@@ -1,0 +1,9518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nova Prime | Tasks</title>
+  <link rel="icon" type="image/png" href="nova_favicon.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <header class="fixed top-0 left-0 w-full bg-white shadow p-4 flex justify-between items-center z-50">
+    <h1 class="text-2xl font-bold text-green-600">Nova Prime</h1>
+  </header>
+
+  <main class="max-w-5xl mx-auto p-4 mt-20">
+    <h2 class="text-xl font-semibold mb-4">Editing and Proofreading Tasks</h2>
+
+    <div id="taskList" class="space-y-6">
+      <!-- Tasks will be dynamically inserted here -->
+    </div>
+  </main>
+  
+  <!-- Rating Modal -->
+  <div id="ratingModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 w-80 text-center shadow-lg">
+      <h3 class="text-lg font-bold mb-2">Rating Restricted</h3>
+      <p class="text-sm text-gray-600 mb-4">Only freelancers who completed and got paid for this task can rate it.</p>
+      <button onclick="closeModal()" class="bg-green-600 text-white px-4 py-2 rounded-lg">Close</button>
+    </div>
+  </div>
+
+  <script>
+    const tasks = [
+  {
+    "id": "TASK400601",
+    "title": "Proofread Academic Thesis on Renewable Energy",
+    "amount": 36,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400602",
+    "title": "Edit E-book on Digital Marketing Trends",
+    "amount": 38,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400603",
+    "title": "Proofread Technical Report for NGO",
+    "amount": 35,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400604",
+    "title": "Edit Startup Pitch Deck Content",
+    "amount": 34,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400605",
+    "title": "Proofread Whitepaper on Blockchain",
+    "amount": 40,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK400606",
+    "title": "Edit Series of Product Descriptions for E-commerce",
+    "amount": 32,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400607",
+    "title": "Proofread UX/UI Design Guidelines",
+    "amount": 33,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK400608",
+    "title": "Edit Manuscript for Fiction Novel",
+    "amount": 39,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400609",
+    "title": "Proofread Policy Brief on Climate Change",
+    "amount": 37,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400610",
+    "title": "Edit Research Proposal for University Submission",
+    "amount": 36,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400611",
+    "title": "Proofread Blog Articles for Tech Company",
+    "amount": 31,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK400612",
+    "title": "Edit User Manual for SaaS Platform",
+    "amount": 34,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400613",
+    "title": "Proofread Legal Compliance Guide",
+    "amount": 40,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK400614",
+    "title": "Edit Medical Case Study Report",
+    "amount": 38,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400615",
+    "title": "Proofread Press Release for Product Launch",
+    "amount": 32,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400616",
+    "title": "Edit Investor Proposal for FinTech Company",
+    "amount": 36,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400617",
+    "title": "Proofread Student Assignments (APA Format)",
+    "amount": 30,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400618",
+    "title": "Edit Online Learning Content for EdTech Platform",
+    "amount": 35,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400619",
+    "title": "Proofread Nonprofit Annual Report",
+    "amount": 34,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400620",
+    "title": "Edit Instructional Design Documents",
+    "amount": 39,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400621",
+    "title": "Proofread Curriculum Vitae (Academic Profile)",
+    "amount": 32,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK400622",
+    "title": "Edit Case Review for Law Journal",
+    "amount": 38,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400623",
+    "title": "Proofread Social Media Posts for NGO",
+    "amount": 30,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400624",
+    "title": "Edit Business Plan for Startup Incubator",
+    "amount": 40,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK400625",
+    "title": "Proofread Executive Summary of Grant Proposal",
+    "amount": 31,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400626",
+    "title": "Edit Online Product Reviews for SEO",
+    "amount": 33,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK400627",
+    "title": "Proofread Online Course Assessment Questions",
+    "amount": 34,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400628",
+    "title": "Edit Technical Description for Engineering Product",
+    "amount": 37,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400629",
+    "title": "Proofread Nonfiction Book for Publishing",
+    "amount": 39,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400630",
+    "title": "Edit Journal Articles for Submission",
+    "amount": 36,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400631",
+    "title": "Proofread English Subtitles for Online Videos",
+    "amount": 30,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK400632",
+    "title": "Edit Monthly Newsletter for Community Group",
+    "amount": 32,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400633",
+    "title": "Proofread Email Campaign for Corporate Outreach",
+    "amount": 31,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400634",
+    "title": "Edit Government Briefing Document",
+    "amount": 38,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400635",
+    "title": "Proofread Employee Handbook for HR",
+    "amount": 36,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400636",
+    "title": "Edit Case Notes for Healthcare System",
+    "amount": 33,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400637",
+    "title": "Proofread Online Articles for Tourism Blog",
+    "amount": 30,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK400638",
+    "title": "Edit Editorial Piece for Lifestyle Magazine",
+    "amount": 39,
+    "posted": "2025-06-25",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400639",
+    "title": "Proofread Online Learning Syllabus",
+    "amount": 34,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400640",
+    "title": "Edit Campaign Material for Fundraiser",
+    "amount": 35,
+    "posted": "2025-06-25",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400361",
+    "title": "Proofread Master's Thesis on Environmental Policy",
+    "amount": 38,
+    "posted": "2025-06-24",
+    "bids": 4,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK400362",
+    "title": "Edit Business Proposal for Investor Pitch",
+    "amount": 35,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400363",
+    "title": "Proofread Journal Article for Psychology Conference",
+    "amount": 36,
+    "posted": "2025-06-24",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400364",
+    "title": "Edit E-book on Personal Finance",
+    "amount": 42,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK400365",
+    "title": "Proofread Technical Report on AI Ethics",
+    "amount": 39,
+    "posted": "2025-06-24",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400366",
+    "title": "Edit Marketing Copy for SaaS Website",
+    "amount": 34,
+    "posted": "2025-06-24",
+    "bids": 2,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400367",
+    "title": "Proofread Research Paper for Engineering Journal",
+    "amount": 37,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400368",
+    "title": "Edit Blog Articles for Online Magazine",
+    "amount": 30,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK400369",
+    "title": "Proofread Legal Documents for Real Estate Firm",
+    "amount": 40,
+    "posted": "2025-06-24",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400370",
+    "title": "Edit Product Descriptions for E-commerce Store",
+    "amount": 33,
+    "posted": "2025-06-24",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400371",
+    "title": "Proofread Conference Presentation Slides",
+    "amount": 31,
+    "posted": "2025-06-24",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400372",
+    "title": "Edit Scientific Manuscript for Publication",
+    "amount": 38,
+    "posted": "2025-06-24",
+    "bids": 4,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK400373",
+    "title": "Proofread Job Application Documents",
+    "amount": 32,
+    "posted": "2025-06-24",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400374",
+    "title": "Edit White Paper on Cybersecurity Solutions",
+    "amount": 41,
+    "posted": "2025-06-24",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400375",
+    "title": "Proofread Educational Materials for E-learning Course",
+    "amount": 34,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400376",
+    "title": "Edit Press Releases for Media Agency",
+    "amount": 33,
+    "posted": "2025-06-24",
+    "bids": 2,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK400377",
+    "title": "Proofread Book Chapter on African History",
+    "amount": 36,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400378",
+    "title": "Edit Business Email Templates for Client Communications",
+    "amount": 30,
+    "posted": "2025-06-24",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400379",
+    "title": "Proofread Website Content for Startup",
+    "amount": 32,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK400380",
+    "title": "Edit Grant Proposal for Research Funding",
+    "amount": 39,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400381",
+    "title": "Proofread Magazine Articles for Monthly Publication",
+    "amount": 34,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400382",
+    "title": "Edit Real Estate Brochures for Print",
+    "amount": 36,
+    "posted": "2025-06-24",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400383",
+    "title": "Proofread University Assignment Submissions",
+    "amount": 31,
+    "posted": "2025-06-24",
+    "bids": 2,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK400384",
+    "title": "Edit Long-form Article on Climate Policy",
+    "amount": 40,
+    "posted": "2025-06-24",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400385",
+    "title": "Proofread Resume and Cover Letter for Job Seeker",
+    "amount": 28,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400386",
+    "title": "Edit Health Blog Content for Wellness Brand",
+    "amount": 34,
+    "posted": "2025-06-24",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400387",
+    "title": "Proofread Technical Manual for Software Tool",
+    "amount": 35,
+    "posted": "2025-06-24",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400388",
+    "title": "Edit Company Handbook for HR Department",
+    "amount": 39,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK400389",
+    "title": "Proofread User Documentation for Mobile App",
+    "amount": 33,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400390",
+    "title": "Edit Proposal Deck for B2B Client",
+    "amount": 31,
+    "posted": "2025-06-24",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400391",
+    "title": "Proofread Conference Proceedings for Academic Panel",
+    "amount": 37,
+    "posted": "2025-06-24",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400392",
+    "title": "Edit Pitch Documents for Startup Accelerator",
+    "amount": 32,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK400393",
+    "title": "Proofread Internal Memos for Corporate Client",
+    "amount": 30,
+    "posted": "2025-06-24",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400394",
+    "title": "Edit Policy Briefs for Think Tank",
+    "amount": 38,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400395",
+    "title": "Proofread User Reviews for Marketplace Platform",
+    "amount": 29,
+    "posted": "2025-06-24",
+    "bids": 2,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK400396",
+    "title": "Edit Website FAQs and Support Content",
+    "amount": 33,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400397",
+    "title": "Proofread Product Labels and Descriptions",
+    "amount": 28,
+    "posted": "2025-06-24",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400398",
+    "title": "Edit Educational Handouts for Teacher Training",
+    "amount": 35,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400399",
+    "title": "Proofread Monthly Reports for NGO",
+    "amount": 31,
+    "posted": "2025-06-24",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400400",
+    "title": "Edit and Format CVs for Career Platform",
+    "amount": 30,
+    "posted": "2025-06-24",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400201",
+    "title": "Proofread Business Proposal for Investor Pitch",
+    "amount": 36,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400202",
+    "title": "Edit Scientific Journal Article on Biotechnology",
+    "amount": 40,
+    "posted": "2025-06-23",
+    "bids": 4,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK400203",
+    "title": "Proofread College Application Essays",
+    "amount": 32,
+    "posted": "2025-06-23",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400204",
+    "title": "Edit Blog Series on Digital Marketing",
+    "amount": 34,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400205",
+    "title": "Proofread Fiction Manuscript (70,000 words)",
+    "amount": 42,
+    "posted": "2025-06-23",
+    "bids": 5,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK400206",
+    "title": "Edit Academic Dissertation in Economics",
+    "amount": 38,
+    "posted": "2025-06-23",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400207",
+    "title": "Proofread Website Content for NGO",
+    "amount": 30,
+    "posted": "2025-06-23",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400208",
+    "title": "Edit Policy Brief on Climate Change",
+    "amount": 37,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400209",
+    "title": "Proofread Training Manuals for E-learning Course",
+    "amount": 35,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400210",
+    "title": "Edit Technical Guide on Cybersecurity",
+    "amount": 39,
+    "posted": "2025-06-23",
+    "bids": 4,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK400211",
+    "title": "Proofread Press Releases for PR Firm",
+    "amount": 31,
+    "posted": "2025-06-23",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400212",
+    "title": "Edit Research Grant Proposal in Public Health",
+    "amount": 36,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400213",
+    "title": "Proofread Articles for Online Magazine",
+    "amount": 33,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400214",
+    "title": "Edit Biography Memoir Draft",
+    "amount": 40,
+    "posted": "2025-06-23",
+    "bids": 5,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK400215",
+    "title": "Proofread Annual Report for Corporation",
+    "amount": 37,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400216",
+    "title": "Edit Educational Handouts for Teachers",
+    "amount": 32,
+    "posted": "2025-06-23",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400217",
+    "title": "Proofread Real Estate Marketing Brochure",
+    "amount": 34,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400218",
+    "title": "Edit Whitepaper on Blockchain Technology",
+    "amount": 39,
+    "posted": "2025-06-23",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400219",
+    "title": "Proofread Terms & Conditions for Website",
+    "amount": 30,
+    "posted": "2025-06-23",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400220",
+    "title": "Edit Workshop Script for Virtual Event",
+    "amount": 36,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400221",
+    "title": "Proofread Course Content for MOOC Platform",
+    "amount": 34,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400222",
+    "title": "Edit LinkedIn Profile and Resume",
+    "amount": 33,
+    "posted": "2025-06-23",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400223",
+    "title": "Proofread Hotel Website Content",
+    "amount": 32,
+    "posted": "2025-06-23",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400224",
+    "title": "Edit Creative Writing Contest Entry",
+    "amount": 30,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400225",
+    "title": "Proofread Investor Presentation Slide Deck",
+    "amount": 35,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400226",
+    "title": "Edit Nonprofit Newsletter Before Distribution",
+    "amount": 31,
+    "posted": "2025-06-23",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400227",
+    "title": "Proofread Product Descriptions for E-commerce",
+    "amount": 34,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400228",
+    "title": "Edit Travel Blog Posts",
+    "amount": 33,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400229",
+    "title": "Proofread Company Handbook",
+    "amount": 36,
+    "posted": "2025-06-23",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400230",
+    "title": "Edit Essay for MBA Application",
+    "amount": 32,
+    "posted": "2025-06-23",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400231",
+    "title": "Proofread Freelance Writing Portfolio",
+    "amount": 31,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400232",
+    "title": "Edit Case Study for Marketing Campaign",
+    "amount": 38,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK400233",
+    "title": "Proofread UX Microcopy for Mobile App",
+    "amount": 34,
+    "posted": "2025-06-23",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400234",
+    "title": "Edit Legal Case Summary",
+    "amount": 37,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400235",
+    "title": "Proofread Sales Brochure Copy",
+    "amount": 32,
+    "posted": "2025-06-23",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400236",
+    "title": "Edit Research Poster Text",
+    "amount": 33,
+    "posted": "2025-06-23",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400237",
+    "title": "Proofread Social Media Captions for Campaign",
+    "amount": 30,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK400238",
+    "title": "Edit Webinar Promotion Emails",
+    "amount": 35,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK400239",
+    "title": "Proofread Terms for Affiliate Program",
+    "amount": 33,
+    "posted": "2025-06-23",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK400240",
+    "title": "Edit Executive Summary for Grant Application",
+    "amount": 36,
+    "posted": "2025-06-23",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK300001",
+    "title": "Proofread Academic Research Paper – Social Sciences",
+    "amount": 38,
+    "posted": "2025-06-22",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK300002",
+    "title": "Edit Business Proposal for Corporate Client",
+    "amount": 42,
+    "posted": "2025-06-22",
+    "bids": 5,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK300003",
+    "title": "Proofread Blog Series – Health & Wellness",
+    "amount": 34,
+    "posted": "2025-06-22",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK300004",
+    "title": "Edit E-book Draft – Personal Finance",
+    "amount": 40,
+    "posted": "2025-06-22",
+    "bids": 6,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK300005",
+    "title": "Proofread Legal Briefs for Law Firm",
+    "amount": 39,
+    "posted": "2025-06-22",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK300006",
+    "title": "Edit Scientific Manuscript – Biology",
+    "amount": 45,
+    "posted": "2025-06-22",
+    "bids": 5,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK300007",
+    "title": "Proofread White Paper – Tech Innovation",
+    "amount": 37,
+    "posted": "2025-06-22",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK300008",
+    "title": "Edit Resume & Cover Letter for Job Application",
+    "amount": 30,
+    "posted": "2025-06-22",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK300009",
+    "title": "Proofread Email Campaigns – Marketing Agency",
+    "amount": 32,
+    "posted": "2025-06-22",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK300010",
+    "title": "Edit Grant Proposal – Nonprofit Sector",
+    "amount": 41,
+    "posted": "2025-06-22",
+    "bids": 5,
+    "rating": 4.8
+  },
+
+  {
+    "id": "TASK300011",
+    "title": "Proofread UX/UI Copy for Mobile App",
+    "amount": 36,
+    "posted": "2025-06-22",
+    "bids": 3,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK300012",
+    "title": "Edit Technical Report – Cybersecurity",
+    "amount": 44,
+    "posted": "2025-06-22",
+    "bids": 4,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK300013",
+    "title": "Proofread Press Releases – PR Agency",
+    "amount": 31,
+    "posted": "2025-06-22",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK300014",
+    "title": "Edit Medical Research Submission – Oncology",
+    "amount": 46,
+    "posted": "2025-06-22",
+    "bids": 5,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK300015",
+    "title": "Proofread Event Brochure – Corporate Conference",
+    "amount": 29,
+    "posted": "2025-06-22",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK300016",
+    "title": "Edit Policy Draft – Government Program",
+    "amount": 42,
+    "posted": "2025-06-22",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK300017",
+    "title": "Proofread Nonfiction Book – History",
+    "amount": 38,
+    "posted": "2025-06-22",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK300018",
+    "title": "Edit University Thesis – Environmental Studies",
+    "amount": 45,
+    "posted": "2025-06-22",
+    "bids": 6,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK300019",
+    "title": "Proofread Articles for Online Magazine",
+    "amount": 33,
+    "posted": "2025-06-22",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK300020",
+    "title": "Edit Product Descriptions – E-commerce Site",
+    "amount": 34,
+    "posted": "2025-06-22",
+    "bids": 3,
+    "rating": 4.7
+  },
+
+  {
+    "id": "TASK300021",
+    "title": "Proofread Executive Summary – Finance Report",
+    "amount": 36,
+    "posted": "2025-06-22",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK300022",
+    "title": "Edit Internal Memo – Tech Company",
+    "amount": 30,
+    "posted": "2025-06-22",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK300023",
+    "title": "Proofread Course Outline – University Module",
+    "amount": 32,
+    "posted": "2025-06-22",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK300024",
+    "title": "Edit SEO Copy – Marketing Campaign",
+    "amount": 31,
+    "posted": "2025-06-22",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK300025",
+    "title": "Proofread Case Study – Client Success Story",
+    "amount": 35,
+    "posted": "2025-06-22",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK300026",
+    "title": "Edit Grant Application – Health NGO",
+    "amount": 40,
+    "posted": "2025-06-22",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK300027",
+    "title": "Proofread Legal Contract – Tech Licensing",
+    "amount": 39,
+    "posted": "2025-06-22",
+    "bids": 4,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK300028",
+    "title": "Edit Thesis Abstract – Political Science",
+    "amount": 33,
+    "posted": "2025-06-22",
+    "bids": 2,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK300029",
+    "title": "Proofread Startup Business Plan",
+    "amount": 37,
+    "posted": "2025-06-22",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK300030",
+    "title": "Edit Travel Blog Series – Adventure Theme",
+    "amount": 30,
+    "posted": "2025-06-22",
+    "bids": 3,
+    "rating": 4.7
+  },
+
+  {
+    "id": "TASK300031",
+    "title": "Proofread HR Handbook – Company Policies",
+    "amount": 34,
+    "posted": "2025-06-22",
+    "bids": 2,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK300032",
+    "title": "Edit Social Media Posts – Brand Campaign",
+    "amount": 28,
+    "posted": "2025-06-22",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK300033",
+    "title": "Proofread Tech Blog – AI Topics",
+    "amount": 35,
+    "posted": "2025-06-22",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK300034",
+    "title": "Edit Product Manual – Electronics",
+    "amount": 40,
+    "posted": "2025-06-22",
+    "bids": 4,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK300035",
+    "title": "Proofread Online Course Content – Finance",
+    "amount": 38,
+    "posted": "2025-06-22",
+    "bids": 5,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK300036",
+    "title": "Edit Internal Guidelines – Remote Work Policy",
+    "amount": 36,
+    "posted": "2025-06-22",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK300037",
+    "title": "Proofread Book Manuscript – Memoir",
+    "amount": 42,
+    "posted": "2025-06-22",
+    "bids": 6,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK300038",
+    "title": "Edit Journal Article – Urban Development",
+    "amount": 39,
+    "posted": "2025-06-22",
+    "bids": 4,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK300039",
+    "title": "Proofread Instruction Manual – Fitness Equipment",
+    "amount": 31,
+    "posted": "2025-06-22",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK300040",
+    "title": "Edit Blog Content – Tech Tutorials",
+    "amount": 33,
+    "posted": "2025-06-22",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK80120",
+    "title": "Proofread Research Paper on Cybersecurity Threats",
+    "amount": 32,
+    "posted": "2025-06-20",
+    "bids": 5,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK80121",
+    "title": "Edit eBook Manuscript for Grammar and Style",
+    "amount": 35,
+    "posted": "2025-06-20",
+    "bids": 4,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK80122",
+    "title": "Proofread Blog Series on Remote Work",
+    "amount": 28,
+    "posted": "2025-06-20",
+    "bids": 6,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK80123",
+    "title": "Edit Whitepaper on AI Ethics",
+    "amount": 34,
+    "posted": "2025-06-20",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK80124",
+    "title": "Proofread Academic Essay on Postcolonial Literature",
+    "amount": 31,
+    "posted": "2025-06-20",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK80125",
+    "title": "Edit Case Study Report for Corporate Client",
+    "amount": 36,
+    "posted": "2025-06-20",
+    "bids": 4,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK80126",
+    "title": "Proofread Book Chapter on Data Science Applications",
+    "amount": 30,
+    "posted": "2025-06-20",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK80127",
+    "title": "Edit Technical Document for Readability",
+    "amount": 33,
+    "posted": "2025-06-20",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK80128",
+    "title": "Proofread Legal Document for Grammar",
+    "amount": 35,
+    "posted": "2025-06-20",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK80129",
+    "title": "Edit NGO Grant Proposal for Clarity",
+    "amount": 32,
+    "posted": "2025-06-20",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK80130",
+    "title": "Proofread Science Journal Submission",
+    "amount": 36,
+    "posted": "2025-06-20",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK80131",
+    "title": "Edit User Manual for Software Application",
+    "amount": 33,
+    "posted": "2025-06-20",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK80132",
+    "title": "Proofread Marketing Campaign Copy",
+    "amount": 29,
+    "posted": "2025-06-20",
+    "bids": 6,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK80133",
+    "title": "Edit Investor Deck Content for Readability",
+    "amount": 34,
+    "posted": "2025-06-20",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK80134",
+    "title": "Proofread Creative Writing Anthology",
+    "amount": 31,
+    "posted": "2025-06-20",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK80135",
+    "title": "Edit Online Course Modules for Grammar and Flow",
+    "amount": 37,
+    "posted": "2025-06-20",
+    "bids": 3,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK80136",
+    "title": "Proofread Press Release for Publishing",
+    "amount": 30,
+    "posted": "2025-06-20",
+    "bids": 6,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK80137",
+    "title": "Edit Email Newsletter Content",
+    "amount": 28,
+    "posted": "2025-06-20",
+    "bids": 5,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK80138",
+    "title": "Proofread Student Thesis in Engineering",
+    "amount": 34,
+    "posted": "2025-06-20",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK80139",
+    "title": "Edit Fiction Novel for Final Review",
+    "amount": 39,
+    "posted": "2025-06-20",
+    "bids": 3,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK80140",
+    "title": "Proofread Internal Company Report",
+    "amount": 33,
+    "posted": "2025-06-20",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK80141",
+    "title": "Edit Online Forum Posts for Publication",
+    "amount": 31,
+    "posted": "2025-06-20",
+    "bids": 5,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK80142",
+    "title": "Proofread Conference Presentation Slides",
+    "amount": 30,
+    "posted": "2025-06-20",
+    "bids": 6,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK80143",
+    "title": "Edit Blog Posts on Financial Planning",
+    "amount": 32,
+    "posted": "2025-06-20",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK80144",
+    "title": "Proofread Technical Specifications",
+    "amount": 35,
+    "posted": "2025-06-20",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK80145",
+    "title": "Edit Student Assignment Portfolio",
+    "amount": 29,
+    "posted": "2025-06-20",
+    "bids": 5,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK80146",
+    "title": "Proofread Grant Application Draft",
+    "amount": 34,
+    "posted": "2025-06-20",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK80147",
+    "title": "Edit Speech for Academic Conference",
+    "amount": 31,
+    "posted": "2025-06-20",
+    "bids": 6,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK80148",
+    "title": "Proofread Self-Published Book",
+    "amount": 36,
+    "posted": "2025-06-20",
+    "bids": 3,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK80149",
+    "title": "Edit Professional CV and Cover Letter",
+    "amount": 28,
+    "posted": "2025-06-20",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK80150",
+    "title": "Proofread Website Content for NGO",
+    "amount": 30,
+    "posted": "2025-06-20",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK80151",
+    "title": "Edit Health & Wellness Articles",
+    "amount": 33,
+    "posted": "2025-06-20",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK80152",
+    "title": "Proofread Journalism Portfolio Submission",
+    "amount": 35,
+    "posted": "2025-06-20",
+    "bids": 3,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK80153",
+    "title": "Edit Technical Paper for Journal Publication",
+    "amount": 37,
+    "posted": "2025-06-20",
+    "bids": 3,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK80154",
+    "title": "Proofread Internal Memos for Corporation",
+    "amount": 30,
+    "posted": "2025-06-20",
+    "bids": 5,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK80155",
+    "title": "Edit Essay Submissions for Contest",
+    "amount": 31,
+    "posted": "2025-06-20",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK80156",
+    "title": "Proofread Code Comments in Documentation",
+    "amount": 29,
+    "posted": "2025-06-20",
+    "bids": 6,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK80157",
+    "title": "Edit Biography Draft for Author Client",
+    "amount": 36,
+    "posted": "2025-06-20",
+    "bids": 3,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK80158",
+    "title": "Proofread Technical Blog Posts on Cybersecurity",
+    "amount": 32,
+    "posted": "2025-06-20",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK80159",
+    "title": "Edit LinkedIn Articles for Professional Profile",
+    "amount": 30,
+    "posted": "2025-06-20",
+    "bids": 5,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK70200",
+    "title": "Proofread academic research on renewable energy",
+    "amount": 35,
+    "posted": "2025-06-19",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK70201",
+    "title": "Edit online course transcript for clarity and grammar",
+    "amount": 37,
+    "posted": "2025-06-19",
+    "bids": 6,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK70202",
+    "title": "Proofread master's thesis in economics",
+    "amount": 40,
+    "posted": "2025-06-19",
+    "bids": 5,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK70203",
+    "title": "Edit blog posts for lifestyle website",
+    "amount": 32,
+    "posted": "2025-06-19",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK70204",
+    "title": "Proofread technical manual for software platform",
+    "amount": 38,
+    "posted": "2025-06-19",
+    "bids": 7,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK70205",
+    "title": "Edit grant proposal for clarity and coherence",
+    "amount": 36,
+    "posted": "2025-06-19",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK70206",
+    "title": "Proofread product descriptions for e-commerce site",
+    "amount": 30,
+    "posted": "2025-06-19",
+    "bids": 3,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK70207",
+    "title": "Edit whitepaper on digital transformation",
+    "amount": 41,
+    "posted": "2025-06-19",
+    "bids": 6,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK70208",
+    "title": "Proofread HR policy documents for international NGO",
+    "amount": 34,
+    "posted": "2025-06-19",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK70209",
+    "title": "Edit travel guidebook for typos and structure",
+    "amount": 33,
+    "posted": "2025-06-19",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK70210",
+    "title": "Proofread student essays for academic integrity",
+    "amount": 29,
+    "posted": "2025-06-19",
+    "bids": 3,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK70211",
+    "title": "Edit medical case study for journal submission",
+    "amount": 39,
+    "posted": "2025-06-19",
+    "bids": 7,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK70212",
+    "title": "Proofread user manuals for clarity and layout",
+    "amount": 31,
+    "posted": "2025-06-19",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK70213",
+    "title": "Edit investor pitch deck for grammar and tone",
+    "amount": 37,
+    "posted": "2025-06-19",
+    "bids": 6,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK70214",
+    "title": "Proofread training content for EdTech platform",
+    "amount": 36,
+    "posted": "2025-06-19",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK70215",
+    "title": "Edit fiction short story for publication",
+    "amount": 33,
+    "posted": "2025-06-19",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK70216",
+    "title": "Proofread translation of business proposal",
+    "amount": 34,
+    "posted": "2025-06-19",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK70217",
+    "title": "Edit academic journal submission in psychology",
+    "amount": 38,
+    "posted": "2025-06-19",
+    "bids": 6,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK70218",
+    "title": "Proofread and format corporate newsletter",
+    "amount": 31,
+    "posted": "2025-06-19",
+    "bids": 5,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK70219",
+    "title": "Edit online resume and cover letter for client",
+    "amount": 28,
+    "posted": "2025-06-19",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK70220",
+    "title": "Proofread government policy report",
+    "amount": 40,
+    "posted": "2025-06-19",
+    "bids": 7,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK70221",
+    "title": "Edit conference paper in computer science",
+    "amount": 39,
+    "posted": "2025-06-19",
+    "bids": 5,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK70222",
+    "title": "Proofread case study on e-commerce trends",
+    "amount": 32,
+    "posted": "2025-06-19",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK70223",
+    "title": "Edit company about page for SEO and clarity",
+    "amount": 29,
+    "posted": "2025-06-19",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK70224",
+    "title": "Proofread master's dissertation in education",
+    "amount": 35,
+    "posted": "2025-06-19",
+    "bids": 6,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK70225",
+    "title": "Edit copy for tech startup website",
+    "amount": 36,
+    "posted": "2025-06-19",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK70226",
+    "title": "Proofread creative writing manuscript",
+    "amount": 34,
+    "posted": "2025-06-19",
+    "bids": 5,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK70227",
+    "title": "Edit interview transcript for online magazine",
+    "amount": 33,
+    "posted": "2025-06-19",
+    "bids": 3,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK70228",
+    "title": "Proofread business plan for presentation",
+    "amount": 31,
+    "posted": "2025-06-19",
+    "bids": 6,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK70229",
+    "title": "Edit product manual for electronics brand",
+    "amount": 37,
+    "posted": "2025-06-19",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK70230",
+    "title": "Proofread research notes for clarity and tone",
+    "amount": 30,
+    "posted": "2025-06-19",
+    "bids": 4,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK70231",
+    "title": "Edit copy for ad campaign pitch",
+    "amount": 36,
+    "posted": "2025-06-19",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK70232",
+    "title": "Proofread e-book on nutrition and wellness",
+    "amount": 34,
+    "posted": "2025-06-19",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK70233",
+    "title": "Edit marketing brochure content",
+    "amount": 32,
+    "posted": "2025-06-19",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK70234",
+    "title": "Proofread engineering project report",
+    "amount": 39,
+    "posted": "2025-06-19",
+    "bids": 6,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK70235",
+    "title": "Edit professional portfolio text",
+    "amount": 28,
+    "posted": "2025-06-19",
+    "bids": 3,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK70236",
+    "title": "Proofread NGO press release draft",
+    "amount": 30,
+    "posted": "2025-06-19",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK70237",
+    "title": "Edit psychology paper for APA compliance",
+    "amount": 38,
+    "posted": "2025-06-19",
+    "bids": 5,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK70238",
+    "title": "Proofread digital storytelling script",
+    "amount": 31,
+    "posted": "2025-06-19",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK70239",
+    "title": "Edit final draft of online course content",
+    "amount": 40,
+    "posted": "2025-06-19",
+    "bids": 5,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK41020",
+    "title": "Proofread Academic Research Paper (APA Style)",
+    "amount": 35,
+    "posted": "2025-06-18",
+    "bids": 5,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK41021",
+    "title": "Edit Blog Post for SEO and Clarity",
+    "amount": 28,
+    "posted": "2025-06-18",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41022",
+    "title": "Proofread Legal Document for Grammar and Consistency",
+    "amount": 38,
+    "posted": "2025-06-18",
+    "bids": 6,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK41023",
+    "title": "Edit Short Story for Publication",
+    "amount": 30,
+    "posted": "2025-06-18",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK41024",
+    "title": "Proofread CV and Cover Letter",
+    "amount": 25,
+    "posted": "2025-06-18",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41025",
+    "title": "Edit Technical Manual for Clarity",
+    "amount": 42,
+    "posted": "2025-06-18",
+    "bids": 5,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK41026",
+    "title": "Proofread Business Proposal",
+    "amount": 33,
+    "posted": "2025-06-18",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK41027",
+    "title": "Edit University Application Essay",
+    "amount": 26,
+    "posted": "2025-06-18",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41028",
+    "title": "Proofread Science Journal Submission",
+    "amount": 40,
+    "posted": "2025-06-18",
+    "bids": 6,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK41029",
+    "title": "Edit Online Course Material (English)",
+    "amount": 34,
+    "posted": "2025-06-18",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK41030",
+    "title": "Proofread Real Estate Brochure",
+    "amount": 27,
+    "posted": "2025-06-18",
+    "bids": 3,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK41031",
+    "title": "Edit Personal Memoir (First Chapter)",
+    "amount": 36,
+    "posted": "2025-06-18",
+    "bids": 5,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK41032",
+    "title": "Proofread Blog Series for Tone and Flow",
+    "amount": 31,
+    "posted": "2025-06-18",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41033",
+    "title": "Edit Grant Proposal Draft",
+    "amount": 39,
+    "posted": "2025-06-18",
+    "bids": 6,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK41034",
+    "title": "Proofread Software Documentation",
+    "amount": 37,
+    "posted": "2025-06-18",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK41035",
+    "title": "Edit Children’s Book Draft",
+    "amount": 29,
+    "posted": "2025-06-18",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41036",
+    "title": "Proofread Email Newsletter",
+    "amount": 24,
+    "posted": "2025-06-18",
+    "bids": 2,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK41037",
+    "title": "Edit Company Profile Description",
+    "amount": 30,
+    "posted": "2025-06-18",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41038",
+    "title": "Proofread Non-Profit Annual Report",
+    "amount": 35,
+    "posted": "2025-06-18",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK41039",
+    "title": "Edit Manuscript for Flow and Grammar",
+    "amount": 43,
+    "posted": "2025-06-18",
+    "bids": 6,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK41040",
+    "title": "Proofread Research Thesis (Harvard Style)",
+    "amount": 41,
+    "posted": "2025-06-18",
+    "bids": 6,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK41041",
+    "title": "Edit Podcast Show Notes",
+    "amount": 27,
+    "posted": "2025-06-18",
+    "bids": 2,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK41042",
+    "title": "Proofread Press Release for Publishing",
+    "amount": 32,
+    "posted": "2025-06-18",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41043",
+    "title": "Edit Whitepaper for Professional Tone",
+    "amount": 37,
+    "posted": "2025-06-18",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK41044",
+    "title": "Proofread Political Speech Draft",
+    "amount": 30,
+    "posted": "2025-06-18",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41045",
+    "title": "Edit Job Description Template",
+    "amount": 25,
+    "posted": "2025-06-18",
+    "bids": 2,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK41046",
+    "title": "Proofread Tech Blog Series",
+    "amount": 34,
+    "posted": "2025-06-18",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK41047",
+    "title": "Edit Sales Pitch Deck Content",
+    "amount": 36,
+    "posted": "2025-06-18",
+    "bids": 5,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK41048",
+    "title": "Proofread Grant Summary Report",
+    "amount": 33,
+    "posted": "2025-06-18",
+    "bids": 3,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK41049",
+    "title": "Edit Travel Article for Tone and Structure",
+    "amount": 29,
+    "posted": "2025-06-18",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41050",
+    "title": "Proofread Freelance Portfolio",
+    "amount": 26,
+    "posted": "2025-06-18",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41051",
+    "title": "Edit Technical Proposal (Engineering Focus)",
+    "amount": 40,
+    "posted": "2025-06-18",
+    "bids": 5,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK41052",
+    "title": "Proofread Academic Essay for Journal Submission",
+    "amount": 39,
+    "posted": "2025-06-18",
+    "bids": 5,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK41053",
+    "title": "Edit eCommerce Product Descriptions",
+    "amount": 27,
+    "posted": "2025-06-18",
+    "bids": 3,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK41054",
+    "title": "Proofread Internal Corporate Memo",
+    "amount": 28,
+    "posted": "2025-06-18",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41055",
+    "title": "Edit Creative Non-Fiction Excerpt",
+    "amount": 31,
+    "posted": "2025-06-18",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK41056",
+    "title": "Proofread Business Plan Document",
+    "amount": 35,
+    "posted": "2025-06-18",
+    "bids": 4,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK41057",
+    "title": "Edit Educational Assessment Guide",
+    "amount": 38,
+    "posted": "2025-06-18",
+    "bids": 5,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK41058",
+    "title": "Proofread Product Instruction Leaflet",
+    "amount": 29,
+    "posted": "2025-06-18",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41059",
+    "title": "Edit Literature Review Draft",
+    "amount": 34,
+    "posted": "2025-06-18",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40860",
+    "title": "Translate Technical Document from Spanish to English",
+    "amount": 37,
+    "posted": "2025-06-17",
+    "bids": 6,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK40861",
+    "title": "Proofread Master's Thesis on Renewable Energy",
+    "amount": 36,
+    "posted": "2025-06-17",
+    "bids": 4,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK40862",
+    "title": "Transcribe Legal Deposition Audio",
+    "amount": 40,
+    "posted": "2025-06-17",
+    "bids": 7,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK40863",
+    "title": "Edit Chapter of Self-Help Book",
+    "amount": 32,
+    "posted": "2025-06-17",
+    "bids": 6,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40864",
+    "title": "Academic Writing on Human Rights Law",
+    "amount": 39,
+    "posted": "2025-06-17",
+    "bids": 5,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK40865",
+    "title": "Proofread Research Abstract for Conference",
+    "amount": 25,
+    "posted": "2025-06-17",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40866",
+    "title": "Transcribe Interview for Dissertation",
+    "amount": 29,
+    "posted": "2025-06-17",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40867",
+    "title": "Edit Website FAQ Section",
+    "amount": 26,
+    "posted": "2025-06-17",
+    "bids": 2,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40868",
+    "title": "Translate Marketing Brochure to German",
+    "amount": 35,
+    "posted": "2025-06-17",
+    "bids": 6,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40869",
+    "title": "Academic Paper on Global Trade Policies",
+    "amount": 38,
+    "posted": "2025-06-17",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40870",
+    "title": "Proofread E-commerce Product Listings",
+    "amount": 24,
+    "posted": "2025-06-17",
+    "bids": 3,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40871",
+    "title": "Transcribe Medical Webinar",
+    "amount": 34,
+    "posted": "2025-06-17",
+    "bids": 5,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK40872",
+    "title": "Edit Policy Memo for Public Sector Agency",
+    "amount": 33,
+    "posted": "2025-06-17",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40873",
+    "title": "Academic Essay on Digital Media Ethics",
+    "amount": 36,
+    "posted": "2025-06-17",
+    "bids": 5,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK40874",
+    "title": "Proofread Course Syllabus Draft",
+    "amount": 27,
+    "posted": "2025-06-17",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40875",
+    "title": "Translate User Manual to French",
+    "amount": 33,
+    "posted": "2025-06-17",
+    "bids": 6,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40876",
+    "title": "Edit Funding Proposal for NGO",
+    "amount": 31,
+    "posted": "2025-06-17",
+    "bids": 5,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40877",
+    "title": "Transcribe Podcast Episode on History",
+    "amount": 30,
+    "posted": "2025-06-17",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40878",
+    "title": "Academic Writing: Gender Studies Reflection",
+    "amount": 29,
+    "posted": "2025-06-17",
+    "bids": 4,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40879",
+    "title": "Proofread Application Essay for Graduate School",
+    "amount": 28,
+    "posted": "2025-06-17",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40880",
+    "title": "Translate Scientific Article Abstract to Chinese",
+    "amount": 36,
+    "posted": "2025-06-17",
+    "bids": 6,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK40881",
+    "title": "Edit Training Course Material",
+    "amount": 30,
+    "posted": "2025-06-17",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40882",
+    "title": "Transcribe Lecture Notes from Audio",
+    "amount": 27,
+    "posted": "2025-06-17",
+    "bids": 4,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40883",
+    "title": "Academic Review on Sustainable Agriculture",
+    "amount": 37,
+    "posted": "2025-06-17",
+    "bids": 5,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK40884",
+    "title": "Proofread Internal HR Report",
+    "amount": 25,
+    "posted": "2025-06-17",
+    "bids": 2,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40885",
+    "title": "Edit Magazine Article on Education Reform",
+    "amount": 32,
+    "posted": "2025-06-17",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40886",
+    "title": "Translate Business Contract to Italian",
+    "amount": 39,
+    "posted": "2025-06-17",
+    "bids": 5,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK40887",
+    "title": "Transcribe Focus Group Discussion",
+    "amount": 34,
+    "posted": "2025-06-17",
+    "bids": 4,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40888",
+    "title": "Academic Summary on Urban Development",
+    "amount": 31,
+    "posted": "2025-06-17",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40889",
+    "title": "Proofread Fictional Short Story",
+    "amount": 26,
+    "posted": "2025-06-17",
+    "bids": 3,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40890",
+    "title": "Edit Business Presentation Slides",
+    "amount": 28,
+    "posted": "2025-06-17",
+    "bids": 2,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40891",
+    "title": "Translate Blog Article to Japanese",
+    "amount": 30,
+    "posted": "2025-06-17",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40892",
+    "title": "Transcribe Documentary Narration",
+    "amount": 36,
+    "posted": "2025-06-17",
+    "bids": 4,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK40893",
+    "title": "Academic Report on Educational Technology",
+    "amount": 35,
+    "posted": "2025-06-17",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40894",
+    "title": "Proofread Email Campaign Copy",
+    "amount": 24,
+    "posted": "2025-06-17",
+    "bids": 3,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40895",
+    "title": "Edit Policy Document for Clarity",
+    "amount": 31,
+    "posted": "2025-06-17",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40896",
+    "title": "Translate NGO Report to Portuguese",
+    "amount": 33,
+    "posted": "2025-06-17",
+    "bids": 5,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40897",
+    "title": "Transcribe YouTube Video on Psychology",
+    "amount": 29,
+    "posted": "2025-06-17",
+    "bids": 4,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40898",
+    "title": "Academic Paper Review on Climate Adaptation",
+    "amount": 37,
+    "posted": "2025-06-17",
+    "bids": 5,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK40899",
+    "title": "Edit Training Video Script",
+    "amount": 30,
+    "posted": "2025-06-17",
+    "bids": 3,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41640",
+    "title": "Proofread Research Paper on Climate Change",
+    "amount": 28,
+    "posted": "2025-06-16",
+    "bids": 7,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41641",
+    "title": "Edit Manuscript for Science Journal Submission",
+    "amount": 35,
+    "posted": "2025-06-16",
+    "bids": 6,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK41642",
+    "title": "Proofread Thesis Draft for University Student",
+    "amount": 30,
+    "posted": "2025-06-16",
+    "bids": 8,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK41643",
+    "title": "Edit Technical Documentation for Software Manual",
+    "amount": 33,
+    "posted": "2025-06-16",
+    "bids": 7,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK41644",
+    "title": "Proofread Business Proposal for Investor Pitch",
+    "amount": 29,
+    "posted": "2025-06-16",
+    "bids": 9,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK41645",
+    "title": "Edit Blog Posts for Grammar and Style",
+    "amount": 26,
+    "posted": "2025-06-16",
+    "bids": 10,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK41646",
+    "title": "Proofread Whitepaper on AI Ethics",
+    "amount": 32,
+    "posted": "2025-06-16",
+    "bids": 6,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK41647",
+    "title": "Edit Creative Writing for Online Magazine",
+    "amount": 25,
+    "posted": "2025-06-16",
+    "bids": 8,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK41648",
+    "title": "Proofread Educational eBook on Programming",
+    "amount": 31,
+    "posted": "2025-06-16",
+    "bids": 7,
+    "rating": 4.8
+  },
+  {
+    "id": "TASK41649",
+    "title": "Edit and Format Academic Journal Article",
+    "amount": 34,
+    "posted": "2025-06-16",
+    "bids": 5,
+    "rating": 4.9
+  },
+  {
+    "id": "TASK40560",
+    "title": "Proofread SaaS Blog Post on Productivity",
+    "amount": 30,
+    "posted": "2025-06-15",
+    "bids": 10,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40561",
+    "title": "Edit Online Course Module on Mindfulness",
+    "amount": 32,
+    "posted": "2025-06-15",
+    "bids": 12,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40562",
+    "title": "Proofread E-book for Digital Marketing",
+    "amount": 35,
+    "posted": "2025-06-15",
+    "bids": 14,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40563",
+    "title": "Edit UX Microcopy for Mobile App",
+    "amount": 28,
+    "posted": "2025-06-15",
+    "bids": 9,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40564",
+    "title": "Proofread Webinar Transcript on AI Ethics",
+    "amount": 31,
+    "posted": "2025-06-15",
+    "bids": 11,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40565",
+    "title": "Edit Product Descriptions for Tech Ecommerce",
+    "amount": 29,
+    "posted": "2025-06-15",
+    "bids": 13,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40566",
+    "title": "Proofread Startup Pitch Email Sequence",
+    "amount": 30,
+    "posted": "2025-06-15",
+    "bids": 8,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40567",
+    "title": "Edit Social Media Copy for Brand Campaign",
+    "amount": 27,
+    "posted": "2025-06-15",
+    "bids": 9,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40568",
+    "title": "Proofread Help Center Articles for SaaS",
+    "amount": 28,
+    "posted": "2025-06-15",
+    "bids": 10,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40569",
+    "title": "Edit Podcast Show Notes for Tech Show",
+    "amount": 26,
+    "posted": "2025-06-15",
+    "bids": 9,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40570",
+    "title": "Proofread Email Newsletter for Health Startup",
+    "amount": 29,
+    "posted": "2025-06-15",
+    "bids": 11,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40571",
+    "title": "Edit App UI Text for Clarity",
+    "amount": 27,
+    "posted": "2025-06-15",
+    "bids": 8,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40572",
+    "title": "Proofread Blog Series on Freelancing Tips",
+    "amount": 28,
+    "posted": "2025-06-15",
+    "bids": 10,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40573",
+    "title": "Edit Digital Guide on Remote Work",
+    "amount": 31,
+    "posted": "2025-06-15",
+    "bids": 13,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40574",
+    "title": "Proofread Course Slides on Design Thinking",
+    "amount": 30,
+    "posted": "2025-06-15",
+    "bids": 12,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40575",
+    "title": "Edit Crowdfunding Video Script",
+    "amount": 29,
+    "posted": "2025-06-15",
+    "bids": 9,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40576",
+    "title": "Proofread Product Launch Website Copy",
+    "amount": 32,
+    "posted": "2025-06-15",
+    "bids": 14,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40577",
+    "title": "Edit Terms & Conditions for Fintech App",
+    "amount": 33,
+    "posted": "2025-06-15",
+    "bids": 15,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40578",
+    "title": "Proofread UX Research Report",
+    "amount": 31,
+    "posted": "2025-06-15",
+    "bids": 11,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40579",
+    "title": "Edit Email Campaign for Online Course",
+    "amount": 30,
+    "posted": "2025-06-15",
+    "bids": 8,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40580",
+    "title": "Proofread Blog Article on AI Tools",
+    "amount": 28,
+    "posted": "2025-06-15",
+    "bids": 9,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40581",
+    "title": "Edit Video Captions for Marketing Webinar",
+    "amount": 27,
+    "posted": "2025-06-15",
+    "bids": 10,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40582",
+    "title": "Proofread E-commerce Product Pages",
+    "amount": 29,
+    "posted": "2025-06-15",
+    "bids": 13,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40583",
+    "title": "Edit Whitepaper on Digital Transformation",
+    "amount": 34,
+    "posted": "2025-06-15",
+    "bids": 16,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40584",
+    "title": "Proofread Social Ads for Education Platform",
+    "amount": 27,
+    "posted": "2025-06-15",
+    "bids": 12,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40585",
+    "title": "Edit Webinar Summary Document",
+    "amount": 28,
+    "posted": "2025-06-15",
+    "bids": 8,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40586",
+    "title": "Proofread Online Workshop Transcript",
+    "amount": 30,
+    "posted": "2025-06-15",
+    "bids": 10,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40587",
+    "title": "Edit Blog Copy for Wellness Influencer",
+    "amount": 30,
+    "posted": "2025-06-15",
+    "bids": 14,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40588",
+    "title": "Proofread Mobile App Tutorial Text",
+    "amount": 29,
+    "posted": "2025-06-15",
+    "bids": 9,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40589",
+    "title": "Edit AI Chatbot Script",
+    "amount": 28,
+    "posted": "2025-06-15",
+    "bids": 11,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40590",
+    "title": "Proofread Digital Media Coverage Document",
+    "amount": 32,
+    "posted": "2025-06-15",
+    "bids": 12,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40591",
+    "title": "Edit Startup FAQ Page Content",
+    "amount": 27,
+    "posted": "2025-06-15",
+    "bids": 8,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40592",
+    "title": "Proofread Digital Health App Copy",
+    "amount": 30,
+    "posted": "2025-06-15",
+    "bids": 10,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40593",
+    "title": "Edit Email Drip Copy for SaaS Launch",
+    "amount": 31,
+    "posted": "2025-06-15",
+    "bids": 15,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40594",
+    "title": "Proofread Online Course QA Copy",
+    "amount": 29,
+    "posted": "2025-06-15",
+    "bids": 9,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40595",
+    "title": "Edit Tech Case Study Document",
+    "amount": 30,
+    "posted": "2025-06-15",
+    "bids": 12,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40596",
+    "title": "Proofread Product FAQ Section",
+    "amount": 28,
+    "posted": "2025-06-15",
+    "bids": 10,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40597",
+    "title": "Edit YouTube Video Description Copy",
+    "amount": 29,
+    "posted": "2025-06-15",
+    "bids": 11,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40598",
+    "title": "Proofread Social Media Bios for Influencers",
+    "amount": 27,
+    "posted": "2025-06-15",
+    "bids": 8,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40599",
+    "title": "Edit Landing Page for Online Conference",
+    "amount": 31,
+    "posted": "2025-06-15",
+    "bids": 14,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40520",
+    "title": "Proofread eBook on Startup Growth Strategies",
+    "amount": 32,
+    "posted": "2025-06-14",
+    "bids": 12,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40521",
+    "title": "Edit Product Launch Newsletter Copy",
+    "amount": 28,
+    "posted": "2025-06-14",
+    "bids": 14,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40522",
+    "title": "Proofread Blog Series on Eco Living",
+    "amount": 26,
+    "posted": "2025-06-14",
+    "bids": 9,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40523",
+    "title": "Edit Subtitles for Digital Health App Videos",
+    "amount": 29,
+    "posted": "2025-06-14",
+    "bids": 13,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40524",
+    "title": "Proofread Email Templates for HR Software",
+    "amount": 30,
+    "posted": "2025-06-14",
+    "bids": 15,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40525",
+    "title": "Edit Online Course Text on Remote Work",
+    "amount": 31,
+    "posted": "2025-06-14",
+    "bids": 10,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40526",
+    "title": "Proofread Fitness App Help Articles",
+    "amount": 27,
+    "posted": "2025-06-14",
+    "bids": 11,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40527",
+    "title": "Edit YouTube Descriptions for FinTech Channel",
+    "amount": 29,
+    "posted": "2025-06-14",
+    "bids": 8,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40528",
+    "title": "Proofread Personal Branding eGuide",
+    "amount": 30,
+    "posted": "2025-06-14",
+    "bids": 13,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40529",
+    "title": "Edit LinkedIn Posts for Business Coach",
+    "amount": 26,
+    "posted": "2025-06-14",
+    "bids": 9,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40530",
+    "title": "Proofread E-learning Modules on Cybersecurity",
+    "amount": 33,
+    "posted": "2025-06-14",
+    "bids": 14,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40531",
+    "title": "Edit UI/UX Copy for EdTech Platform",
+    "amount": 34,
+    "posted": "2025-06-14",
+    "bids": 10,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40532",
+    "title": "Proofread Legal Tech Product Documentation",
+    "amount": 32,
+    "posted": "2025-06-14",
+    "bids": 16,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40533",
+    "title": "Edit Descriptions for Learning App Features",
+    "amount": 28,
+    "posted": "2025-06-14",
+    "bids": 12,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40534",
+    "title": "Proofread Travel Blog for SEO",
+    "amount": 26,
+    "posted": "2025-06-14",
+    "bids": 18,
+    "rating": 4.2
+  },
+  {
+    "id": "TASK40535",
+    "title": "Edit Tech Newsletter for Grammar & Flow",
+    "amount": 29,
+    "posted": "2025-06-14",
+    "bids": 17,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40536",
+    "title": "Proofread Real Estate Website Listings",
+    "amount": 27,
+    "posted": "2025-06-14",
+    "bids": 9,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40537",
+    "title": "Edit Onboarding Guide for Health Tracker App",
+    "amount": 30,
+    "posted": "2025-06-14",
+    "bids": 10,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40538",
+    "title": "Proofread Product FAQ for Digital Tool",
+    "amount": 25,
+    "posted": "2025-06-14",
+    "bids": 19,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40539",
+    "title": "Edit Slides for Remote Team Workshop",
+    "amount": 28,
+    "posted": "2025-06-14",
+    "bids": 12,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40540",
+    "title": "Proofread Finance App Terms and Conditions",
+    "amount": 34,
+    "posted": "2025-06-14",
+    "bids": 20,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40541",
+    "title": "Edit Copy for Affiliate Marketing Site",
+    "amount": 30,
+    "posted": "2025-06-14",
+    "bids": 15,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40542",
+    "title": "Proofread Creator Course Descriptions",
+    "amount": 27,
+    "posted": "2025-06-14",
+    "bids": 11,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40543",
+    "title": "Edit UX Writing for Mobile App Tour",
+    "amount": 31,
+    "posted": "2025-06-14",
+    "bids": 16,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40544",
+    "title": "Proofread Copy for Nonprofit Awareness Campaign",
+    "amount": 29,
+    "posted": "2025-06-14",
+    "bids": 13,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40545",
+    "title": "Edit Documentation for Digital Productivity Suite",
+    "amount": 33,
+    "posted": "2025-06-14",
+    "bids": 21,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40546",
+    "title": "Proofread Remote Work Coaching Scripts",
+    "amount": 28,
+    "posted": "2025-06-14",
+    "bids": 9,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40547",
+    "title": "Edit Blog for Wellness and Meditation Site",
+    "amount": 26,
+    "posted": "2025-06-14",
+    "bids": 14,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40548",
+    "title": "Proofread User Reviews for Language Learning App",
+    "amount": 25,
+    "posted": "2025-06-14",
+    "bids": 11,
+    "rating": 4.2
+  },
+  {
+    "id": "TASK40549",
+    "title": "Edit Terms of Use for Freelance Platform",
+    "amount": 32,
+    "posted": "2025-06-14",
+    "bids": 22,
+    "rating": 4.7
+  },
+  {
+    "id": "TASK40550",
+    "title": "Proofread App Store Listings for Finance Tools",
+    "amount": 30,
+    "posted": "2025-06-14",
+    "bids": 18,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40551",
+    "title": "Edit Community Rules for Creator Network",
+    "amount": 29,
+    "posted": "2025-06-14",
+    "bids": 17,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40552",
+    "title": "Proofread Scripts for Online Coaching Videos",
+    "amount": 27,
+    "posted": "2025-06-14",
+    "bids": 13,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40553",
+    "title": "Edit Articles for Tech Trends Blog",
+    "amount": 28,
+    "posted": "2025-06-14",
+    "bids": 11,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40554",
+    "title": "Proofread Transcriptions for Marketing Podcast",
+    "amount": 30,
+    "posted": "2025-06-14",
+    "bids": 15,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40555",
+    "title": "Edit Email Sequences for Coaching Program",
+    "amount": 31,
+    "posted": "2025-06-14",
+    "bids": 12,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40556",
+    "title": "Proofread Digital Course PDF Materials",
+    "amount": 29,
+    "posted": "2025-06-14",
+    "bids": 13,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40557",
+    "title": "Edit Voice-Over Scripts for YouTube Ads",
+    "amount": 32,
+    "posted": "2025-06-14",
+    "bids": 16,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40558",
+    "title": "Proofread User Interface Strings for SaaS App",
+    "amount": 28,
+    "posted": "2025-06-14",
+    "bids": 19,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40559",
+    "title": "Edit Audio Guides for Museum Mobile App",
+    "amount": 30,
+    "posted": "2025-06-14",
+    "bids": 36,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40480",
+    "title": "Proofread eBook on Personal Finance for Millennials",
+    "amount": 30,
+    "posted": "2025-06-13",
+    "bids": 5,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40481",
+    "title": "Edit Landing Page Copy for SaaS Startup",
+    "amount": 28,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40482",
+    "title": "Proofread Blog Articles on Mental Health",
+    "amount": 26,
+    "posted": "2025-06-13",
+    "bids": 6,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40483",
+    "title": "Edit Subtitles for YouTube Series",
+    "amount": 29,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40484",
+    "title": "Proofread Email Campaign for eCommerce Store",
+    "amount": 25,
+    "posted": "2025-06-13",
+    "bids": 5,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40485",
+    "title": "Edit Online Course Materials on UX Design",
+    "amount": 32,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40486",
+    "title": "Proofread Articles for Wellness Blog",
+    "amount": 27,
+    "posted": "2025-06-13",
+    "bids": 5,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40487",
+    "title": "Edit Product Manuals for Mobile Devices",
+    "amount": 30,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40488",
+    "title": "Proofread Investor Pitch Deck Text",
+    "amount": 26,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40489",
+    "title": "Edit Scripts for Video Tutorials",
+    "amount": 29,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40490",
+    "title": "Proofread Crowdfunding Campaign Page",
+    "amount": 24,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.2
+  },
+  {
+    "id": "TASK40491",
+    "title": "Edit Content for AI Startup Website",
+    "amount": 31,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40492",
+    "title": "Proofread Podcast Show Notes",
+    "amount": 25,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40493",
+    "title": "Edit Personal Development eBook",
+    "amount": 33,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40494",
+    "title": "Proofread App Store Descriptions",
+    "amount": 24,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.2
+  },
+  {
+    "id": "TASK40495",
+    "title": "Edit Audio Transcriptions for Grammar and Clarity",
+    "amount": 30,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40496",
+    "title": "Proofread Product Pages on Shopify Store",
+    "amount": 28,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40497",
+    "title": "Edit LinkedIn Profile Content for Professionals",
+    "amount": 27,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40498",
+    "title": "Proofread Real Estate Listing Descriptions",
+    "amount": 25,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.2
+  },
+  {
+    "id": "TASK40499",
+    "title": "Edit Instructional Guides for Online Workshop",
+    "amount": 30,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40500",
+    "title": "Proofread Social Media Marketing Strategy Doc",
+    "amount": 26,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40501",
+    "title": "Edit Newsletters for Tech Company",
+    "amount": 28,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40502",
+    "title": "Proofread Whitepaper on Digital Transformation",
+    "amount": 32,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.6
+  },
+  {
+    "id": "TASK40503",
+    "title": "Edit Community Guidelines for Web Platform",
+    "amount": 27,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40504",
+    "title": "Proofread Resumes and Cover Letters",
+    "amount": 25,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40505",
+    "title": "Edit Course Scripts for LMS Platform",
+    "amount": 31,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40506",
+    "title": "Proofread Technical Documentation for App",
+    "amount": 30,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40507",
+    "title": "Edit Digital Marketing Reports",
+    "amount": 28,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40508",
+    "title": "Proofread Mobile Game Narrative Scripts",
+    "amount": 29,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40509",
+    "title": "Edit FAQs and Help Articles for Web App",
+    "amount": 27,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.2
+  },
+  {
+    "id": "TASK40510",
+    "title": "Proofread Online Booking Platform UI Text",
+    "amount": 26,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40511",
+    "title": "Edit User Onboarding Email Sequences",
+    "amount": 28,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40512",
+    "title": "Proofread Instructional Text in E-learning Modules",
+    "amount": 30,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40513",
+    "title": "Edit Descriptions for Online Courses",
+    "amount": 27,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40514",
+    "title": "Proofread B2B Website Copy",
+    "amount": 26,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40515",
+    "title": "Edit Sales Pitch Emails for Startup Launch",
+    "amount": 30,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40516",
+    "title": "Proofread Case Study for SEO Agency",
+    "amount": 29,
+    "posted": "2025-06-13",
+    "bids": 3,
+    "rating": 4.3
+  },
+  {
+    "id": "TASK40517",
+    "title": "Edit Digital Branding Strategy PDF",
+    "amount": 31,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.5
+  },
+  {
+    "id": "TASK40518",
+    "title": "Proofread Tutorials for Video Editing Platform",
+    "amount": 28,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.4
+  },
+  {
+    "id": "TASK40519",
+    "title": "Edit Downloadable Guides for Affiliate Marketers",
+    "amount": 29,
+    "posted": "2025-06-13",
+    "bids": 4,
+    "rating": 4.4
+  },
+  {
+    id: 'TASK31204',
+    title: 'Proofread Graduate Thesis on Climate Change Policy',
+    amount: 30,
+    posted: '2025-06-12',
+    bids: 9,
+    rating: 4.7
+  },
+  {
+    id: 'TASK31205',
+    title: 'Edit Personal Statement for University Admission',
+    amount: 25,
+    posted: '2025-06-12',
+    bids: 8,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31206',
+    title: 'Proofread Scientific Research Paper (Biology)',
+    amount: 32,
+    posted: '2025-06-12',
+    bids: 7,
+    rating: 4.7
+  },
+  {
+    id: 'TASK31207',
+    title: 'Edit Resume and Cover Letter for Job Application',
+    amount: 20,
+    posted: '2025-06-12',
+    bids: 6,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31208',
+    title: 'Proofread Blog Posts for SEO Consistency',
+    amount: 24,
+    posted: '2025-06-12',
+    bids: 7,
+    rating: 4.4
+  },
+  {
+    id: 'TASK31209',
+    title: 'Edit Manuscript of Fiction Novel (First 3 Chapters)',
+    amount: 35,
+    posted: '2025-06-12',
+    bids: 9,
+    rating: 4.8
+  },
+  {
+    id: 'TASK31210',
+    title: 'Proofread Press Release for Marketing Campaign',
+    amount: 22,
+    posted: '2025-06-12',
+    bids: 5,
+    rating: 4.3
+  },
+  {
+    id: 'TASK31211',
+    title: 'Edit Academic Essay on Postcolonial Literature',
+    amount: 28,
+    posted: '2025-06-12',
+    bids: 7,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31212',
+    title: 'Proofread Email Newsletter for Grammar and Tone',
+    amount: 20,
+    posted: '2025-06-12',
+    bids: 6,
+    rating: 4.4
+  },
+  {
+    id: 'TASK31213',
+    title: 'Edit Legal Document for Clarity and Consistency',
+    amount: 30,
+    posted: '2025-06-12',
+    bids: 8,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31214',
+    title: 'Proofread Student Report on Urban Planning',
+    amount: 23,
+    posted: '2025-06-12',
+    bids: 5,
+    rating: 4.3
+  },
+  {
+    id: 'TASK31215',
+    title: 'Edit UX Case Study for Design Portfolio',
+    amount: 26,
+    posted: '2025-06-12',
+    bids: 6,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31216',
+    title: 'Proofread Nonprofit Proposal (Funding Request)',
+    amount: 29,
+    posted: '2025-06-12',
+    bids: 7,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31217',
+    title: 'Edit Interview Transcript for Clarity',
+    amount: 22,
+    posted: '2025-06-12',
+    bids: 6,
+    rating: 4.3
+  },
+  {
+    id: 'TASK31218',
+    title: 'Proofread High School Essay for Grammar',
+    amount: 18,
+    posted: '2025-06-12',
+    bids: 4,
+    rating: 4.2
+  },
+  {
+    id: 'TASK31219',
+    title: 'Edit Blog Article on Remote Work Culture',
+    amount: 24,
+    posted: '2025-06-12',
+    bids: 5,
+    rating: 4.4
+  },
+  {
+    id: 'TASK31220',
+    title: 'Proofread Business Proposal for FinTech Startup',
+    amount: 27,
+    posted: '2025-06-12',
+    bids: 8,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31221',
+    title: 'Edit Research Summary on Behavioral Psychology',
+    amount: 30,
+    posted: '2025-06-12',
+    bids: 7,
+    rating: 4.7
+  },
+  {
+    id: 'TASK31222',
+    title: 'Proofread Magazine Article for Print Publishing',
+    amount: 26,
+    posted: '2025-06-12',
+    bids: 6,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31223',
+    title: 'Edit Business Email Campaign for Tone and Grammar',
+    amount: 21,
+    posted: '2025-06-12',
+    bids: 5,
+    rating: 4.4
+  },
+
+  // DATED: 2025-06-11
+  {
+    id: 'TASK31224',
+    title: 'Proofread Literature Review on AI in Healthcare',
+    amount: 28,
+    posted: '2025-06-11',
+    bids: 7,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31225',
+    title: 'Edit White Paper for Environmental NGO',
+    amount: 30,
+    posted: '2025-06-11',
+    bids: 6,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31226',
+    title: 'Proofread Report on Social Media Analytics',
+    amount: 23,
+    posted: '2025-06-11',
+    bids: 6,
+    rating: 4.4
+  },
+  {
+    id: 'TASK31227',
+    title: 'Edit Undergraduate Essay on World War II',
+    amount: 20,
+    posted: '2025-06-11',
+    bids: 5,
+    rating: 4.3
+  },
+  {
+    id: 'TASK31228',
+    title: 'Proofread Marketing Copy for Startup Website',
+    amount: 26,
+    posted: '2025-06-11',
+    bids: 7,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31229',
+    title: 'Edit Research Abstract for Medical Journal',
+    amount: 30,
+    posted: '2025-06-11',
+    bids: 8,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31230',
+    title: 'Proofread Thesis Chapter on Feminist Theory',
+    amount: 27,
+    posted: '2025-06-11',
+    bids: 6,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31231',
+    title: 'Edit LinkedIn Bio and Work Summary',
+    amount: 18,
+    posted: '2025-06-11',
+    bids: 4,
+    rating: 4.2
+  },
+  {
+    id: 'TASK31232',
+    title: 'Proofread Grant Application for Academic Funding',
+    amount: 29,
+    posted: '2025-06-11',
+    bids: 7,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31233',
+    title: 'Edit Script for Educational Video Series',
+    amount: 25,
+    posted: '2025-06-11',
+    bids: 5,
+    rating: 4.4
+  },
+  {
+    id: 'TASK31234',
+    title: 'Proofread eBook on Mindfulness and Meditation',
+    amount: 32,
+    posted: '2025-06-11',
+    bids: 9,
+    rating: 4.7
+  },
+  {
+    id: 'TASK31235',
+    title: 'Edit Technical Manual for SaaS Platform',
+    amount: 35,
+    posted: '2025-06-11',
+    bids: 8,
+    rating: 4.8
+  },
+  {
+    id: 'TASK31236',
+    title: 'Proofread News Article Before Publication',
+    amount: 24,
+    posted: '2025-06-11',
+    bids: 6,
+    rating: 4.4
+  },
+  {
+    id: 'TASK31237',
+    title: 'Edit Product Descriptions for Online Store',
+    amount: 20,
+    posted: '2025-06-11',
+    bids: 5,
+    rating: 4.3
+  },
+  {
+    id: 'TASK31238',
+    title: 'Proofread Scholarship Application Essay',
+    amount: 22,
+    posted: '2025-06-11',
+    bids: 4,
+    rating: 4.2
+  },
+  {
+    id: 'TASK31239',
+    title: 'Edit Online Course Materials for Grammar',
+    amount: 28,
+    posted: '2025-06-11',
+    bids: 7,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31240',
+    title: 'Proofread Legal Memo for Corporate Client',
+    amount: 33,
+    posted: '2025-06-11',
+    bids: 8,
+    rating: 4.7
+  },
+  {
+    id: 'TASK31241',
+    title: 'Edit Journal Submission on Renewable Energy',
+    amount: 31,
+    posted: '2025-06-11',
+    bids: 7,
+    rating: 4.7
+  },
+  {
+    id: 'TASK31242',
+    title: 'Proofread Syllabus for University Course',
+    amount: 25,
+    posted: '2025-06-11',
+    bids: 5,
+    rating: 4.4
+  },
+  {
+    id: 'TASK31243',
+    title: 'Edit Email Templates for Corporate Outreach',
+    amount: 21,
+    posted: '2025-06-11',
+    bids: 5,
+    rating: 4.3
+  },
+  {
+    id: 'TASK31081',
+    title: 'Proofread a Research Article on Education Reform',
+    amount: 25,
+    posted: '2025-06-11',
+    bids: 8,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31082',
+    title: 'Edit a Thesis in Environmental Science',
+    amount: 32,
+    posted: '2025-06-11',
+    bids: 10,
+    rating: 4.7
+  },
+  {
+    id: 'TASK31083',
+    title: 'Grammar Check for a Book Manuscript',
+    amount: 35,
+    posted: '2025-06-11',
+    bids: 11,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31084',
+    title: 'Edit a Company Annual Report',
+    amount: 28,
+    posted: '2025-06-11',
+    bids: 9,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31085',
+    title: 'Proofread a 3000-word Psychology Essay',
+    amount: 27,
+    posted: '2025-06-11',
+    bids: 7,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31086',
+    title: 'Edit Business Emails for Clarity',
+    amount: 20,
+    posted: '2025-06-11',
+    bids: 6,
+    rating: 4.4
+  },
+  {
+    id: 'TASK31087',
+    title: 'Proofread a Children’s Storybook',
+    amount: 26,
+    posted: '2025-06-11',
+    bids: 8,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31088',
+    title: 'Edit Legal Documents for Grammar and Format',
+    amount: 33,
+    posted: '2025-06-11',
+    bids: 10,
+    rating: 4.7
+  },
+  {
+    id: 'TASK31089',
+    title: 'Proofread and Edit Scientific Abstracts',
+    amount: 29,
+    posted: '2025-06-11',
+    bids: 9,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31090',
+    title: 'Edit a Memoir for Grammar and Flow',
+    amount: 30,
+    posted: '2025-06-11',
+    bids: 10,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31091',
+    title: 'Proofread Marketing Content for Accuracy',
+    amount: 23,
+    posted: '2025-06-11',
+    bids: 7,
+    rating: 4.4
+  },
+  {
+    id: 'TASK31092',
+    title: 'Edit a Book Proposal for Clarity',
+    amount: 28,
+    posted: '2025-06-11',
+    bids: 8,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31093',
+    title: 'Proofread an Academic CV and Cover Letter',
+    amount: 22,
+    posted: '2025-06-11',
+    bids: 6,
+    rating: 4.3
+  },
+  {
+    id: 'TASK31094',
+    title: 'Edit Journal Submissions for Publication',
+    amount: 31,
+    posted: '2025-06-11',
+    bids: 10,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31095',
+    title: 'Proofread Articles for an Online Blog',
+    amount: 25,
+    posted: '2025-06-11',
+    bids: 9,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31096',
+    title: 'Grammar Check for Whitepaper in FinTech',
+    amount: 35,
+    posted: '2025-06-11',
+    bids: 11,
+    rating: 4.7
+  },
+  {
+    id: 'TASK31097',
+    title: 'Edit a Report on Human Resource Policies',
+    amount: 29,
+    posted: '2025-06-11',
+    bids: 8,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31098',
+    title: 'Proofread Transcripts from a Conference',
+    amount: 27,
+    posted: '2025-06-11',
+    bids: 7,
+    rating: 4.4
+  },
+  {
+    id: 'TASK31099',
+    title: 'Edit University Application Essays',
+    amount: 28,
+    posted: '2025-06-11',
+    bids: 10,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31100',
+    title: 'Proofread English Translation of Legal Papers',
+    amount: 34,
+    posted: '2025-06-11',
+    bids: 12,
+    rating: 4.7
+  },
+  {
+    id: 'TASK31101',
+    title: 'Edit an Instruction Manual for Clarity',
+    amount: 26,
+    posted: '2025-06-11',
+    bids: 7,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31102',
+    title: 'Proofread Email Campaign Content',
+    amount: 22,
+    posted: '2025-06-11',
+    bids: 6,
+    rating: 4.4
+  },
+  {
+    id: 'TASK31103',
+    title: 'Edit a Whitepaper on Machine Learning',
+    amount: 33,
+    posted: '2025-06-11',
+    bids: 11,
+    rating: 4.7
+  },
+  {
+    id: 'TASK31104',
+    title: 'Proofread Product Descriptions for E-commerce',
+    amount: 21,
+    posted: '2025-06-11',
+    bids: 5,
+    rating: 4.3
+  },
+  {
+    id: 'TASK31105',
+    title: 'Edit User Guide for Software Tool',
+    amount: 30,
+    posted: '2025-06-11',
+    bids: 9,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31106',
+    title: 'Proofread Research Funding Proposal',
+    amount: 29,
+    posted: '2025-06-11',
+    bids: 8,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31107',
+    title: 'Edit Case Study Draft in Marketing',
+    amount: 32,
+    posted: '2025-06-11',
+    bids: 10,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31108',
+    title: 'Proofread a Healthcare Whitepaper',
+    amount: 35,
+    posted: '2025-06-11',
+    bids: 12,
+    rating: 4.7
+  },
+  {
+    id: 'TASK31109',
+    title: 'Edit and Format a Scientific Poster',
+    amount: 25,
+    posted: '2025-06-11',
+    bids: 7,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31110',
+    title: 'Proofread and Format Webinar Scripts',
+    amount: 23,
+    posted: '2025-06-11',
+    bids: 6,
+    rating: 4.4
+  },
+  {
+    id: 'TASK31111',
+    title: 'Edit Survey Report for Government Project',
+    amount: 31,
+    posted: '2025-06-11',
+    bids: 9,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31112',
+    title: 'Proofread a Grant Application',
+    amount: 28,
+    posted: '2025-06-11',
+    bids: 8,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31113',
+    title: 'Edit University Research Papers',
+    amount: 34,
+    posted: '2025-06-11',
+    bids: 11,
+    rating: 4.7
+  },
+  {
+    id: 'TASK31114',
+    title: 'Proofread NGO Outreach Materials',
+    amount: 22,
+    posted: '2025-06-11',
+    bids: 6,
+    rating: 4.4
+  },
+  {
+    id: 'TASK31115',
+    title: 'Edit Public Policy Research Reports',
+    amount: 33,
+    posted: '2025-06-11',
+    bids: 10,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31116',
+    title: 'Proofread Historical Research Document',
+    amount: 27,
+    posted: '2025-06-11',
+    bids: 7,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31117',
+    title: 'Edit Technical Reports in Engineering',
+    amount: 35,
+    posted: '2025-06-11',
+    bids: 12,
+    rating: 4.7
+  },
+  {
+    id: 'TASK31118',
+    title: 'Proofread Freelance Blog Submissions',
+    amount: 24,
+    posted: '2025-06-11',
+    bids: 7,
+    rating: 4.5
+  },
+  {
+    id: 'TASK31119',
+    title: 'Edit Client Proposal Documents',
+    amount: 29,
+    posted: '2025-06-11',
+    bids: 8,
+    rating: 4.6
+  },
+  {
+    id: 'TASK31120',
+    title: 'Proofread English Learning Handouts',
+    amount: 20,
+    posted: '2025-06-11',
+    bids: 6,
+    rating: 4.4
+  },
+  {
+    id: 'TASK30801',
+    title: 'Proofread Academic Research Paper (APA Style)',
+    amount: 30,
+    posted: '2025-06-09',
+    bids: 12,
+    rating: 4.7
+  },
+  {
+    id: 'TASK30802',
+    title: 'Edit Website Content for Clarity and Grammar',
+    amount: 28,
+    posted: '2025-06-09',
+    bids: 10,
+    rating: 4.5
+  },
+  {
+    id: 'TASK30803',
+    title: 'Proofread Marketing Email Campaign Copy',
+    amount: 25,
+    posted: '2025-06-09',
+    bids: 9,
+    rating: 4.4
+  },
+  {
+    id: 'TASK30804',
+    title: 'Edit Technical Document (Engineering Focus)',
+    amount: 34,
+    posted: '2025-06-09',
+    bids: 11,
+    rating: 4.6
+  },
+  {
+    id: 'TASK30805',
+    title: 'Proofread Manuscript for Grammar and Flow',
+    amount: 32,
+    posted: '2025-06-09',
+    bids: 13,
+    rating: 4.7
+  },
+  {
+    id: 'TASK30806',
+    title: 'Edit Blog Post Series for SEO and Clarity',
+    amount: 27,
+    posted: '2025-06-09',
+    bids: 10,
+    rating: 4.5
+  },
+  {
+    id: 'TASK30807',
+    title: 'Proofread Medical Research Article (Harvard Style)',
+    amount: 33,
+    posted: '2025-06-09',
+    bids: 12,
+    rating: 4.6
+  },
+  {
+    id: 'TASK30808',
+    title: 'Edit White Paper for Style and Consistency',
+    amount: 31,
+    posted: '2025-06-09',
+    bids: 11,
+    rating: 4.6
+  },
+  {
+    id: 'TASK30809',
+    title: 'Proofread English Translated Novel',
+    amount: 35,
+    posted: '2025-06-09',
+    bids: 14,
+    rating: 4.8
+  },
+  {
+    id: 'TASK30810',
+    title: 'Edit Resume and Cover Letter Package',
+    amount: 22,
+    posted: '2025-06-09',
+    bids: 9,
+    rating: 4.3
+  },
+  {
+    id: 'TASK30811',
+    title: 'Proofread E-commerce Product Descriptions',
+    amount: 26,
+    posted: '2025-06-09',
+    bids: 10,
+    rating: 4.4
+  },
+  {
+    id: 'TASK30812',
+    title: 'Edit LinkedIn Bio and About Section',
+    amount: 24,
+    posted: '2025-06-09',
+    bids: 8,
+    rating: 4.2
+  },
+  {
+    id: 'TASK30813',
+    title: 'Proofread Business Proposal Document',
+    amount: 29,
+    posted: '2025-06-09',
+    bids: 10,
+    rating: 4.5
+  },
+  {
+    id: 'TASK30814',
+    title: 'Edit Press Release for Corporate Client',
+    amount: 30,
+    posted: '2025-06-09',
+    bids: 11,
+    rating: 4.6
+  },
+  {
+    id: 'TASK30815',
+    title: 'Proofread Master’s Thesis (Chicago Style)',
+    amount: 35,
+    posted: '2025-06-09',
+    bids: 13,
+    rating: 4.8
+  },
+  {
+    id: 'TASK30816',
+    title: 'Edit Fiction Book for Grammar and Tone',
+    amount: 34,
+    posted: '2025-06-09',
+    bids: 12,
+    rating: 4.7
+  },
+  {
+    id: 'TASK30817',
+    title: 'Proofread Real Estate Website Content',
+    amount: 25,
+    posted: '2025-06-09',
+    bids: 9,
+    rating: 4.4
+  },
+  {
+    id: 'TASK30818',
+    title: 'Edit Email Newsletter for Nonprofit Organization',
+    amount: 27,
+    posted: '2025-06-09',
+    bids: 10,
+    rating: 4.5
+  },
+  {
+    id: 'TASK30819',
+    title: 'Proofread Legal Contract Draft',
+    amount: 30,
+    posted: '2025-06-09',
+    bids: 11,
+    rating: 4.6
+  },
+  {
+    id: 'TASK30820',
+    title: 'Edit Product Manual for Technical Accuracy',
+    amount: 32,
+    posted: '2025-06-09',
+    bids: 12,
+    rating: 4.7
+  },
+  {
+    id: 'TASK30821',
+    title: 'Proofread University Admission Essay',
+    amount: 26,
+    posted: '2025-06-09',
+    bids: 9,
+    rating: 4.4
+  },
+  {
+    id: 'TASK30822',
+    title: 'Edit Research Summary for Publication',
+    amount: 31,
+    posted: '2025-06-09',
+    bids: 10,
+    rating: 4.6
+  },
+  {
+    id: 'TASK30823',
+    title: 'Proofread Short Stories for Grammar and Pacing',
+    amount: 28,
+    posted: '2025-06-09',
+    bids: 10,
+    rating: 4.5
+  },
+  {
+    id: 'TASK30824',
+    title: 'Edit Policy Document for Public Release',
+    amount: 34,
+    posted: '2025-06-09',
+    bids: 12,
+    rating: 4.7
+  },
+  {
+    id: 'TASK30825',
+    title: 'Proofread Job Descriptions for Recruitment Firm',
+    amount: 27,
+    posted: '2025-06-09',
+    bids: 9,
+    rating: 4.4
+  },
+  {
+    id: 'TASK30826',
+    title: 'Edit Executive Report for C-Suite Review',
+    amount: 33,
+    posted: '2025-06-09',
+    bids: 12,
+    rating: 4.6
+  },
+  {
+    id: 'TASK30827',
+    title: 'Proofread User Guide for Mobile App',
+    amount: 29,
+    posted: '2025-06-09',
+    bids: 10,
+    rating: 4.5
+  },
+  {
+    id: 'TASK30828',
+    title: 'Edit College Application Essay',
+    amount: 25,
+    posted: '2025-06-09',
+    bids: 8,
+    rating: 4.3
+  },
+  {
+    id: 'TASK30829',
+    title: 'Proofread Investor Presentation Slides',
+    amount: 31,
+    posted: '2025-06-09',
+    bids: 11,
+    rating: 4.6
+  },
+  {
+    id: 'TASK30830',
+    title: 'Edit Online Course Description Pages',
+    amount: 30,
+    posted: '2025-06-09',
+    bids: 11,
+    rating: 4.5
+  },
+  {
+    id: 'TASK30831',
+    title: 'Proofread Biography for Author Website',
+    amount: 24,
+    posted: '2025-06-09',
+    bids: 9,
+    rating: 4.3
+  },
+  {
+    id: 'TASK30832',
+    title: 'Edit Corporate Annual Report',
+    amount: 35,
+    posted: '2025-06-09',
+    bids: 14,
+    rating: 4.8
+  },
+  {
+    id: 'TASK30833',
+    title: 'Proofread UX Copy for Web App Interface',
+    amount: 26,
+    posted: '2025-06-09',
+    bids: 9,
+    rating: 4.4
+  },
+  {
+    id: 'TASK30834',
+    title: 'Edit Academic Article Abstracts',
+    amount: 28,
+    posted: '2025-06-09',
+    bids: 10,
+    rating: 4.5
+  },
+  {
+    id: 'TASK30835',
+    title: 'Proofread Training Materials for HR Team',
+    amount: 29,
+    posted: '2025-06-09',
+    bids: 11,
+    rating: 4.5
+  },
+  {
+    id: 'TASK30836',
+    title: 'Edit Business Blog for Readability',
+    amount: 27,
+    posted: '2025-06-09',
+    bids: 10,
+    rating: 4.4
+  },
+  {
+    id: 'TASK30837',
+    title: 'Proofread Personal Statement for Graduate School',
+    amount: 25,
+    posted: '2025-06-09',
+    bids: 9,
+    rating: 4.4
+  },
+  {
+    id: 'TASK30838',
+    title: 'Edit Magazine Article for Print',
+    amount: 30,
+    posted: '2025-06-09',
+    bids: 11,
+    rating: 4.6
+  },
+  {
+    id: 'TASK30839',
+    title: 'Proofread Funding Proposal for NGO',
+    amount: 32,
+    posted: '2025-06-09',
+    bids: 12,
+    rating: 4.6
+  },
+  {
+    id: 'TASK30840',
+    title: 'Edit Curriculum Vitae for Clarity and Impact',
+    amount: 26,
+    posted: '2025-06-09',
+    bids: 9,
+    rating: 4.4
+  },
+  {
+    id: 'TASK30821',
+    title: 'Proofread Academic Research Paper (2,500 words)',
+    amount: 28,
+    posted: '2025-06-08',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK30822',
+    title: 'Edit and Format Business Proposal Document',
+    amount: 30,
+    posted: '2025-06-08',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK30823',
+    title: 'Proofread Blog Articles for SEO Consistency',
+    amount: 27,
+    posted: '2025-06-08',
+    bids: 9,
+    rating: 5
+  },
+  {
+    id: 'TASK30824',
+    title: 'Edit Fiction Novel (Grammar and Flow)',
+    amount: 34,
+    posted: '2025-06-08',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK30825',
+    title: 'Proofread Product Descriptions (500 items)',
+    amount: 29,
+    posted: '2025-06-08',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK30826',
+    title: 'Edit Academic Dissertation Formatting',
+    amount: 33,
+    posted: '2025-06-08',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK30827',
+    title: 'Proofread and Polish Press Release (1 page)',
+    amount: 22,
+    posted: '2025-06-08',
+    bids: 8,
+    rating: 5
+  },
+  {
+    id: 'TASK30828',
+    title: 'Edit Resume and Cover Letter for Clarity',
+    amount: 24,
+    posted: '2025-06-08',
+    bids: 9,
+    rating: 5
+  },
+  {
+    id: 'TASK30829',
+    title: 'Proofread Technical Whitepaper (3,000 words)',
+    amount: 30,
+    posted: '2025-06-08',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK30830',
+    title: 'Edit Subtitles for Grammar and Flow',
+    amount: 25,
+    posted: '2025-06-08',
+    bids: 8,
+    rating: 5
+  },
+  {
+    id: 'TASK30831',
+    title: 'Proofread Scientific Journal Manuscript',
+    amount: 34,
+    posted: '2025-06-08',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK30832',
+    title: 'Edit Company Profile Document',
+    amount: 27,
+    posted: '2025-06-08',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK30833',
+    title: 'Proofread E-Commerce Product Pages',
+    amount: 28,
+    posted: '2025-06-08',
+    bids: 9,
+    rating: 5
+  },
+  {
+    id: 'TASK30834',
+    title: 'Edit Student Personal Statement for Admission',
+    amount: 26,
+    posted: '2025-06-08',
+    bids: 9,
+    rating: 5
+  },
+  {
+    id: 'TASK30835',
+    title: 'Proofread Magazine Article (1,500 words)',
+    amount: 25,
+    posted: '2025-06-08',
+    bids: 8,
+    rating: 5
+  },
+  {
+    id: 'TASK30836',
+    title: 'Edit Nonfiction Manuscript (Chapters 1–3)',
+    amount: 32,
+    posted: '2025-06-08',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK30837',
+    title: 'Proofread Company Newsletter (4 pages)',
+    amount: 24,
+    posted: '2025-06-08',
+    bids: 8,
+    rating: 5
+  },
+  {
+    id: 'TASK30838',
+    title: 'Edit Marketing Copy for Landing Page',
+    amount: 26,
+    posted: '2025-06-08',
+    bids: 9,
+    rating: 5
+  },
+  {
+    id: 'TASK30839',
+    title: 'Proofread PhD Thesis for Grammar and Clarity',
+    amount: 35,
+    posted: '2025-06-08',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK30840',
+    title: 'Edit Email Campaigns for Tone and Grammar',
+    amount: 25,
+    posted: '2025-06-08',
+    bids: 8,
+    rating: 5
+  },
+  {
+    id: 'TASK30841',
+    title: 'Proofread Non-Profit Annual Report',
+    amount: 29,
+    posted: '2025-06-08',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK30842',
+    title: 'Edit and Rewrite News Article (800 words)',
+    amount: 28,
+    posted: '2025-06-08',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK30843',
+    title: 'Proofread Legal Documents (Contracts)',
+    amount: 32,
+    posted: '2025-06-08',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK30844',
+    title: 'Edit Internal Memos for Clarity',
+    amount: 22,
+    posted: '2025-06-08',
+    bids: 7,
+    rating: 5
+  },
+  {
+    id: 'TASK30845',
+    title: 'Proofread Grant Application (1,200 words)',
+    amount: 26,
+    posted: '2025-06-08',
+    bids: 9,
+    rating: 5
+  },
+  {
+    id: 'TASK30846',
+    title: 'Edit Blog Series for Consistent Voice',
+    amount: 30,
+    posted: '2025-06-08',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK30847',
+    title: 'Proofread Training Manual (15 pages)',
+    amount: 28,
+    posted: '2025-06-08',
+    bids: 9,
+    rating: 5
+  },
+  {
+    id: 'TASK30848',
+    title: 'Edit Case Study Content for Readability',
+    amount: 27,
+    posted: '2025-06-08',
+    bids: 9,
+    rating: 5
+  },
+  {
+    id: 'TASK30849',
+    title: 'Proofread English-to-English Translation',
+    amount: 24,
+    posted: '2025-06-08',
+    bids: 8,
+    rating: 5
+  },
+  {
+    id: 'TASK30850',
+    title: 'Edit Ebook Formatting for Kindle Publishing',
+    amount: 31,
+    posted: '2025-06-08',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK30851',
+    title: 'Proofread UX Microcopy (App Text)',
+    amount: 23,
+    posted: '2025-06-08',
+    bids: 8,
+    rating: 5
+  },
+  {
+    id: 'TASK30852',
+    title: 'Edit Research Summary for Journal Submission',
+    amount: 28,
+    posted: '2025-06-08',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK30853',
+    title: 'Proofread Email Templates (12 total)',
+    amount: 25,
+    posted: '2025-06-08',
+    bids: 9,
+    rating: 5
+  },
+  {
+    id: 'TASK30854',
+    title: 'Edit Onboarding Documentation (Startup)',
+    amount: 29,
+    posted: '2025-06-08',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK30855',
+    title: 'Proofread Social Media Ads for Grammar',
+    amount: 22,
+    posted: '2025-06-08',
+    bids: 8,
+    rating: 5
+  },
+  {
+    id: 'TASK30856',
+    title: 'Edit Freelance Writer Submissions (Short Stories)',
+    amount: 30,
+    posted: '2025-06-08',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK30857',
+    title: 'Proofread University Course Materials',
+    amount: 27,
+    posted: '2025-06-08',
+    bids: 9,
+    rating: 5
+  },
+  {
+    id: 'TASK30858',
+    title: 'Edit Executive Summary for Investor Deck',
+    amount: 26,
+    posted: '2025-06-08',
+    bids: 9,
+    rating: 5
+  },
+  {
+    id: 'TASK30859',
+    title: 'Proofread Scientific Abstracts (10 entries)',
+    amount: 29,
+    posted: '2025-06-08',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK30860',
+    title: 'Edit User Guide for Mobile App',
+    amount: 30,
+    posted: '2025-06-08',
+    bids: 11,
+    rating: 5
+  },
+        {
+  id: 'TASK30500',
+  title: 'Proofread Manuscript on Climate Change',
+  amount: 28,
+  posted: '2025-06-07',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK30501',
+  title: 'Edit Journal Article on Sociology',
+  amount: 30,
+  posted: '2025-06-07',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK30502',
+  title: 'Proofread Thesis on Psychology',
+  amount: 25,
+  posted: '2025-06-07',
+  bids: 15,
+  rating: 4
+},
+{
+  id: 'TASK30503',
+  title: 'Edit Business Report',
+  amount: 27,
+  posted: '2025-06-07',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK30504',
+  title: 'Proofread Research Proposal',
+  amount: 22,
+  posted: '2025-06-07',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK30505',
+  title: 'Edit Dissertation on Environmental Science',
+  amount: 35,
+  posted: '2025-06-07',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK30506',
+  title: 'Proofread Marketing Case Study',
+  amount: 20,
+  posted: '2025-06-07',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK30507',
+  title: 'Edit Legal Document',
+  amount: 33,
+  posted: '2025-06-07',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK30508',
+  title: 'Proofread Technical Manual',
+  amount: 30,
+  posted: '2025-06-07',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK30509',
+  title: 'Edit Financial Report',
+  amount: 28,
+  posted: '2025-06-07',
+  bids: 15,
+  rating: 4
+},
+{
+  id: 'TASK30510',
+  title: 'Proofread Academic Journal Submission',
+  amount: 25,
+  posted: '2025-06-07',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK30511',
+  title: 'Edit Medical Research Paper',
+  amount: 38,
+  posted: '2025-06-07',
+  bids: 17,
+  rating: 5
+},
+{
+  id: 'TASK30512',
+  title: 'Proofread Novel Manuscript',
+  amount: 26,
+  posted: '2025-06-07',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK30513',
+  title: 'Edit Scientific Article on Biology',
+  amount: 32,
+  posted: '2025-06-07',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK30514',
+  title: 'Proofread Conference Paper',
+  amount: 24,
+  posted: '2025-06-07',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK30515',
+  title: 'Edit Marketing Proposal',
+  amount: 29,
+  posted: '2025-06-07',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK30516',
+  title: 'Proofread Grant Application',
+  amount: 27,
+  posted: '2025-06-07',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK30517',
+  title: 'Edit Corporate Presentation',
+  amount: 30,
+  posted: '2025-06-07',
+  bids: 15,
+  rating: 4
+},
+{
+  id: 'TASK30518',
+  title: 'Proofread Manuscript on Education',
+  amount: 22,
+  posted: '2025-06-07',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK30519',
+  title: 'Edit Product Manual',
+  amount: 33,
+  posted: '2025-06-07',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK30520',
+  title: 'Proofread Magazine Article',
+  amount: 24,
+  posted: '2025-06-07',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK30521',
+  title: 'Edit Legal Contract',
+  amount: 35,
+  posted: '2025-06-07',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK30522',
+  title: 'Proofread Script for Documentary',
+  amount: 28,
+  posted: '2025-06-07',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK30523',
+  title: 'Edit Website Content for NGO',
+  amount: 30,
+  posted: '2025-06-07',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK30524',
+  title: 'Proofread Academic Essay',
+  amount: 22,
+  posted: '2025-06-07',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK30525',
+  title: 'Edit Blog Posts on Technology',
+  amount: 27,
+  posted: '2025-06-07',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK30526',
+  title: 'Proofread Speech Transcript',
+  amount: 25,
+  posted: '2025-06-07',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK30527',
+  title: 'Edit White Paper on Finance',
+  amount: 33,
+  posted: '2025-06-07',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK30528',
+  title: 'Proofread Technical Report',
+  amount: 29,
+  posted: '2025-06-07',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK30529',
+  title: 'Edit Online Course Material',
+  amount: 35,
+  posted: '2025-06-07',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK30530',
+  title: 'Proofread Business Proposal',
+  amount: 24,
+  posted: '2025-06-07',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK30531',
+  title: 'Edit Magazine Feature Article',
+  amount: 28,
+  posted: '2025-06-07',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK30532',
+  title: 'Proofread Travel Blog Posts',
+  amount: 20,
+  posted: '2025-06-07',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK30533',
+  title: 'Edit Social Media Content',
+  amount: 25,
+  posted: '2025-06-07',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK30534',
+  title: 'Proofread Academic Conference Abstracts',
+  amount: 22,
+  posted: '2025-06-07',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK30535',
+  title: 'Edit Technical Documentation',
+  amount: 32,
+  posted: '2025-06-07',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK30536',
+  title: 'Proofread Non-fiction Book Chapter',
+  amount: 27,
+  posted: '2025-06-07',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK30537',
+  title: 'Edit Press Release',
+  amount: 25,
+  posted: '2025-06-07',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK30538',
+  title: 'Proofread Magazine Editorial',
+  amount: 30,
+  posted: '2025-06-07',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK30539',
+  title: 'Edit Online Magazine Articles',
+  amount: 28,
+  posted: '2025-06-07',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK30540',
+  title: 'Proofread Science Textbook Chapter',
+  amount: 33,
+  posted: '2025-06-07',
+  bids: 16,
+  rating: 5
+},
+        {
+  id: 'TASK30260',
+  title: 'Proofread Journal Article on Sociology',
+  amount: 26,
+  posted: '2025-06-06',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK30261',
+  title: 'Edit Website Copy for Tech Startup',
+  amount: 23,
+  posted: '2025-06-06',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK30262',
+  title: 'Proofread Grant Proposal for NGO',
+  amount: 28,
+  posted: '2025-06-06',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK30263',
+  title: 'Edit Research Paper on Climate Change',
+  amount: 30,
+  posted: '2025-06-06',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK30264',
+  title: 'Proofread Personal Statement for College Admission',
+  amount: 22,
+  posted: '2025-06-06',
+  bids: 9,
+  rating: 4
+},
+{
+  id: 'TASK30265',
+  title: 'Edit Novel Draft (50 Pages)',
+  amount: 34,
+  posted: '2025-06-06',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK30266',
+  title: 'Proofread Technical Report in Engineering',
+  amount: 27,
+  posted: '2025-06-06',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK30267',
+  title: 'Edit Manuscript for Grammar and Clarity',
+  amount: 25,
+  posted: '2025-06-06',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK30268',
+  title: 'Proofread Blog Posts for Fitness Website',
+  amount: 21,
+  posted: '2025-06-06',
+  bids: 9,
+  rating: 4
+},
+{
+  id: 'TASK30269',
+  title: 'Edit Academic Essay on Literature',
+  amount: 24,
+  posted: '2025-06-06',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK30270',
+  title: 'Proofread Training Manual for Clarity',
+  amount: 26,
+  posted: '2025-06-06',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK30271',
+  title: 'Edit Product Descriptions for E-commerce Site',
+  amount: 20,
+  posted: '2025-06-06',
+  bids: 8,
+  rating: 4
+},
+{
+  id: 'TASK30272',
+  title: 'Proofread Legal Contract for Errors',
+  amount: 29,
+  posted: '2025-06-06',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK30273',
+  title: 'Edit Master\'s Thesis in Psychology',
+  amount: 32,
+  posted: '2025-06-06',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK30274',
+  title: 'Proofread Press Release for Media Distribution',
+  amount: 23,
+  posted: '2025-06-06',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK30275',
+  title: 'Edit eBook for Spelling and Grammar',
+  amount: 28,
+  posted: '2025-06-06',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK30276',
+  title: 'Proofread Resume and Cover Letter',
+  amount: 18,
+  posted: '2025-06-06',
+  bids: 9,
+  rating: 4
+},
+{
+  id: 'TASK30277',
+  title: 'Edit Video Script for Online Course',
+  amount: 22,
+  posted: '2025-06-06',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK30278',
+  title: 'Proofread Investment Proposal Document',
+  amount: 27,
+  posted: '2025-06-06',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK30279',
+  title: 'Edit Short Story Collection',
+  amount: 31,
+  posted: '2025-06-06',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK30280',
+  title: 'Proofread Website Terms and Conditions',
+  amount: 25,
+  posted: '2025-06-06',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK30281',
+  title: 'Edit Nonprofit Annual Report',
+  amount: 26,
+  posted: '2025-06-06',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK30282',
+  title: 'Proofread and Format eLearning Content',
+  amount: 24,
+  posted: '2025-06-06',
+  bids: 9,
+  rating: 4
+},
+{
+  id: 'TASK30283',
+  title: 'Edit Biographical Article for Publication',
+  amount: 29,
+  posted: '2025-06-06',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK30284',
+  title: 'Proofread Business Proposal Pitch',
+  amount: 22,
+  posted: '2025-06-06',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK30285',
+  title: 'Edit Grant Application for Clarity',
+  amount: 28,
+  posted: '2025-06-06',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK30286',
+  title: 'Proofread Magazine Article Submission',
+  amount: 21,
+  posted: '2025-06-06',
+  bids: 9,
+  rating: 4
+},
+{
+  id: 'TASK30287',
+  title: 'Edit Conference Paper (APA Style)',
+  amount: 26,
+  posted: '2025-06-06',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK30288',
+  title: 'Proofread Marketing Email Campaign',
+  amount: 20,
+  posted: '2025-06-06',
+  bids: 9,
+  rating: 4
+},
+{
+  id: 'TASK30289',
+  title: 'Edit Final Chapter of Dissertation',
+  amount: 30,
+  posted: '2025-06-06',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK30290',
+  title: 'Proofread Funding Request Letter',
+  amount: 19,
+  posted: '2025-06-06',
+  bids: 8,
+  rating: 4
+},
+{
+  id: 'TASK30291',
+  title: 'Edit Internal Company Newsletter',
+  amount: 23,
+  posted: '2025-06-06',
+  bids: 9,
+  rating: 4
+},
+{
+  id: 'TASK30292',
+  title: 'Proofread Book Summary for Publishing',
+  amount: 25,
+  posted: '2025-06-06',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK30293',
+  title: 'Edit Online Portfolio Text',
+  amount: 20,
+  posted: '2025-06-06',
+  bids: 9,
+  rating: 4
+},
+{
+  id: 'TASK30294',
+  title: 'Proofread Investor Update Letter',
+  amount: 22,
+  posted: '2025-06-06',
+  bids: 8,
+  rating: 4
+},
+{
+  id: 'TASK30295',
+  title: 'Edit Thesis Abstract for Readability',
+  amount: 27,
+  posted: '2025-06-06',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK30296',
+  title: 'Proofread Case Study on Digital Marketing',
+  amount: 26,
+  posted: '2025-06-06',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK30297',
+  title: 'Edit Content for Medical Brochure',
+  amount: 28,
+  posted: '2025-06-06',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK30298',
+  title: 'Proofread and Rephrase CV',
+  amount: 19,
+  posted: '2025-06-06',
+  bids: 8,
+  rating: 4
+},
+{
+  id: 'TASK30299',
+  title: 'Edit Policy Document for Language and Flow',
+  amount: 31,
+  posted: '2025-06-06',
+  bids: 13,
+  rating: 5
+},
+        {
+  id: 'TASK20321',
+  title: 'Proofread Academic Paper on Environmental Science',
+  amount: 24,
+  posted: '2025-06-05',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK20322',
+  title: 'Edit Manuscript for Fiction Novel',
+  amount: 30,
+  posted: '2025-06-05',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK20323',
+  title: 'Proofread Business Report for Startup',
+  amount: 22,
+  posted: '2025-06-05',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK20324',
+  title: 'Edit Research Paper on Psychology',
+  amount: 28,
+  posted: '2025-06-05',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK20325',
+  title: 'Proofread Blog Post on Health & Nutrition',
+  amount: 20,
+  posted: '2025-06-05',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK20326',
+  title: 'Edit Technical Document on Software Development',
+  amount: 27,
+  posted: '2025-06-05',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK20327',
+  title: 'Proofread Marketing Materials for Product Launch',
+  amount: 25,
+  posted: '2025-06-05',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK20328',
+  title: 'Edit Academic Essay on History',
+  amount: 23,
+  posted: '2025-06-05',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK20329',
+  title: 'Proofread Website Content for E-commerce Site',
+  amount: 21,
+  posted: '2025-06-05',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK20330',
+  title: 'Edit Non-fiction Book Manuscript',
+  amount: 29,
+  posted: '2025-06-05',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK20331',
+  title: 'Proofread Social Media Posts for Brand',
+  amount: 18,
+  posted: '2025-06-05',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK20332',
+  title: 'Edit Technical Article on AI and Machine Learning',
+  amount: 26,
+  posted: '2025-06-05',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK20333',
+  title: 'Proofread Legal Documents for Consulting Firm',
+  amount: 27,
+  posted: '2025-06-05',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK20334',
+  title: 'Edit Travel Guide for Tourism Website',
+  amount: 22,
+  posted: '2025-06-05',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK20335',
+  title: 'Proofread Academic Thesis on Sociology',
+  amount: 24,
+  posted: '2025-06-05',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK20336',
+  title: 'Edit Marketing Blog Content',
+  amount: 21,
+  posted: '2025-06-05',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK20337',
+  title: 'Proofread Business Proposal Document',
+  amount: 25,
+  posted: '2025-06-05',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK20338',
+  title: 'Edit Newsletter Content for Nonprofit',
+  amount: 23,
+  posted: '2025-06-05',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK20339',
+  title: 'Proofread Product Descriptions for Online Store',
+  amount: 20,
+  posted: '2025-06-05',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK20340',
+  title: 'Edit Educational Content for eLearning Platform',
+  amount: 28,
+  posted: '2025-06-05',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK20341',
+  title: 'Proofread Script for Video Production',
+  amount: 19,
+  posted: '2025-06-05',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK20342',
+  title: 'Edit Blog Posts on Environmental Issues',
+  amount: 22,
+  posted: '2025-06-05',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK20343',
+  title: 'Proofread Scientific Journal Article',
+  amount: 26,
+  posted: '2025-06-05',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK20344',
+  title: 'Edit Technical Manual for Electronics',
+  amount: 24,
+  posted: '2025-06-05',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK20345',
+  title: 'Proofread Fashion Blog Articles',
+  amount: 20,
+  posted: '2025-06-05',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK20346',
+  title: 'Edit Press Releases for Corporate Clients',
+  amount: 27,
+  posted: '2025-06-05',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK20347',
+  title: 'Proofread Academic Journal Submission',
+  amount: 23,
+  posted: '2025-06-05',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK20348',
+  title: 'Edit Travel Blog Content',
+  amount: 21,
+  posted: '2025-06-05',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK20349',
+  title: 'Proofread Business Website Copy',
+  amount: 25,
+  posted: '2025-06-05',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK20350',
+  title: 'Edit Educational Blog Articles',
+  amount: 22,
+  posted: '2025-06-05',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK20351',
+  title: 'Proofread Legal Contracts',
+  amount: 28,
+  posted: '2025-06-05',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK20352',
+  title: 'Edit Scientific Research Proposal',
+  amount: 26,
+  posted: '2025-06-05',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK20353',
+  title: 'Proofread Non-fiction Manuscript',
+  amount: 20,
+  posted: '2025-06-05',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK20354',
+  title: 'Edit Marketing Brochure Text',
+  amount: 27,
+  posted: '2025-06-05',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK20355',
+  title: 'Proofread Articles on Technology Trends',
+  amount: 23,
+  posted: '2025-06-05',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK20356',
+  title: 'Edit Blog Posts on Mental Health',
+  amount: 21,
+  posted: '2025-06-05',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK20357',
+  title: 'Proofread Product Manuals',
+  amount: 25,
+  posted: '2025-06-05',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK20358',
+  title: 'Edit Online Course Materials',
+  amount: 22,
+  posted: '2025-06-05',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK20359',
+  title: 'Proofread Blog Series on Social Media Marketing',
+  amount: 24,
+  posted: '2025-06-05',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK20360',
+  title: 'Edit Scientific Abstracts',
+  amount: 26,
+  posted: '2025-06-05',
+  bids: 13,
+  rating: 5
+},
+  {
+    id: 'TASK19660',
+    title: 'Proofread Academic Paper on History',
+    amount: 24,
+    posted: '2025-06-04',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19661',
+    title: 'Edit Research Paper on Psychology',
+    amount: 27,
+    posted: '2025-06-04',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19662',
+    title: 'Proofread Thesis on Political Science',
+    amount: 25,
+    posted: '2025-06-04',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19663',
+    title: 'Edit Academic Essay on Sociology',
+    amount: 23,
+    posted: '2025-06-04',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19664',
+    title: 'Proofread Technical Manual on Software',
+    amount: 26,
+    posted: '2025-06-04',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19665',
+    title: 'Edit Academic Paper on Literature',
+    amount: 22,
+    posted: '2025-06-04',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK19666',
+    title: 'Proofread Research Paper on Environmental Science',
+    amount: 27,
+    posted: '2025-06-04',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19667',
+    title: 'Edit Business Report on Marketing',
+    amount: 23,
+    posted: '2025-06-04',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19668',
+    title: 'Proofread Manuscript on Philosophy',
+    amount: 25,
+    posted: '2025-06-04',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19669',
+    title: 'Edit Academic Thesis on Economics',
+    amount: 26,
+    posted: '2025-06-04',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19670',
+    title: 'Proofread Technical Report on IT',
+    amount: 24,
+    posted: '2025-06-04',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK19671',
+    title: 'Edit Academic Essay on Political Science',
+    amount: 23,
+    posted: '2025-06-04',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19672',
+    title: 'Proofread Research Paper on Sociology',
+    amount: 27,
+    posted: '2025-06-04',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19673',
+    title: 'Edit Thesis on History',
+    amount: 25,
+    posted: '2025-06-04',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19674',
+    title: 'Proofread Academic Paper on Marketing',
+    amount: 22,
+    posted: '2025-06-04',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK19675',
+    title: 'Edit Manuscript on Literature',
+    amount: 24,
+    posted: '2025-06-04',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19676',
+    title: 'Proofread Business Proposal',
+    amount: 26,
+    posted: '2025-06-04',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19677',
+    title: 'Edit Technical Manual on Software',
+    amount: 25,
+    posted: '2025-06-04',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19678',
+    title: 'Proofread Academic Essay on Psychology',
+    amount: 23,
+    posted: '2025-06-04',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19679',
+    title: 'Edit Research Paper on Environmental Science',
+    amount: 27,
+    posted: '2025-06-04',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19680',
+    title: 'Proofread Academic Essay on Sociology',
+    amount: 25,
+    posted: '2025-06-03',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19681',
+    title: 'Edit Research Paper on Biotechnology',
+    amount: 27,
+    posted: '2025-06-03',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19682',
+    title: 'Proofread Technical Report on IT',
+    amount: 24,
+    posted: '2025-06-03',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19683',
+    title: 'Edit Thesis on Political Science',
+    amount: 26,
+    posted: '2025-06-03',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19684',
+    title: 'Proofread Academic Paper on Philosophy',
+    amount: 22,
+    posted: '2025-06-03',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK19685',
+    title: 'Edit Business Report on Marketing',
+    amount: 23,
+    posted: '2025-06-03',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19686',
+    title: 'Proofread Manuscript on History',
+    amount: 25,
+    posted: '2025-06-03',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19687',
+    title: 'Edit Academic Essay on Literature',
+    amount: 24,
+    posted: '2025-06-03',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19688',
+    title: 'Proofread Research Paper on Environmental Science',
+    amount: 27,
+    posted: '2025-06-03',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19689',
+    title: 'Edit Technical Manual on Software',
+    amount: 25,
+    posted: '2025-06-03',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19690',
+    title: 'Proofread Academic Thesis on Economics',
+    amount: 26,
+    posted: '2025-06-03',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19691',
+    title: 'Edit Research Paper on Sociology',
+    amount: 23,
+    posted: '2025-06-03',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19692',
+    title: 'Proofread Manuscript on Psychology',
+    amount: 24,
+    posted: '2025-06-03',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19693',
+    title: 'Edit Academic Paper on Marketing',
+    amount: 22,
+    posted: '2025-06-03',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK19694',
+    title: 'Proofread Business Proposal',
+    amount: 26,
+    posted: '2025-06-03',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19695',
+    title: 'Edit Thesis on History',
+    amount: 25,
+    posted: '2025-06-03',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19696',
+    title: 'Proofread Academic Essay on Political Science',
+    amount: 23,
+    posted: '2025-06-03',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19697',
+    title: 'Edit Manuscript on Literature',
+    amount: 24,
+    posted: '2025-06-03',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19698',
+    title: 'Proofread Research Paper on Biotechnology',
+    amount: 27,
+    posted: '2025-06-03',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19699',
+    title: 'Edit Technical Report on IT',
+    amount: 25,
+    posted: '2025-06-03',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19620',
+    title: 'Proofread Academic Essay on Sociology',
+    amount: 27,
+    posted: '2025-06-02',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19621',
+    title: 'Edit Research Paper on Environmental Science',
+    amount: 28,
+    posted: '2025-06-02',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19622',
+    title: 'Proofread Technical Report on IT',
+    amount: 25,
+    posted: '2025-06-02',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19623',
+    title: 'Edit Business Proposal Document',
+    amount: 26,
+    posted: '2025-06-02',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19624',
+    title: 'Proofread Academic Thesis on Political Science',
+    amount: 27,
+    posted: '2025-06-02',
+    bids: 15,
+    rating: 5
+  },
+  {
+    id: 'TASK19625',
+    title: 'Edit Marketing Research Paper',
+    amount: 23,
+    posted: '2025-06-02',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19626',
+    title: 'Proofread Literature Review on Psychology',
+    amount: 24,
+    posted: '2025-06-02',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19627',
+    title: 'Edit Academic Essay on History',
+    amount: 22,
+    posted: '2025-06-02',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK19628',
+    title: 'Proofread Scientific Article on Biotechnology',
+    amount: 26,
+    posted: '2025-06-02',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19629',
+    title: 'Edit Thesis on Economics',
+    amount: 25,
+    posted: '2025-06-02',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19630',
+    title: 'Proofread Manuscript on Philosophy',
+    amount: 23,
+    posted: '2025-06-02',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19631',
+    title: 'Edit Research Paper on Sociology',
+    amount: 27,
+    posted: '2025-06-02',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19632',
+    title: 'Proofread Academic Essay on Literature',
+    amount: 24,
+    posted: '2025-06-02',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19633',
+    title: 'Edit Technical Manual on Software',
+    amount: 25,
+    posted: '2025-06-02',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19634',
+    title: 'Proofread Business Report',
+    amount: 22,
+    posted: '2025-06-02',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19635',
+    title: 'Edit Academic Paper on Environmental Science',
+    amount: 27,
+    posted: '2025-06-02',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19636',
+    title: 'Proofread Thesis on Political Science',
+    amount: 26,
+    posted: '2025-06-02',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19637',
+    title: 'Edit Academic Essay on Psychology',
+    amount: 23,
+    posted: '2025-06-02',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19638',
+    title: 'Proofread Research Paper on Sociology',
+    amount: 25,
+    posted: '2025-06-02',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19639',
+    title: 'Edit Manuscript on Philosophy',
+    amount: 24,
+    posted: '2025-06-02',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK19640',
+    title: 'Proofread Academic Paper on Economics',
+    amount: 25,
+    posted: '2025-06-01',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19641',
+    title: 'Edit Research Paper on Biotechnology',
+    amount: 27,
+    posted: '2025-06-01',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19642',
+    title: 'Proofread Academic Essay on Literature',
+    amount: 22,
+    posted: '2025-06-01',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK19643',
+    title: 'Edit Thesis on Political Science',
+    amount: 26,
+    posted: '2025-06-01',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19644',
+    title: 'Proofread Manuscript on Sociology',
+    amount: 24,
+    posted: '2025-06-01',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19645',
+    title: 'Edit Business Report',
+    amount: 23,
+    posted: '2025-06-01',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19646',
+    title: 'Proofread Technical Manual on Software',
+    amount: 25,
+    posted: '2025-06-01',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19647',
+    title: 'Edit Academic Essay on History',
+    amount: 22,
+    posted: '2025-06-01',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19648',
+    title: 'Proofread Research Paper on Environmental Science',
+    amount: 27,
+    posted: '2025-06-01',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19649',
+    title: 'Edit Marketing Research Paper',
+    amount: 24,
+    posted: '2025-06-01',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK19650',
+    title: 'Proofread Academic Thesis on Psychology',
+    amount: 26,
+    posted: '2025-06-01',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19651',
+    title: 'Edit Academic Paper on Philosophy',
+    amount: 23,
+    posted: '2025-06-01',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19652',
+    title: 'Proofread Technical Report on IT',
+    amount: 25,
+    posted: '2025-06-01',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19653',
+    title: 'Edit Thesis on Economics',
+    amount: 27,
+    posted: '2025-06-01',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19654',
+    title: 'Proofread Manuscript on History',
+    amount: 24,
+    posted: '2025-06-01',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19655',
+    title: 'Edit Academic Essay on Sociology',
+    amount: 23,
+    posted: '2025-06-01',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK19656',
+    title: 'Proofread Research Paper on Biotechnology',
+    amount: 25,
+    posted: '2025-06-01',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK19657',
+    title: 'Edit Academic Essay on Literature',
+    amount: 22,
+    posted: '2025-06-01',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK19658',
+    title: 'Proofread Business Proposal',
+    amount: 27,
+    posted: '2025-06-01',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK19659',
+    title: 'Edit Technical Manual on Software',
+    amount: 25,
+    posted: '2025-06-01',
+    bids: 13,
+    rating: 5
+  },
+{
+  id: 'TASK11301',
+  title: 'Proofread Academic Essay on Philosophy',
+  amount: 24,
+  posted: '2025-05-31',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK11302',
+  title: 'Edit Research Paper on Artificial Intelligence',
+  amount: 28,
+  posted: '2025-05-31',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK11303',
+  title: 'Proofread Business Report for Investors',
+  amount: 25,
+  posted: '2025-05-31',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK11304',
+  title: 'Edit Thesis Chapter on Sociology',
+  amount: 29,
+  posted: '2025-05-31',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11305',
+  title: 'Proofread Blog Post on Mental Health',
+  amount: 19,
+  posted: '2025-05-31',
+  bids: 16,
+  rating: 4
+},
+{
+  id: 'TASK11306',
+  title: 'Edit Marketing Content for Social Campaign',
+  amount: 22,
+  posted: '2025-05-31',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11307',
+  title: 'Proofread Scientific Article on Climate Change',
+  amount: 27,
+  posted: '2025-05-31',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK11308',
+  title: 'Edit Fiction Manuscript for Style and Grammar',
+  amount: 24,
+  posted: '2025-05-31',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11309',
+  title: 'Proofread Scholarship Essay on Education',
+  amount: 21,
+  posted: '2025-05-31',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK11310',
+  title: 'Edit Technical Documentation on Software',
+  amount: 26,
+  posted: '2025-05-31',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK11311',
+  title: 'Proofread Resume and Cover Letter',
+  amount: 23,
+  posted: '2025-05-31',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK11312',
+  title: 'Edit Presentation Slides for Workshop',
+  amount: 25,
+  posted: '2025-05-31',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11313',
+  title: 'Proofread Historical Research Paper',
+  amount: 25,
+  posted: '2025-05-31',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK11314',
+  title: 'Edit Non-fiction Manuscript on Economics',
+  amount: 28,
+  posted: '2025-05-31',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11315',
+  title: 'Proofread Press Release on Product Launch',
+  amount: 18,
+  posted: '2025-05-31',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11316',
+  title: 'Edit Academic Journal Article',
+  amount: 30,
+  posted: '2025-05-31',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11317',
+  title: 'Proofread Website Content for Clarity',
+  amount: 22,
+  posted: '2025-05-31',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11318',
+  title: 'Edit Travel Blog Articles',
+  amount: 20,
+  posted: '2025-05-31',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11319',
+  title: 'Proofread Medical Research Report',
+  amount: 26,
+  posted: '2025-05-31',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK11320',
+  title: 'Edit Educational Materials for Grammar',
+  amount: 24,
+  posted: '2025-05-31',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK11321',
+  title: 'Proofread Academic Essay on Psychology',
+  amount: 23,
+  posted: '2025-05-30',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK11322',
+  title: 'Edit Research Paper on Sociology',
+  amount: 27,
+  posted: '2025-05-30',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK11323',
+  title: 'Proofread Business Proposal',
+  amount: 24,
+  posted: '2025-05-30',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK11324',
+  title: 'Edit Thesis Draft on Environmental Studies',
+  amount: 29,
+  posted: '2025-05-30',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11325',
+  title: 'Proofread Blog Post on Nutrition',
+  amount: 19,
+  posted: '2025-05-30',
+  bids: 15,
+  rating: 4
+},
+{
+  id: 'TASK11326',
+  title: 'Edit Social Media Content for Branding',
+  amount: 21,
+  posted: '2025-05-30',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11327',
+  title: 'Proofread Scientific Article on Renewable Energy',
+  amount: 26,
+  posted: '2025-05-30',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK11328',
+  title: 'Edit Fiction Manuscript for Grammar and Style',
+  amount: 22,
+  posted: '2025-05-30',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11329',
+  title: 'Proofread Scholarship Application Essay',
+  amount: 20,
+  posted: '2025-05-30',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK11330',
+  title: 'Edit Technical Documentation on IT Systems',
+  amount: 25,
+  posted: '2025-05-30',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK11331',
+  title: 'Proofread Resume and Cover Letter',
+  amount: 21,
+  posted: '2025-05-30',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK11332',
+  title: 'Edit Presentation Slides for Academic Conference',
+  amount: 23,
+  posted: '2025-05-30',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11333',
+  title: 'Proofread Historical Research Article',
+  amount: 24,
+  posted: '2025-05-30',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK11334',
+  title: 'Edit Non-fiction Manuscript on Health and Wellness',
+  amount: 27,
+  posted: '2025-05-30',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11335',
+  title: 'Proofread Press Release on Company Update',
+  amount: 18,
+  posted: '2025-05-30',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11336',
+  title: 'Edit Journal Article Submission',
+  amount: 29,
+  posted: '2025-05-30',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11337',
+  title: 'Proofread Website Content for Grammar',
+  amount: 21,
+  posted: '2025-05-30',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11338',
+  title: 'Edit Travel Articles for Publication',
+  amount: 19,
+  posted: '2025-05-30',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11339',
+  title: 'Proofread Medical Report',
+  amount: 26,
+  posted: '2025-05-30',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11340',
+  title: 'Edit Educational Materials for Grammar',
+  amount: 23,
+  posted: '2025-05-30',
+  bids: 11,
+  rating: 4
+},    
+  {
+  id: 'TASK11201',
+  title: 'Proofread Academic Essay on Sociology',
+  amount: 24,
+  posted: '2025-05-29',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK11202',
+  title: 'Edit Research Paper on Environmental Science',
+  amount: 27,
+  posted: '2025-05-29',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK11203',
+  title: 'Proofread Business Proposal for Startup',
+  amount: 25,
+  posted: '2025-05-29',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK11204',
+  title: 'Edit Thesis Chapter on Political Science',
+  amount: 29,
+  posted: '2025-05-29',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11205',
+  title: 'Proofread Blog Post on Wellness Tips',
+  amount: 18,
+  posted: '2025-05-29',
+  bids: 15,
+  rating: 4
+},
+{
+  id: 'TASK11206',
+  title: 'Edit Marketing Content for Online Campaign',
+  amount: 21,
+  posted: '2025-05-29',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11207',
+  title: 'Proofread Scientific Article on Genetics',
+  amount: 27,
+  posted: '2025-05-29',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK11208',
+  title: 'Edit Fiction Manuscript for Grammar and Style',
+  amount: 23,
+  posted: '2025-05-29',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11209',
+  title: 'Proofread Scholarship Essay',
+  amount: 20,
+  posted: '2025-05-29',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK11210',
+  title: 'Edit Technical Documentation on Software',
+  amount: 26,
+  posted: '2025-05-29',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK11211',
+  title: 'Proofread Resume and Cover Letter',
+  amount: 22,
+  posted: '2025-05-29',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK11212',
+  title: 'Edit Presentation Slides for Conference',
+  amount: 24,
+  posted: '2025-05-29',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11213',
+  title: 'Proofread Historical Research Paper',
+  amount: 25,
+  posted: '2025-05-29',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK11214',
+  title: 'Edit Non-fiction Manuscript on Economics',
+  amount: 28,
+  posted: '2025-05-29',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11215',
+  title: 'Proofread Press Release on New Product',
+  amount: 17,
+  posted: '2025-05-29',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11216',
+  title: 'Edit Academic Journal Article',
+  amount: 30,
+  posted: '2025-05-29',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11217',
+  title: 'Proofread Website Content for Clarity',
+  amount: 22,
+  posted: '2025-05-29',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11218',
+  title: 'Edit Travel Blog Articles',
+  amount: 19,
+  posted: '2025-05-29',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11219',
+  title: 'Proofread Medical Research Report',
+  amount: 26,
+  posted: '2025-05-29',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11220',
+  title: 'Edit Educational Curriculum Documents',
+  amount: 24,
+  posted: '2025-05-29',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK11221',
+  title: 'Proofread Academic Essay on Psychology',
+  amount: 23,
+  posted: '2025-05-28',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK11222',
+  title: 'Edit Research Paper on Sociology',
+  amount: 27,
+  posted: '2025-05-28',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK11223',
+  title: 'Proofread Business Proposal',
+  amount: 24,
+  posted: '2025-05-28',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK11224',
+  title: 'Edit Thesis Draft on Environmental Studies',
+  amount: 29,
+  posted: '2025-05-28',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11225',
+  title: 'Proofread Blog Post on Nutrition',
+  amount: 18,
+  posted: '2025-05-28',
+  bids: 15,
+  rating: 4
+},
+{
+  id: 'TASK11226',
+  title: 'Edit Social Media Content for Branding',
+  amount: 21,
+  posted: '2025-05-28',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11227',
+  title: 'Proofread Scientific Article on Renewable Energy',
+  amount: 26,
+  posted: '2025-05-28',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK11228',
+  title: 'Edit Fiction Manuscript for Grammar and Style',
+  amount: 22,
+  posted: '2025-05-28',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11229',
+  title: 'Proofread Scholarship Application Essay',
+  amount: 20,
+  posted: '2025-05-28',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK11230',
+  title: 'Edit Technical Documentation on IT Systems',
+  amount: 25,
+  posted: '2025-05-28',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK11231',
+  title: 'Proofread Resume and Cover Letter',
+  amount: 21,
+  posted: '2025-05-28',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK11232',
+  title: 'Edit Presentation Slides for Academic Conference',
+  amount: 23,
+  posted: '2025-05-28',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11233',
+  title: 'Proofread Historical Research Article',
+  amount: 24,
+  posted: '2025-05-28',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK11234',
+  title: 'Edit Non-fiction Manuscript on Health and Wellness',
+  amount: 27,
+  posted: '2025-05-28',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11235',
+  title: 'Proofread Press Release on Company Update',
+  amount: 17,
+  posted: '2025-05-28',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11236',
+  title: 'Edit Journal Article Submission',
+  amount: 29,
+  posted: '2025-05-28',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11237',
+  title: 'Proofread Website Content for Grammar',
+  amount: 21,
+  posted: '2025-05-28',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11238',
+  title: 'Edit Travel Articles for Publication',
+  amount: 19,
+  posted: '2025-05-28',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11239',
+  title: 'Proofread Medical Report',
+  amount: 26,
+  posted: '2025-05-28',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11240',
+  title: 'Edit Educational Materials for Grammar',
+  amount: 23,
+  posted: '2025-05-28',
+  bids: 11,
+  rating: 4
+},    
+ {
+  id: 'TASK11101',
+  title: 'Proofread Academic Essay on Environmental Policy',
+  amount: 23,
+  posted: '2025-05-27',
+  bids: 13,
+  rating: 5
+},
+{
+  id: 'TASK11102',
+  title: 'Edit Research Paper on Cognitive Psychology',
+  amount: 28,
+  posted: '2025-05-27',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK11103',
+  title: 'Proofread Business Plan for Startup',
+  amount: 24,
+  posted: '2025-05-27',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK11104',
+  title: 'Edit Thesis Chapter on International Relations',
+  amount: 29,
+  posted: '2025-05-27',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11105',
+  title: 'Proofread Blog Post on Fitness and Health',
+  amount: 18,
+  posted: '2025-05-27',
+  bids: 15,
+  rating: 4
+},
+{
+  id: 'TASK11106',
+  title: 'Edit Marketing Copy for Product Launch',
+  amount: 20,
+  posted: '2025-05-27',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11107',
+  title: 'Proofread Scientific Article on Biotechnology',
+  amount: 27,
+  posted: '2025-05-27',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK11108',
+  title: 'Edit Short Story Manuscript for Style',
+  amount: 23,
+  posted: '2025-05-27',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11109',
+  title: 'Proofread Scholarship Application Essay',
+  amount: 19,
+  posted: '2025-05-27',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK11110',
+  title: 'Edit Technical Documentation on Software',
+  amount: 26,
+  posted: '2025-05-27',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK11111',
+  title: 'Proofread Resume and Cover Letter',
+  amount: 21,
+  posted: '2025-05-27',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK11112',
+  title: 'Edit Presentation Slides for Conference',
+  amount: 24,
+  posted: '2025-05-27',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11113',
+  title: 'Proofread Historical Research Article',
+  amount: 25,
+  posted: '2025-05-27',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK11114',
+  title: 'Edit Non-fiction Manuscript on Finance',
+  amount: 28,
+  posted: '2025-05-27',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11115',
+  title: 'Proofread Press Release on New Service',
+  amount: 17,
+  posted: '2025-05-27',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11116',
+  title: 'Edit Academic Journal Submission',
+  amount: 30,
+  posted: '2025-05-27',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11117',
+  title: 'Proofread Website Content for Grammar',
+  amount: 22,
+  posted: '2025-05-27',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11118',
+  title: 'Edit Travel Blog Articles',
+  amount: 19,
+  posted: '2025-05-27',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11119',
+  title: 'Proofread Medical Report',
+  amount: 26,
+  posted: '2025-05-27',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11120',
+  title: 'Edit Educational Curriculum Documents',
+  amount: 24,
+  posted: '2025-05-27',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK11121',
+  title: 'Proofread Academic Essay on Sociology',
+  amount: 23,
+  posted: '2025-05-26',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK11122',
+  title: 'Edit Research Paper on Psychology',
+  amount: 27,
+  posted: '2025-05-26',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK11123',
+  title: 'Proofread Business Proposal',
+  amount: 24,
+  posted: '2025-05-26',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK11124',
+  title: 'Edit Thesis Draft on Political Science',
+  amount: 29,
+  posted: '2025-05-26',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11125',
+  title: 'Proofread Blog Post on Lifestyle Tips',
+  amount: 18,
+  posted: '2025-05-26',
+  bids: 15,
+  rating: 4
+},
+{
+  id: 'TASK11126',
+  title: 'Edit Social Media Content for Branding',
+  amount: 21,
+  posted: '2025-05-26',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11127',
+  title: 'Proofread Scientific Article on Renewable Energy',
+  amount: 26,
+  posted: '2025-05-26',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK11128',
+  title: 'Edit Fiction Manuscript for Style and Grammar',
+  amount: 22,
+  posted: '2025-05-26',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11129',
+  title: 'Proofread College Scholarship Essay',
+  amount: 20,
+  posted: '2025-05-26',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK11130',
+  title: 'Edit Technical Documentation on IT Systems',
+  amount: 25,
+  posted: '2025-05-26',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK11131',
+  title: 'Proofread Resume and Cover Letter',
+  amount: 21,
+  posted: '2025-05-26',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK11132',
+  title: 'Edit Presentation Slides for Academic Conference',
+  amount: 23,
+  posted: '2025-05-26',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11133',
+  title: 'Proofread Historical Research Article',
+  amount: 24,
+  posted: '2025-05-26',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK11134',
+  title: 'Edit Non-fiction Manuscript on Health and Nutrition',
+  amount: 27,
+  posted: '2025-05-26',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11135',
+  title: 'Proofread Press Release on New Product Launch',
+  amount: 17,
+  posted: '2025-05-26',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11136',
+  title: 'Edit Journal Article Submission',
+  amount: 29,
+  posted: '2025-05-26',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11137',
+  title: 'Proofread Website Content for Clarity and Grammar',
+  amount: 21,
+  posted: '2025-05-26',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11138',
+  title: 'Edit Travel Articles for Publication',
+  amount: 19,
+  posted: '2025-05-26',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11139',
+  title: 'Proofread Medical Research Report',
+  amount: 26,
+  posted: '2025-05-26',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11140',
+  title: 'Edit Educational Materials for Grammar',
+  amount: 23,
+  posted: '2025-05-26',
+  bids: 11,
+  rating: 4
+},     
+{
+  id: 'TASK11001',
+  title: 'Proofread Academic Essay on Environmental Science',
+  amount: 22,
+  posted: '2025-05-25',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK11002',
+  title: 'Edit Research Paper on Mental Health Studies',
+  amount: 28,
+  posted: '2025-05-25',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK11003',
+  title: 'Proofread Business Report on Market Analysis',
+  amount: 25,
+  posted: '2025-05-25',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK11004',
+  title: 'Edit Thesis Chapter on International Law',
+  amount: 30,
+  posted: '2025-05-25',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11005',
+  title: 'Proofread Blog Article on Healthy Living',
+  amount: 18,
+  posted: '2025-05-25',
+  bids: 15,
+  rating: 4
+},
+{
+  id: 'TASK11006',
+  title: 'Edit Marketing Content for Social Media Campaign',
+  amount: 20,
+  posted: '2025-05-25',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11007',
+  title: 'Proofread Scientific Manuscript on Climate Change',
+  amount: 27,
+  posted: '2025-05-25',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK11008',
+  title: 'Edit Fiction Short Story for Grammar and Style',
+  amount: 23,
+  posted: '2025-05-25',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11009',
+  title: 'Proofread College Application Essay',
+  amount: 19,
+  posted: '2025-05-25',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK11010',
+  title: 'Edit Technical Report on Software Development',
+  amount: 26,
+  posted: '2025-05-25',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK11011',
+  title: 'Proofread Resume and Cover Letter',
+  amount: 21,
+  posted: '2025-05-25',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK11012',
+  title: 'Edit Academic Presentation Slides',
+  amount: 24,
+  posted: '2025-05-25',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11013',
+  title: 'Proofread Historical Research Paper',
+  amount: 25,
+  posted: '2025-05-25',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK11014',
+  title: 'Edit Non-fiction Manuscript on Personal Finance',
+  amount: 28,
+  posted: '2025-05-25',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11015',
+  title: 'Proofread Press Release for Product Launch',
+  amount: 17,
+  posted: '2025-05-25',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11016',
+  title: 'Edit Academic Journal Submission',
+  amount: 30,
+  posted: '2025-05-25',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11017',
+  title: 'Proofread Website Content for Grammar and Clarity',
+  amount: 22,
+  posted: '2025-05-25',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11018',
+  title: 'Edit Travel Blog Articles',
+  amount: 19,
+  posted: '2025-05-25',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11019',
+  title: 'Proofread Medical Report',
+  amount: 26,
+  posted: '2025-05-25',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11020',
+  title: 'Edit Educational Curriculum Documents',
+  amount: 24,
+  posted: '2025-05-25',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK11021',
+  title: 'Proofread Academic Essay on Sociology',
+  amount: 23,
+  posted: '2025-05-24',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK11022',
+  title: 'Edit Research Paper on Psychology',
+  amount: 27,
+  posted: '2025-05-24',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK11023',
+  title: 'Proofread Business Proposal',
+  amount: 24,
+  posted: '2025-05-24',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK11024',
+  title: 'Edit Thesis Draft on Political Science',
+  amount: 29,
+  posted: '2025-05-24',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11025',
+  title: 'Proofread Blog Post on Lifestyle Tips',
+  amount: 18,
+  posted: '2025-05-24',
+  bids: 15,
+  rating: 4
+},
+{
+  id: 'TASK11026',
+  title: 'Edit Social Media Content for Branding',
+  amount: 21,
+  posted: '2025-05-24',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11027',
+  title: 'Proofread Scientific Article on Renewable Energy',
+  amount: 26,
+  posted: '2025-05-24',
+  bids: 11,
+  rating: 5
+},
+{
+  id: 'TASK11028',
+  title: 'Edit Fiction Manuscript for Style and Grammar',
+  amount: 22,
+  posted: '2025-05-24',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11029',
+  title: 'Proofread College Scholarship Essay',
+  amount: 20,
+  posted: '2025-05-24',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK11030',
+  title: 'Edit Technical Documentation on IT Systems',
+  amount: 25,
+  posted: '2025-05-24',
+  bids: 10,
+  rating: 4
+},
+{
+  id: 'TASK11031',
+  title: 'Proofread Resume and Cover Letter',
+  amount: 21,
+  posted: '2025-05-24',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK11032',
+  title: 'Edit Presentation Slides for Academic Conference',
+  amount: 23,
+  posted: '2025-05-24',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11033',
+  title: 'Proofread Historical Research Article',
+  amount: 24,
+  posted: '2025-05-24',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK11034',
+  title: 'Edit Non-fiction Manuscript on Health and Nutrition',
+  amount: 27,
+  posted: '2025-05-24',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11035',
+  title: 'Proofread Press Release on New Service Launch',
+  amount: 17,
+  posted: '2025-05-24',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK11036',
+  title: 'Edit Journal Article Submission',
+  amount: 29,
+  posted: '2025-05-24',
+  bids: 9,
+  rating: 5
+},
+{
+  id: 'TASK11037',
+  title: 'Proofread Website Content for Clarity and Grammar',
+  amount: 21,
+  posted: '2025-05-24',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK11038',
+  title: 'Edit Travel Articles for Publication',
+  amount: 19,
+  posted: '2025-05-24',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK11039',
+  title: 'Proofread Medical Research Report',
+  amount: 26,
+  posted: '2025-05-24',
+  bids: 10,
+  rating: 5
+},
+{
+  id: 'TASK11040',
+  title: 'Edit Educational Materials for Grammar',
+  amount: 23,
+  posted: '2025-05-24',
+  bids: 11,
+  rating: 4
+},   
+  {
+    id: 'TASK9301',
+    title: 'Proofread Corporate Website Pages',
+    amount: 25,
+    posted: '2025-05-23',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK9302',
+    title: 'Edit Fiction Novel Draft (10 chapters)',
+    amount: 30,
+    posted: '2025-05-23',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK9303',
+    title: 'Proofread Psychology Thesis Abstract',
+    amount: 20,
+    posted: '2025-05-23',
+    bids: 11,
+    rating: 4
+  },
+  {
+    id: 'TASK9304',
+    title: 'Edit Startup Pitch Email',
+    amount: 16,
+    posted: '2025-05-23',
+    bids: 10,
+    rating: 4
+  },
+  {
+    id: 'TASK9305',
+    title: 'Proofread Government Policy Brief',
+    amount: 27,
+    posted: '2025-05-23',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK9306',
+    title: 'Edit Children’s Book Text',
+    amount: 19,
+    posted: '2025-05-23',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9307',
+    title: 'Proofread Online Store Product Titles',
+    amount: 22,
+    posted: '2025-05-23',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9308',
+    title: 'Edit Executive Biography',
+    amount: 24,
+    posted: '2025-05-23',
+    bids: 11,
+    rating: 4
+  },
+  {
+    id: 'TASK9309',
+    title: 'Proofread Course Completion Certificates',
+    amount: 17,
+    posted: '2025-05-23',
+    bids: 15,
+    rating: 4
+  },
+  {
+    id: 'TASK9310',
+    title: 'Edit Science Journal Abstract',
+    amount: 28,
+    posted: '2025-05-23',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9311',
+    title: 'Proofread Mobile App Text Strings',
+    amount: 20,
+    posted: '2025-05-23',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9312',
+    title: 'Edit Artist Statement',
+    amount: 18,
+    posted: '2025-05-23',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9313',
+    title: 'Proofread Internal Audit Report',
+    amount: 29,
+    posted: '2025-05-23',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK9314',
+    title: 'Edit Fashion Lookbook Descriptions',
+    amount: 21,
+    posted: '2025-05-23',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9315',
+    title: 'Proofread Academic Research Summary',
+    amount: 26,
+    posted: '2025-05-23',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK9316',
+    title: 'Edit Terms and Conditions for App',
+    amount: 23,
+    posted: '2025-05-23',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9317',
+    title: 'Proofread Blog on Remote Work Trends',
+    amount: 19,
+    posted: '2025-05-23',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9318',
+    title: 'Edit Health Tips Newsletter',
+    amount: 15,
+    posted: '2025-05-23',
+    bids: 11,
+    rating: 4
+  },
+  {
+    id: 'TASK9319',
+    title: 'Proofread Email Campaign Copy',
+    amount: 30,
+    posted: '2025-05-23',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9320',
+    title: 'Edit Virtual Conference Guidelines',
+    amount: 22,
+    posted: '2025-05-23',
+    bids: 13,
+    rating: 4
+  },
+
+  // --- Dated 2025-05-22 ---
+  {
+    id: 'TASK9321',
+    title: 'Proofread Medical Patient Handbook',
+    amount: 28,
+    posted: '2025-05-22',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9322',
+    title: 'Edit Freelance Contract Template',
+    amount: 23,
+    posted: '2025-05-22',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9323',
+    title: 'Proofread Short Poem Series',
+    amount: 17,
+    posted: '2025-05-22',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9324',
+    title: 'Edit Nonprofit Mission Statement',
+    amount: 20,
+    posted: '2025-05-22',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9325',
+    title: 'Proofread Employee Feedback Report',
+    amount: 18,
+    posted: '2025-05-22',
+    bids: 11,
+    rating: 4
+  },
+  {
+    id: 'TASK9326',
+    title: 'Edit Annual School Report',
+    amount: 26,
+    posted: '2025-05-22',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK9327',
+    title: 'Proofread Crowdfunding Campaign Page',
+    amount: 21,
+    posted: '2025-05-22',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9328',
+    title: 'Edit Fashion Blog Feature',
+    amount: 15,
+    posted: '2025-05-22',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9329',
+    title: 'Proofread International Press Brief',
+    amount: 25,
+    posted: '2025-05-22',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9330',
+    title: 'Edit Educational Survey Questions',
+    amount: 22,
+    posted: '2025-05-22',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9331',
+    title: 'Proofread Event Sponsorship Letter',
+    amount: 16,
+    posted: '2025-05-22',
+    bids: 11,
+    rating: 4
+  },
+  {
+    id: 'TASK9332',
+    title: 'Edit Business Strategy Proposal',
+    amount: 30,
+    posted: '2025-05-22',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK9333',
+    title: 'Proofread Artisan Product Catalog',
+    amount: 24,
+    posted: '2025-05-22',
+    bids: 10,
+    rating: 4
+  },
+  {
+    id: 'TASK9334',
+    title: 'Edit Sustainability Report Draft',
+    amount: 29,
+    posted: '2025-05-22',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK9335',
+    title: 'Proofread Social Media Policy',
+    amount: 19,
+    posted: '2025-05-22',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9336',
+    title: 'Edit Church Bulletin Text',
+    amount: 17,
+    posted: '2025-05-22',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9337',
+    title: 'Proofread Student Loan Guide',
+    amount: 27,
+    posted: '2025-05-22',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9338',
+    title: 'Edit Online Dating Profile Templates',
+    amount: 15,
+    posted: '2025-05-22',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9339',
+    title: 'Proofread Small Business About Page',
+    amount: 20,
+    posted: '2025-05-22',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9340',
+    title: 'Edit Career Coaching Guide',
+    amount: 26,
+    posted: '2025-05-22',
+    bids: 11,
+    rating: 5
+  },   
+  {
+    id: 'TASK9261',
+    title: 'Proofread NGO Grant Proposal',
+    amount: 25,
+    posted: '2025-05-21',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK9262',
+    title: 'Edit Resume for Product Manager',
+    amount: 18,
+    posted: '2025-05-21',
+    bids: 11,
+    rating: 4
+  },
+  {
+    id: 'TASK9263',
+    title: 'Proofread Real Estate Listing Descriptions',
+    amount: 20,
+    posted: '2025-05-21',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9264',
+    title: 'Edit Medical Consent Forms',
+    amount: 28,
+    posted: '2025-05-21',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9265',
+    title: 'Proofread Short Story Compilation',
+    amount: 30,
+    posted: '2025-05-21',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK9266',
+    title: 'Edit YouTube Video Captions',
+    amount: 17,
+    posted: '2025-05-21',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9267',
+    title: 'Proofread Environmental Research Paper',
+    amount: 22,
+    posted: '2025-05-21',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK9268',
+    title: 'Edit Internal HR Policy Document',
+    amount: 27,
+    posted: '2025-05-21',
+    bids: 10,
+    rating: 4
+  },
+  {
+    id: 'TASK9269',
+    title: 'Proofread Weekly Company Newsletter',
+    amount: 19,
+    posted: '2025-05-21',
+    bids: 15,
+    rating: 4
+  },
+  {
+    id: 'TASK9270',
+    title: 'Edit Motivational Book Chapter',
+    amount: 24,
+    posted: '2025-05-21',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9271',
+    title: 'Proofread Press Release for Product Launch',
+    amount: 23,
+    posted: '2025-05-21',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9272',
+    title: 'Edit Sports Commentary Article',
+    amount: 16,
+    posted: '2025-05-21',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9273',
+    title: 'Proofread Religious Magazine Issue',
+    amount: 29,
+    posted: '2025-05-21',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK9274',
+    title: 'Edit Email Marketing Templates',
+    amount: 20,
+    posted: '2025-05-21',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9275',
+    title: 'Proofread Nonprofit Volunteer Handbook',
+    amount: 21,
+    posted: '2025-05-21',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9276',
+    title: 'Edit Product FAQ Section',
+    amount: 15,
+    posted: '2025-05-21',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9277',
+    title: 'Proofread Technical Proposal for Startup',
+    amount: 30,
+    posted: '2025-05-21',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9278',
+    title: 'Edit Internal Business Memo Drafts',
+    amount: 17,
+    posted: '2025-05-21',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9279',
+    title: 'Proofread Digital Course Landing Page',
+    amount: 22,
+    posted: '2025-05-21',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9280',
+    title: 'Edit Remote Work Agreement Template',
+    amount: 26,
+    posted: '2025-05-21',
+    bids: 11,
+    rating: 5
+  },
+
+  // --- Dated 2025-05-20 ---
+  {
+    id: 'TASK9281',
+    title: 'Proofread Grant Application Narrative',
+    amount: 24,
+    posted: '2025-05-20',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9282',
+    title: 'Edit Course Descriptions for eLearning Site',
+    amount: 28,
+    posted: '2025-05-20',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK9283',
+    title: 'Proofread Tech Blog Guest Post',
+    amount: 19,
+    posted: '2025-05-20',
+    bids: 11,
+    rating: 4
+  },
+  {
+    id: 'TASK9284',
+    title: 'Edit Academic Book Preface',
+    amount: 30,
+    posted: '2025-05-20',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK9285',
+    title: 'Proofread Case Study for SaaS Platform',
+    amount: 23,
+    posted: '2025-05-20',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9286',
+    title: 'Edit LinkedIn Articles (3 pieces)',
+    amount: 21,
+    posted: '2025-05-20',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9287',
+    title: 'Proofread Parenting Guide eBook',
+    amount: 18,
+    posted: '2025-05-20',
+    bids: 11,
+    rating: 4
+  },
+  {
+    id: 'TASK9288',
+    title: 'Edit Corporate Ethics Handbook',
+    amount: 27,
+    posted: '2025-05-20',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9289',
+    title: 'Proofread Ad Copy for Retail Campaign',
+    amount: 20,
+    posted: '2025-05-20',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9290',
+    title: 'Edit Interview Transcript for Magazine',
+    amount: 22,
+    posted: '2025-05-20',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9291',
+    title: 'Proofread School Website Content',
+    amount: 15,
+    posted: '2025-05-20',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9292',
+    title: 'Edit Software Documentation Draft',
+    amount: 26,
+    posted: '2025-05-20',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9293',
+    title: 'Proofread Event Promotion Brochure',
+    amount: 19,
+    posted: '2025-05-20',
+    bids: 11,
+    rating: 4
+  },
+  {
+    id: 'TASK9294',
+    title: 'Edit Client Success Story Script',
+    amount: 25,
+    posted: '2025-05-20',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9295',
+    title: 'Proofread Financial Strategy Deck',
+    amount: 29,
+    posted: '2025-05-20',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK9296',
+    title: 'Edit Contest Rules and Regulations',
+    amount: 18,
+    posted: '2025-05-20',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9297',
+    title: 'Proofread Nonprofit Social Media Calendar',
+    amount: 20,
+    posted: '2025-05-20',
+    bids: 11,
+    rating: 4
+  },
+  {
+    id: 'TASK9298',
+    title: 'Edit Artist Portfolio Description',
+    amount: 30,
+    posted: '2025-05-20',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9299',
+    title: 'Proofread Restaurant Menu Copy',
+    amount: 16,
+    posted: '2025-05-20',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9300',
+    title: 'Edit Customer Service Email Scripts',
+    amount: 17,
+    posted: '2025-05-20',
+    bids: 13,
+    rating: 4
+  },   
+  {
+    id: 'TASK9241',
+    title: 'Proofread Investor Pitch Deck',
+    amount: 28,
+    posted: '2025-05-19',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK9242',
+    title: 'Edit Travel Blog Entries (6 posts)',
+    amount: 22,
+    posted: '2025-05-19',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9243',
+    title: 'Proofread Academic Research Summary',
+    amount: 30,
+    posted: '2025-05-19',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9244',
+    title: 'Edit Company Terms and Conditions',
+    amount: 26,
+    posted: '2025-05-19',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK9245',
+    title: 'Proofread CVs for Executive Roles',
+    amount: 24,
+    posted: '2025-05-19',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9246',
+    title: 'Edit Product Labels for Spelling & Grammar',
+    amount: 18,
+    posted: '2025-05-19',
+    bids: 15,
+    rating: 4
+  },
+  {
+    id: 'TASK9247',
+    title: 'Proofread Legal Notice for Publication',
+    amount: 25,
+    posted: '2025-05-19',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK9248',
+    title: 'Edit Freelance Contract Template',
+    amount: 21,
+    posted: '2025-05-19',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9249',
+    title: 'Proofread Newsroom Editorial',
+    amount: 23,
+    posted: '2025-05-19',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9250',
+    title: 'Edit Business Blog for Clarity',
+    amount: 20,
+    posted: '2025-05-19',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9251',
+    title: 'Proofread Educational Brochure',
+    amount: 22,
+    posted: '2025-05-19',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9252',
+    title: 'Edit Short Fiction Manuscript',
+    amount: 30,
+    posted: '2025-05-19',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9253',
+    title: 'Proofread Scientific Abstracts (5)',
+    amount: 26,
+    posted: '2025-05-19',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK9254',
+    title: 'Edit Annual Report for NGO',
+    amount: 28,
+    posted: '2025-05-19',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK9255',
+    title: 'Proofread Web App UI Text',
+    amount: 19,
+    posted: '2025-05-19',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9256',
+    title: 'Edit Motivational Speech Draft',
+    amount: 20,
+    posted: '2025-05-19',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9257',
+    title: 'Proofread Marketing Campaign Copy',
+    amount: 23,
+    posted: '2025-05-19',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9258',
+    title: 'Edit Intro Email for Client Outreach',
+    amount: 18,
+    posted: '2025-05-19',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9259',
+    title: 'Proofread Travel Guide Excerpts',
+    amount: 21,
+    posted: '2025-05-19',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9260',
+    title: 'Edit Course Curriculum Overview',
+    amount: 24,
+    posted: '2025-05-19',
+    bids: 11,
+    rating: 5
+  },  
+  {
+    id: 'TASK9181',
+    title: 'Proofread Online Store FAQ Content',
+    amount: 18,
+    posted: '2025-05-18',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9182',
+    title: 'Edit Self-Published E-book Description',
+    amount: 21,
+    posted: '2025-05-18',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK9183',
+    title: 'Proofread Conference Presentation Script',
+    amount: 22,
+    posted: '2025-05-18',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK9184',
+    title: 'Edit Fitness Brand Website Copy',
+    amount: 20,
+    posted: '2025-05-18',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9185',
+    title: 'Proofread User Feedback Summaries',
+    amount: 17,
+    posted: '2025-05-18',
+    bids: 15,
+    rating: 4
+  },
+  {
+    id: 'TASK9186',
+    title: 'Edit Legal Service Agreement',
+    amount: 25,
+    posted: '2025-05-18',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9187',
+    title: 'Proofread Policy Update Notice',
+    amount: 19,
+    posted: '2025-05-18',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9188',
+    title: 'Edit Government Grant Application',
+    amount: 24,
+    posted: '2025-05-18',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK9189',
+    title: 'Proofread Cryptocurrency Whitepaper',
+    amount: 26,
+    posted: '2025-05-18',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9190',
+    title: 'Edit Artist Bio for Gallery Submission',
+    amount: 18,
+    posted: '2025-05-18',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9191',
+    title: 'Proofread Product Use Guidelines',
+    amount: 21,
+    posted: '2025-05-18',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9192',
+    title: 'Edit Music Band Press Kit',
+    amount: 20,
+    posted: '2025-05-18',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK9193',
+    title: 'Proofread Volunteer Program Brochure',
+    amount: 19,
+    posted: '2025-05-18',
+    bids: 15,
+    rating: 4
+  },
+  {
+    id: 'TASK9194',
+    title: 'Edit Business Email Templates',
+    amount: 22,
+    posted: '2025-05-18',
+    bids: 11,
+    rating: 4
+  },
+  {
+    id: 'TASK9195',
+    title: 'Proofread Children’s Educational Book',
+    amount: 23,
+    posted: '2025-05-18',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK9196',
+    title: 'Edit Corporate Mission Statement',
+    amount: 21,
+    posted: '2025-05-18',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9197',
+    title: 'Proofread NGO Website Text (5 pages)',
+    amount: 25,
+    posted: '2025-05-18',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9198',
+    title: 'Edit YouTube Video Transcript',
+    amount: 20,
+    posted: '2025-05-18',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9199',
+    title: 'Proofread Corporate Compliance Report',
+    amount: 24,
+    posted: '2025-05-18',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK9200',
+    title: 'Edit Product Return Email Responses',
+    amount: 18,
+    posted: '2025-05-18',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9161',
+    title: 'Proofread Resume and Cover Letter',
+    amount: 20,
+    posted: '2025-05-17',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9162',
+    title: 'Edit Business Proposal (12 pages)',
+    amount: 26,
+    posted: '2025-05-17',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9163',
+    title: 'Proofread Product Descriptions for E-commerce',
+    amount: 18,
+    posted: '2025-05-17',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9164',
+    title: 'Edit Personal Statement for University',
+    amount: 22,
+    posted: '2025-05-17',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK9165',
+    title: 'Proofread Non-fiction Manuscript (3 chapters)',
+    amount: 30,
+    posted: '2025-05-17',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK9166',
+    title: 'Edit Company About Us Page',
+    amount: 19,
+    posted: '2025-05-17',
+    bids: 15,
+    rating: 4
+  },
+  {
+    id: 'TASK9167',
+    title: 'Proofread Software Documentation',
+    amount: 24,
+    posted: '2025-05-17',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9168',
+    title: 'Edit Event Press Release',
+    amount: 20,
+    posted: '2025-05-17',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9169',
+    title: 'Proofread Fashion Blog Content',
+    amount: 21,
+    posted: '2025-05-17',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9170',
+    title: 'Edit Grant Proposal Summary',
+    amount: 25,
+    posted: '2025-05-17',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9171',
+    title: 'Proofread Training Manual Draft',
+    amount: 22,
+    posted: '2025-05-17',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9172',
+    title: 'Edit Online Course Descriptions',
+    amount: 19,
+    posted: '2025-05-17',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9173',
+    title: 'Proofread Medical Brochure Text',
+    amount: 23,
+    posted: '2025-05-17',
+    bids: 12,
+    rating: 5
+  },
+  {
+    id: 'TASK9174',
+    title: 'Edit Employee Handbook Content',
+    amount: 27,
+    posted: '2025-05-17',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK9175',
+    title: 'Proofread Newsletter Before Distribution',
+    amount: 18,
+    posted: '2025-05-17',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9176',
+    title: 'Edit Author Introduction for Book',
+    amount: 21,
+    posted: '2025-05-17',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9177',
+    title: 'Proofread Privacy Policy Draft',
+    amount: 20,
+    posted: '2025-05-17',
+    bids: 15,
+    rating: 4
+  },
+  {
+    id: 'TASK9178',
+    title: 'Edit YouTube Video Descriptions',
+    amount: 17,
+    posted: '2025-05-17',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9179',
+    title: 'Proofread SEO Blog Article (1500 words)',
+    amount: 22,
+    posted: '2025-05-17',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9180',
+    title: 'Edit Internship Program Announcement',
+    amount: 20,
+    posted: '2025-05-17',
+    bids: 12,
+    rating: 4
+  },  
+      {
+    id: 'TASK9061',
+    title: 'Proofread Product Labels for Spelling Errors',
+    amount: 18,
+    posted: '2025-05-16',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9062',
+    title: 'Edit Training Presentation Slides',
+    amount: 20,
+    posted: '2025-05-16',
+    bids: 15,
+    rating: 5
+  },
+  {
+    id: 'TASK9063',
+    title: 'Proofread Non-Profit Annual Report',
+    amount: 23,
+    posted: '2025-05-16',
+    bids: 11,
+    rating: 4
+  },
+  {
+    id: 'TASK9064',
+    title: 'Edit Technical Manual for Manufacturing Firm',
+    amount: 25,
+    posted: '2025-05-16',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK9065',
+    title: 'Proofread Book Manuscript Introduction',
+    amount: 21,
+    posted: '2025-05-16',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9066',
+    title: 'Edit Software Documentation for Clarity',
+    amount: 24,
+    posted: '2025-05-16',
+    bids: 13,
+    rating: 5
+  },
+  {
+    id: 'TASK9067',
+    title: 'Proofread Magazine Editorial Piece',
+    amount: 22,
+    posted: '2025-05-16',
+    bids: 10,
+    rating: 4
+  },
+  {
+    id: 'TASK9068',
+    title: 'Edit Product Packaging Text for Grammar',
+    amount: 19,
+    posted: '2025-05-16',
+    bids: 15,
+    rating: 4
+  },
+  {
+    id: 'TASK9069',
+    title: 'Proofread Online Course Descriptions',
+    amount: 20,
+    posted: '2025-05-16',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK9070',
+    title: 'Edit Email Marketing Templates',
+    amount: 21,
+    posted: '2025-05-16',
+    bids: 16,
+    rating: 4
+  },
+  {
+    id: 'TASK9071',
+    title: 'Proofread Customer Case Study Document',
+    amount: 23,
+    posted: '2025-05-16',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9072',
+    title: 'Edit Business Plan for Grammar and Tone',
+    amount: 24,
+    posted: '2025-05-16',
+    bids: 10,
+    rating: 5
+  },
+  {
+    id: 'TASK9073',
+    title: 'Proofread Internal Policy Memo',
+    amount: 19,
+    posted: '2025-05-16',
+    bids: 12,
+    rating: 4
+  },
+  {
+    id: 'TASK9074',
+    title: 'Edit Online Course Syllabus',
+    amount: 22,
+    posted: '2025-05-16',
+    bids: 11,
+    rating: 4
+  },
+  {
+    id: 'TASK9075',
+    title: 'Proofread Onboarding Checklist',
+    amount: 18,
+    posted: '2025-05-16',
+    bids: 14,
+    rating: 5
+  },
+  {
+    id: 'TASK9076',
+    title: 'Edit Newsletter for Local NGO',
+    amount: 21,
+    posted: '2025-05-16',
+    bids: 13,
+    rating: 4
+  },
+  {
+    id: 'TASK9077',
+    title: 'Proofread Product Return Policy Text',
+    amount: 20,
+    posted: '2025-05-16',
+    bids: 15,
+    rating: 4
+  },
+  {
+    id: 'TASK9078',
+    title: 'Edit Educational Curriculum Outline',
+    amount: 23,
+    posted: '2025-05-16',
+    bids: 11,
+    rating: 5
+  },
+  {
+    id: 'TASK9079',
+    title: 'Proofread and Polish Author Bio',
+    amount: 19,
+    posted: '2025-05-16',
+    bids: 14,
+    rating: 4
+  },
+  {
+    id: 'TASK9080',
+    title: 'Edit Investor Pitch Script',
+    amount: 25,
+    posted: '2025-05-16',
+    bids: 12,
+    rating: 5
+  },
+  {
+  id: 'TASK40131',
+  title: 'Proofread Academic Research Paper',
+  amount: 22,
+  posted: '2025-05-15',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK40132',
+  title: 'Edit Business Proposal Document',
+  amount: 24,
+  posted: '2025-05-15',
+  bids: 15,
+  rating: 5
+},
+{
+  id: 'TASK40133',
+  title: 'Proofread Blog Post (1000 words)',
+  amount: 12,
+  posted: '2025-05-15',
+  bids: 13,
+  rating: 3
+},
+{
+  id: 'TASK40134',
+  title: 'Edit eBook Chapter (Fiction)',
+  amount: 20,
+  posted: '2025-05-15',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK40135',
+  title: 'Grammar Check for Resume & Cover Letter',
+  amount: 15,
+  posted: '2025-05-15',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK40136',
+  title: 'Proofread University Admission Essay',
+  amount: 18,
+  posted: '2025-05-15',
+  bids: 12,
+  rating: 5
+},
+{
+  id: 'TASK40137',
+  title: 'Edit Newsletter Content (Monthly)',
+  amount: 19,
+  posted: '2025-05-15',
+  bids: 12,
+  rating: 3
+},
+{
+  id: 'TASK40138',
+  title: 'Website Content Proofreading',
+  amount: 23,
+  posted: '2025-05-15',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK40139',
+  title: 'Edit Grant Proposal Draft',
+  amount: 25,
+  posted: '2025-05-15',
+  bids: 18,
+  rating: 5
+},
+{
+  id: 'TASK40140',
+  title: 'Proofread Short Story (3000 words)',
+  amount: 17,
+  posted: '2025-05-15',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK40141',
+  title: 'Edit Technical Report for Clarity',
+  amount: 21,
+  posted: '2025-05-15',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK40142',
+  title: 'Proofread Product Descriptions',
+  amount: 16,
+  posted: '2025-05-15',
+  bids: 11,
+  rating: 3
+},
+{
+  id: 'TASK40143',
+  title: 'Edit Freelance Portfolio Bio',
+  amount: 10,
+  posted: '2025-05-15',
+  bids: 9,
+  rating: 3
+},
+{
+  id: 'TASK40144',
+  title: 'Proofread Master’s Thesis Introduction',
+  amount: 24,
+  posted: '2025-05-15',
+  bids: 17,
+  rating: 5
+},
+{
+  id: 'TASK40145',
+  title: 'Edit Journal Abstract for Publication',
+  amount: 22,
+  posted: '2025-05-15',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK40146',
+  title: 'Proofread Terms and Conditions Document',
+  amount: 20,
+  posted: '2025-05-15',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK40147',
+  title: 'Edit YouTube Script for Grammar',
+  amount: 15,
+  posted: '2025-05-15',
+  bids: 11,
+  rating: 3
+},
+{
+  id: 'TASK40148',
+  title: 'Proofread Company Brochure',
+  amount: 19,
+  posted: '2025-05-15',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK40149',
+  title: 'Edit Interview Transcript (Clean Copy)',
+  amount: 23,
+  posted: '2025-05-15',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK40150',
+  title: 'Proofread Legal Agreement',
+  amount: 25,
+  posted: '2025-05-15',
+  bids: 18,
+  rating: 5
+},
+{
+  id: 'TASK40151',
+  title: 'Edit Fictional Story Dialogue',
+  amount: 13,
+  posted: '2025-05-15',
+  bids: 10,
+  rating: 3
+},
+{
+  id: 'TASK40152',
+  title: 'Proofread Instruction Manual',
+  amount: 18,
+  posted: '2025-05-15',
+  bids: 11,
+  rating: 4
+},
+{
+  id: 'TASK40153',
+  title: 'Edit Scientific Article',
+  amount: 24,
+  posted: '2025-05-15',
+  bids: 17,
+  rating: 5
+},
+{
+  id: 'TASK40154',
+  title: 'Proofread Book Foreword',
+  amount: 14,
+  posted: '2025-05-15',
+  bids: 10,
+  rating: 3
+},
+{
+  id: 'TASK40155',
+  title: 'Edit Event Invitation Email',
+  amount: 12,
+  posted: '2025-05-15',
+  bids: 11,
+  rating: 3
+},
+{
+  id: 'TASK40156',
+  title: 'Proofread Memoir Chapter',
+  amount: 21,
+  posted: '2025-05-15',
+  bids: 15,
+  rating: 4
+},
+{
+  id: 'TASK40157',
+  title: 'Edit Funding Request Letter',
+  amount: 20,
+  posted: '2025-05-15',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK40158',
+  title: 'Proofread App Store Description',
+  amount: 13,
+  posted: '2025-05-15',
+  bids: 11,
+  rating: 3
+},
+{
+  id: 'TASK40159',
+  title: 'Edit Personal Statement',
+  amount: 17,
+  posted: '2025-05-15',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK40160',
+  title: 'Proofread User Guide for Software',
+  amount: 23,
+  posted: '2025-05-15',
+  bids: 16,
+  rating: 5
+},
+{
+  id: 'TASK40161',
+  title: 'Edit White Paper Draft',
+  amount: 25,
+  posted: '2025-05-15',
+  bids: 18,
+  rating: 5
+},
+{
+  id: 'TASK40162',
+  title: 'Proofread Internal Company Memo',
+  amount: 16,
+  posted: '2025-05-15',
+  bids: 11,
+  rating: 3
+},
+{
+  id: 'TASK40163',
+  title: 'Edit Academic Paper for Flow',
+  amount: 22,
+  posted: '2025-05-15',
+  bids: 14,
+  rating: 5
+},
+{
+  id: 'TASK40164',
+  title: 'Proofread Blog Comment Section',
+  amount: 11,
+  posted: '2025-05-15',
+  bids: 9,
+  rating: 2
+},
+{
+  id: 'TASK40165',
+  title: 'Edit Policy Brief Summary',
+  amount: 20,
+  posted: '2025-05-15',
+  bids: 13,
+  rating: 4
+},
+{
+  id: 'TASK40166',
+  title: 'Proofread Grant Budget Narrative',
+  amount: 19,
+  posted: '2025-05-15',
+  bids: 14,
+  rating: 4
+},
+{
+  id: 'TASK40167',
+  title: 'Edit Literature Review (2 pages)',
+  amount: 21,
+  posted: '2025-05-15',
+  bids: 12,
+  rating: 4
+},
+{
+  id: 'TASK40168',
+  title: 'Proofread Client Email Draft',
+  amount: 10,
+  posted: '2025-05-15',
+  bids: 8,
+  rating: 2
+},
+{
+  id: 'TASK40169',
+  title: 'Edit Investor Pitch Deck Notes',
+  amount: 24,
+  posted: '2025-05-15',
+  bids: 17,
+  rating: 5
+},
+{
+  id: 'TASK40170',
+  title: 'Proofread Workshop Agenda',
+  amount: 15,
+  posted: '2025-05-15',
+  bids: 11,
+  rating: 3
+}
+    ];
+    // === Shuffle function ===
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+// === Update tasks once per day at 2:42 PM ===
+function updateTasks() {
+  const now = new Date();
+  const today = now.toDateString();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+
+  const lastUpdated = localStorage.getItem("lastUpdated");
+  if (hour === 14 && minute === 42 && lastUpdated !== today) {
+    shuffle(tasks);
+    tasks.forEach((task, index) => {
+      task.id = "TASK" + (400000 + index);
+      task.posted = "2025-06-26";
+    });
+    localStorage.setItem("lastUpdated", today);
+    renderTasks();
+    console.log("✅ Tasks updated for 2025-06-26 at 2:42 PM");
+  }
+}
+
+// === Render tasks to screen ===
+function renderTasks() {
+  const list = document.getElementById("taskList");
+  list.innerHTML = "";
+  tasks.forEach(task => {
+    const item = document.createElement("pre");
+    item.textContent = JSON.stringify(task, null, 2);
+    list.appendChild(item);
+  });
+}
+
+// === Run every minute ===
+setInterval(updateTasks, 60 * 1000);
+renderTasks();
+
+
+    const completedTasks = JSON.parse(localStorage.getItem('completedTasks') || '[]');
+
+    function renderTasks() {
+      const taskList = document.getElementById('taskList');
+      taskList.innerHTML = '';
+
+      tasks.forEach(task => {
+        const div = document.createElement('div');
+        div.className = 'bg-white p-6 rounded-lg shadow';
+        div.innerHTML = `
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="text-lg font-bold text-gray-800">${task.title}</h3>
+              <p class="text-sm text-gray-500">Task ID: ${task.id}</p>
+              <p class="text-sm text-gray-500">Posted: ${task.posted}</p>
+              <p class="text-sm text-gray-500">Bids: ${task.bids}</p>
+              <p class="text-md font-semibold text-green-600 mt-2">Amount: $${task.amount}</p>
+            </div>
+            <div class="flex flex-col items-end">
+              <a href="bid?taskId=${task.id}&amount=${task.amount}" class="bg-green-600 text-white px-4 py-2 rounded-lg mb-2">Bid</a>
+              <div class="flex items-center">
+                ${[1, 2, 3, 4, 5].map(i => `
+                  <svg onclick="handleRating('${task.id}', ${i})" class="w-5 h-5 cursor-pointer ${i <= task.rating ? 'text-green-600' : 'text-gray-300'}" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.974a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.39 2.46a1 1 0 00-.364 1.118l1.286 3.974c.3.921-.755 1.688-1.54 1.118l-3.39-2.46a1 1 0 00-1.175 0l-3.39 2.46c-.784.57-1.838-.197-1.539-1.118l1.285-3.974a1 1 0 00-.364-1.118l-3.39-2.46c-.784-.57-.38-1.81.588-1.81h4.18a1 1 0 00.951-.69l1.285-3.974z" />
+                  </svg>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+        taskList.appendChild(div);
+      });
+    }
+
+    function handleRating(taskId, ratingValue) {
+      if (!completedTasks.includes(taskId)) {
+        document.getElementById('ratingModal').classList.remove('hidden');
+        return;
+      }
+      alert(`Thanks for rating task ${taskId} with ${ratingValue} stars.`);
+    }
+
+    function closeModal() {
+      document.getElementById('ratingModal').classList.add('hidden');
+    }
+
+    renderTasks();
+  </script>
+  
+  <!-- Footer -->
+  <footer class="bg-white border-t mt-12">
+    <footer class="fixed bottom-0 left-0 w-full bg-white text-center py-4 text-gray-500 text-sm z-50 shadow">
+      <p>&copy; 2025 Nova Prime Inc. All rights reserved.</p>
+      <div class="space-x-4">
+        <a href="privacy" class="hover:text-green-600">Privacy</a>
+        <a href="terms" class="hover:text-green-600">Terms</a>
+        <a href="help" class="hover:text-green-600">Help</a>
+      </div>
+    </div>
+  </footer>
+    
+</body>
+</html>

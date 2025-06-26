@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nova Prime | My Bids</title>
+  <link rel="icon" type="image/png" href="nova_favicon.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    #notifyToast {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background-color: #16a34a;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      display: none;
+      z-index: 9999;
+      font-weight: 600;
+      min-width: 250px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 99999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 2rem;
+      border: 1px solid #ccc;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 0.5rem;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<!-- ✅ Nova Prime Fixed Header -->
+<header class="fixed top-0 left-0 w-full z-50 bg-white shadow p-4 flex items-center justify-between">
+  <div class="text-xl font-bold text-green-600">Nova Prime</div>
+  <h1 class="text-lg font-semibold text-gray-700"></h1>
+</header>
+
+<!-- ✅ Main Content (Offset with margin to avoid header overlap) -->
+<div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md mt-24">
+  <h1 class="text-2xl font-bold text-green-600 mb-6">My Bids</h1>
+  <div id="bidsContainer" class="space-y-4">
+    <!-- Dynamic bid items go here -->
+  </div>
+</div> 
+
+  <div id="notifyToast">Payment verified successfully, Your account has been funded!</div>
+  <audio id="notifySound" src="https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg" preload="auto"></audio>
+
+  <!-- Modal -->
+  <div id="verificationModal" class="modal">
+    <div class="modal-content">
+      <h2 class="text-lg font-semibold mb-4">Enter Verification Code</h2>
+      <input id="verificationInput" type="text" placeholder="Code" class="w-full px-3 py-2 mb-4 border rounded" />
+      <div class="flex justify-end space-x-2">
+        <button onclick="closeModal()" class="bg-gray-400 text-white px-4 py-2 rounded">Cancel</button>
+        <button onclick="confirmVerification()" class="bg-green-600 text-white px-4 py-2 rounded">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const verificationCode = 'PAY1234';
+  let selectedBidIndex = null;
+
+  let bids = JSON.parse(localStorage.getItem('bids') || '[]');
+  const bidsContainer = document.getElementById('bidsContainer');
+  const notifyToast = document.getElementById('notifyToast');
+  const notifySound = document.getElementById('notifySound');
+
+  const modal = document.getElementById('verificationModal');
+  const verificationInput = document.getElementById('verificationInput');
+
+  function openModal(index) {
+    selectedBidIndex = index;
+    verificationInput.value = '';
+    modal.style.display = 'block';
+  }
+
+  function closeModal() {
+    modal.style.display = 'none';
+    selectedBidIndex = null;
+  }
+
+  function confirmVerification() {
+    const input = verificationInput.value.trim();
+    if (input === verificationCode && selectedBidIndex !== null) {
+      let bid = bids[selectedBidIndex];
+      if (bid.status === 'Paid') return;
+
+      bids[selectedBidIndex].status = 'Paid';
+      let balance = parseFloat(localStorage.getItem('balance') || '0');
+      balance += parseFloat(bid.amount);
+      localStorage.setItem('balance', balance.toFixed(2));
+
+      const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
+      transactions.unshift({
+        id: bid.taskId,
+        type: 'Task Payment',
+        amount: bid.amount,
+        date: bid.date,
+        time: bid.time,
+        status: 'Paid'
+      });
+      localStorage.setItem('transactions', JSON.stringify(transactions));
+
+      const paidTasks = JSON.parse(localStorage.getItem('paidTasks') || '[]');
+      if (!paidTasks.some(t => t.id === bid.taskId)) {
+        paidTasks.push({
+          id: bid.taskId,
+          amount: bid.amount,
+          date: bid.date,
+          time: bid.time
+        });
+        localStorage.setItem('paidTasks', JSON.stringify(paidTasks));
+      }
+
+      localStorage.setItem('bids', JSON.stringify(bids));
+      renderBids();
+      closeModal();
+      showNotification('Payment verified successfully, Your account has been funded!');
+      setTimeout(() => window.location.href = 'account', 1500);
+    } else {
+      verificationInput.classList.add('border-red-500');
+    }
+  }
+
+  function formatDateTime(dateStr, timeStr) {
+    return `${dateStr} ${timeStr}`;
+  }
+
+  function showNotification(message) {
+    notifyToast.textContent = message;
+    notifyToast.style.display = 'block';
+    notifySound.play();
+    setTimeout(() => {
+      notifyToast.style.display = 'none';
+    }, 4000);
+  }
+
+  function renderBids() {
+    bidsContainer.innerHTML = '';
+    if (bids.length === 0) {
+      bidsContainer.innerHTML = '<p class="text-gray-500">No bids placed yet.</p>';
+      return;
+    }
+
+    bids.sort((a, b) => (a.status === 'Paid') - (b.status === 'Paid'));
+
+    bids.forEach((bid, index) => {
+      const statusColor = bid.status === 'Paid' ? 'text-green-600' : 'text-red-600';
+      const statusText = bid.status;
+
+      const bidEl = document.createElement('div');
+      bidEl.className = 'flex justify-between items-center border rounded p-4 bg-gray-50 shadow-sm';
+
+      bidEl.innerHTML = `
+        <div class="flex-1">
+          <p><span class="font-semibold">Task ID:</span> ${bid.taskId}</p>
+          <p><span class="font-semibold">Amount:</span> $${bid.amount}</p>
+          <p><span class="font-semibold">Date & Time:</span> ${formatDateTime(bid.date, bid.time)}</p>
+          <p><span class="font-semibold">Status:</span> <span class="${statusColor}">${statusText}</span></p>
+        </div>
+        <div class="ml-4">
+          ${bid.status === 'Paid' ? '' : `
+            <button 
+              class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+              onclick="openModal(${index})"
+            >Verify</button>
+          `}
+        </div>
+      `;
+
+      bidsContainer.appendChild(bidEl);
+    });
+  }
+
+  renderBids();
+</script>
+<!-- Include Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+  <footer class="bg-white border-t mt-12">
+    <footer class="fixed bottom-0 left-0 w-full bg-white text-center py-4 text-gray-500 text-sm z-50 shadow">
+      <p>&copy; 2025 Nova Prime Inc. All rights reserved.</p>
+      <div class="space-x-4">
+        <a href="privacy" class="hover:text-green-600">Privacy</a>
+        <a href="terms" class="hover:text-green-600">Terms</a>
+        <a href="help" class="hover:text-green-600">Help</a>
+      </div>
+    </div>
+  </footer>
+    </body>
+</html>
