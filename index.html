@@ -6,10 +6,11 @@
   <title>Zoom Call UI</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+<body class="bg-gray-900 text-white min-h-screen flex flex-col justify-between p-4">
 
-  <div class="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-    
+  <!-- Video Grid -->
+  <div class="w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+
     <!-- Host -->
     <div class="bg-gray-800 rounded-lg p-3 flex flex-col items-center">
       <img src="https://i.pravatar.cc/100?img=10" alt="Host" class="w-24 h-24 rounded-full mb-3 border-4 border-blue-500">
@@ -51,6 +52,49 @@
       <h2 class="text-lg font-bold">Brian Odhiambo</h2>
       <p class="text-sm text-gray-300 mt-1">+254 755 445566</p>
     </div>
+  </div>
+
+  <!-- Control Bar -->
+  <div class="w-full max-w-4xl mx-auto mt-6 bg-gray-800 rounded-full px-6 py-3 flex justify-center space-x-6 items-center shadow-lg">
+    <!-- Mute -->
+    <button class="flex flex-col items-center text-white hover:text-blue-400">
+      <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+        d="M9 5l6 4v6l-6 4V5z" /></svg>
+      <span class="text-xs">Mute</span>
+    </button>
+
+    <!-- Video -->
+    <button class="flex flex-col items-center text-white hover:text-green-400">
+      <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+        d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14v2a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h8a2 2 0 012 2v2z" /></svg>
+      <span class="text-xs">Video</span>
+    </button>
+
+    <!-- Share Screen -->
+    <button class="flex flex-col items-center text-white hover:text-yellow-400">
+      <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+        d="M4 4h16v12H4zM8 20h8" /></svg>
+      <span class="text-xs">Share</span>
+    </button>
+
+    <!-- Add User -->
+    <button class="flex flex-col items-center text-white hover:text-indigo-400">
+      <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+        d="M18 9v6m3-3h-6m-4 6a4 4 0 10-8 0 4 4 0 008 0zm0 0v-1a4 4 0 018 0v1" /></svg>
+      <span class="text-xs">Add</span>
+    </button>
+
+    <!-- End Call -->
+    <button class="flex flex-col items-center text-red-500 hover:text-red-700">
+      <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+        d="M20 13c0-1.38-1.79-2.5-4-2.5s-4 1.12-4 2.5 1.79 2.5 4 2.5 4-1.12 4-2.5zM4 4v16" /></svg>
+      <span class="text-xs">End</span>
+    </button>
   </div>
 
 </body>
