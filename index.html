@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Business Call UI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white h-screen flex flex-col items-center justify-center p-4">
+
+  <!-- Call Screen -->
+  <div class="w-full max-w-md bg-black rounded-xl shadow-lg p-4 space-y-4">
+
+    <!-- Row 1 -->
+    <div class="grid grid-cols-2 gap-2">
+      <!-- Martin Champ -->
+      <div class="bg-gray-800 p-3 rounded-lg flex flex-col items-center text-center">
+        <img src="https://i.pravatar.cc/80?img=1" alt="Martin" class="w-16 h-16 rounded-full mb-2 border-2 border-white">
+        <h2 class="text-sm font-bold text-orange-400">Martin Champ</h2>
+      </div>
+
+      <!-- Phone Number with waveform -->
+      <div class="bg-blue-900 p-3 rounded-lg flex flex-col items-center text-center">
+        <img src="https://i.pravatar.cc/80?img=5" alt="Caller" class="w-16 h-16 rounded-full mb-2 border-2 border-white">
+        <div class="w-full h-2 bg-blue-400 rounded-full animate-pulse mb-1"></div>
+        <h2 class="text-xs text-white mt-1">+254 757 708520</h2>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="bg-gray-800 p-3 rounded-lg flex flex-col items-center text-center">
+      <img src="https://i.pravatar.cc/80?img=4" alt="Simon" class="w-16 h-16 rounded-full mb-2 border-2 border-white">
+      <h2 class="text-sm font-bold text-purple-400">Simon Team Martin</h2>
+    </div>
+
+    <!-- Call Footer -->
+    <div class="flex items-center justify-between mt-4 px-2">
+      <p class="text-gray-300 text-sm italic">Business Calls 🎙️📞✅✅</p>
+      <div class="space-x-3">
+        <button class="bg-gray-700 p-2 rounded-full">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+            d="M15 10l4.553 2.276A1 1 0 0120 13.118V16.5a2.5 2.5 0 01-2.5 2.5h-1a1 1 0 01-1-1v-3a1 1 0 011-1h.5"></path>
+          </svg>
+        </button>
+        <button class="bg-red-600 p-2 rounded-full">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
