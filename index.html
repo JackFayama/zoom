@@ -1,93 +1,1849 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zoom Call UI</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jumia - Online Shopping for Electronics, Phones, Fashion & more</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#f68b1e',secondary:'#282828'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        
+        /* Custom styles */
+        .flash-sale-timer {
+            background: linear-gradient(45deg, #f68b1e, #ff9f4a);
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .category-card {
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Custom range slider */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #f68b1e;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        /* Custom checkbox */
+        .custom-checkbox {
+            position: relative;
+            padding-left: 28px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+        }
+        
+        .custom-checkbox:hover input ~ .checkmark {
+            background-color: #f9fafb;
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: #f68b1e;
+            border-color: #f68b1e;
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .custom-checkbox .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 6px;
+            height: 11px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        /* Custom switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e5e7eb;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #f68b1e;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+        
+        /* Remove number input arrows */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        
+        /* Banner carousel */
+        .carousel {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-item {
+            min-width: 100%;
+        }
+        
+        /* Horizontal scroll containers */
+        .scroll-container {
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
-
-  <!-- Main Container -->
-  <div class="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-
-    <!-- Nova Prime Inc with Speaking Effect -->
-    <div class="bg-gray-800 p-3 flex flex-col items-center rounded-xl shadow relative">
-  <img src="nova_favicon.png" class="w-24 h-24 rounded-full mb-2 object-cover border-4 border-blue-500" />
-  <h2 class="text-lg font-bold text-blue-400">Nova Prime Inc 
-    <span class="text-xs bg-blue-600 text-white px-2 py-1 rounded ml-1">Host</span>
-  </h2>
-  <span class="mt-1 text-xs bg-sky-700 text-white px-3 py-1 rounded-full font-semibold animate-pulse">
-    🎙️ Speaking now...
-  </span>
-  <p class="text-sm text-gray-300 mt-1">+1 700 200200</p>
-</div>
-
-    <!-- Other Participants -->
-    <div class="bg-gray-800 p-3 flex flex-col items-center rounded-xl shadow">
-      <img src="p2.jpg" class="w-24 h-24 rounded-full mb-2 object-cover" />
-      <h2 class="text-lg font-bold">Rose Mushfaddi</h2>
-      <p class="text-sm text-gray-300 mt-1">+254 711 802416</p>
-    </div>
-    <div class="bg-gray-800 p-3 flex flex-col items-center rounded-xl shadow">
-      <img src="p8.jpg" class="w-24 h-24 rounded-full mb-2 object-cover" />
-      <h2 class="text-lg font-bold">Azziad Nafula</h2>
-      <p class="text-sm text-gray-300 mt-1">+254 702 992674</p>
-    </div>
-    <div class="bg-gray-800 p-3 flex flex-col items-center rounded-xl shadow">
-      <img src="p7.jpg" class="w-24 h-24 rounded-full mb-2 object-cover" />
-      <h2 class="text-lg font-bold">Jacob Amaitsa</h2>
-      <p class="text-sm text-gray-300 mt-1">+254 790 408472</p>
-    </div>
-    <div class="bg-gray-800 p-3 flex flex-col items-center rounded-xl shadow">
-      <img src="p9.jpg" class="w-24 h-24 rounded-full mb-2 object-cover" />
-      <h2 class="text-lg font-bold">Azeezah Hashim</h2>
-      <p class="text-sm text-gray-300 mt-1">+254 744 622864</p>
-    </div>
-    <div class="bg-gray-800 p-3 flex flex-col items-center rounded-xl shadow">
-      <img src="p10.jpg" class="w-24 h-24 rounded-full mb-2 object-cover" />
-      <h2 class="text-lg font-bold">Brian Odhiambo</h2>
-      <p class="text-sm text-gray-300 mt-1">+254 702 107668</p>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-white shadow-lg z-50 p-4 flex items-center justify-between">
+        <div class="text-sm text-gray-700">
+            We use cookies to improve your experience. By using our site, you agree to our <a href="#" class="text-primary hover:underline">cookie policy</a>.
+        </div>
+        <div class="flex gap-2">
+            <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-button whitespace-nowrap text-sm">Customize</button>
+            <button id="accept-cookies" class="px-4 py-2 bg-primary text-white rounded-button whitespace-nowrap text-sm">Accept All</button>
+        </div>
     </div>
 
-    <!-- Controls Bar -->
-    <div class="col-span-1 sm:col-span-2 md:col-span-3 bg-gray-800 px-6 py-4 flex justify-around items-center rounded-xl border-t border-gray-700 shadow-xl">
-      
-      <!-- Mute -->
-      <button class="flex flex-col items-center text-sky-400 hover:text-sky-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6"/></svg>
-        <span class="text-xs">Mute</span>
-      </button>
+    <!-- Header - Fixed Navigation -->
+    <header class="sticky top-0 z-40 bg-white shadow-md">
+        <!-- Top Navigation -->
+        <div class="bg-white border-b border-gray-200">
+            <div class="container mx-auto px-4 py-2 flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#" class="text-primary font-['Pacifico'] text-2xl">logo</a>
+                
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-2xl mx-4 relative">
+                    <div class="flex">
+                        <div class="relative">
+                            <button id="category-dropdown-btn" class="h-10 px-4 bg-gray-100 border border-gray-300 rounded-l-button text-gray-700 flex items-center whitespace-nowrap">
+                                <span>All Categories</span>
+                                <div class="w-5 h-5 ml-2 flex items-center justify-center">
+                                    <i class="ri-arrow-down-s-line"></i>
+                                </div>
+                            </button>
+                            <div id="category-dropdown" class="absolute top-full left-0 mt-1 w-56 bg-white border border-gray-200 rounded shadow-lg z-10 hidden">
+                                <ul class="py-1">
+                                    <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Supermarket</a></li>
+                                    <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Health & Beauty</a></li>
+                                    <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Home & Office</a></li>
+                                    <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Phones & Tablets</a></li>
+                                    <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Computing</a></li>
+                                    <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Electronics</a></li>
+                                    <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Fashion</a></li>
+                                    <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Baby Products</a></li>
+                                    <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Gaming</a></li>
+                                    <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Sporting Goods</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="relative flex-1">
+                            <input type="text" placeholder="Search products, brands and categories" class="w-full h-10 px-4 py-2 border border-gray-300 border-l-0 border-r-0 focus:outline-none text-sm">
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-search-line text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="h-10 px-4 bg-primary text-white rounded-r-button whitespace-nowrap">
+                            SEARCH
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Account & Cart -->
+                <div class="flex items-center space-x-6">
+                    <!-- Account -->
+                    <div class="relative group">
+                        <a href="#" class="flex flex-col items-center text-gray-700 hover:text-primary">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-user-line"></i>
+                            </div>
+                            <span class="text-xs mt-1">Account</span>
+                        </a>
+                        <div class="absolute right-0 top-full mt-1 w-64 bg-white border border-gray-200 rounded shadow-lg z-10 hidden group-hover:block">
+                            <div class="p-4 border-b border-gray-200">
+                                <div class="flex justify-between mb-2">
+                                    <a href="#" class="px-4 py-2 bg-primary text-white rounded-button text-sm whitespace-nowrap">SIGN IN</a>
+                                    <a href="#" class="px-4 py-2 border border-primary text-primary rounded-button text-sm whitespace-nowrap">JOIN</a>
+                                </div>
+                                <div class="text-xs text-gray-500 mt-2">
+                                    <a href="#" class="hover:underline">Login</a> with your existing social media account
+                                </div>
+                                <div class="flex space-x-2 mt-2">
+                                    <a href="#" class="w-8 h-8 flex items-center justify-center bg-blue-600 text-white rounded-full">
+                                        <i class="ri-facebook-fill"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 flex items-center justify-center bg-blue-400 text-white rounded-full">
+                                        <i class="ri-twitter-fill"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 flex items-center justify-center bg-red-600 text-white rounded-full">
+                                        <i class="ri-google-fill"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <ul class="py-2">
+                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a></li>
+                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Orders</a></li>
+                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Saved Items</a></li>
+                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Vouchers</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Help -->
+                    <div class="relative group">
+                        <a href="#" class="flex flex-col items-center text-gray-700 hover:text-primary">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-question-line"></i>
+                            </div>
+                            <span class="text-xs mt-1">Help</span>
+                        </a>
+                        <div class="absolute right-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded shadow-lg z-10 hidden group-hover:block">
+                            <ul class="py-2">
+                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Help Center</a></li>
+                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Place & Track Order</a></li>
+                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Order Cancellation</a></li>
+                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Returns & Refunds</a></li>
+                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Payment & Jumia Account</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Cart -->
+                    <a href="#" class="flex flex-col items-center text-gray-700 hover:text-primary relative">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="ri-shopping-cart-line"></i>
+                        </div>
+                        <span class="text-xs mt-1">Cart</span>
+                        <span class="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-primary text-white text-xs rounded-full">3</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Categories Navigation -->
+        <nav class="bg-white">
+            <div class="container mx-auto px-4">
+                <ul class="flex overflow-x-auto space-x-6 py-2 text-sm font-medium text-gray-700 no-scrollbar">
+                    <li><a href="#" class="whitespace-nowrap hover:text-primary">Supermarket</a></li>
+                    <li><a href="#" class="whitespace-nowrap hover:text-primary">Health & Beauty</a></li>
+                    <li><a href="#" class="whitespace-nowrap hover:text-primary">Home & Office</a></li>
+                    <li><a href="#" class="whitespace-nowrap hover:text-primary">Phones & Tablets</a></li>
+                    <li><a href="#" class="whitespace-nowrap hover:text-primary">Computing</a></li>
+                    <li><a href="#" class="whitespace-nowrap hover:text-primary">Electronics</a></li>
+                    <li><a href="#" class="whitespace-nowrap hover:text-primary">Fashion</a></li>
+                    <li><a href="#" class="whitespace-nowrap hover:text-primary">Baby Products</a></li>
+                    <li><a href="#" class="whitespace-nowrap hover:text-primary">Gaming</a></li>
+                    <li><a href="#" class="whitespace-nowrap hover:text-primary">Sporting Goods</a></li>
+                    <li><a href="#" class="whitespace-nowrap hover:text-primary">Automobile</a></li>
+                    <li><a href="#" class="whitespace-nowrap hover:text-primary">Other Categories</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-      <!-- Video -->
-      <button class="flex flex-col items-center text-emerald-400 hover:text-emerald-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l19.8 19.8M15 15.7V17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2h.3m5.4 0H13a2 2 0 0 1 2 2v3.3l1 1L22 7v10"/></svg>
-        <span class="text-xs">Video</span>
-      </button>
+    <main class="pt-4 pb-12">
+        <!-- Hero Banner Section -->
+        <section class="container mx-auto px-4 mb-6">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="w-full md:w-3/4">
+                    <div class="carousel rounded relative h-[300px] md:h-[400px]">
+                        <div class="carousel-inner h-full">
+                            <div class="carousel-item h-full">
+                                <div class="w-full h-full bg-cover bg-center rounded" style="background-image: url('https://readdy.ai/api/search-image?query=modern%20e-commerce%20promotional%20banner%20showing%20a%20diverse%20range%20of%20electronics%2C%20fashion%20items%2C%20and%20home%20goods%20arranged%20in%20an%20attractive%20layout%20with%20bold%20text%20announcing%20special%20discounts%20and%20promotions%2C%20vibrant%20colors%2C%20professional%20product%20photography&width=1200&height=400&seq=jumia1&orientation=landscape')"></div>
+                            </div>
+                            <div class="carousel-item h-full">
+                                <div class="w-full h-full bg-cover bg-center rounded" style="background-image: url('https://readdy.ai/api/search-image?query=e-commerce%20promotional%20banner%20featuring%20smartphones%20and%20electronic%20devices%20with%20price%20tags%20and%20discount%20labels%2C%20clean%20modern%20design%20with%20orange%20accent%20colors%2C%20professional%20product%20photography%20on%20white%20background&width=1200&height=400&seq=jumia2&orientation=landscape')"></div>
+                            </div>
+                            <div class="carousel-item h-full">
+                                <div class="w-full h-full bg-cover bg-center rounded" style="background-image: url('https://readdy.ai/api/search-image?query=fashion%20sale%20promotional%20banner%20showing%20stylish%20clothing%20and%20accessories%20for%20men%20and%20women%2C%20modern%20clean%20design%20with%20discount%20text%20overlay%2C%20professional%20fashion%20photography%20on%20neutral%20background&width=1200&height=400&seq=jumia3&orientation=landscape')"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Carousel Navigation -->
+                        <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+                            <button class="w-3 h-3 rounded-full bg-white opacity-50 carousel-indicator active" data-index="0"></button>
+                            <button class="w-3 h-3 rounded-full bg-white opacity-50 carousel-indicator" data-index="1"></button>
+                            <button class="w-3 h-3 rounded-full bg-white opacity-50 carousel-indicator" data-index="2"></button>
+                        </div>
+                        
+                        <!-- Carousel Controls -->
+                        <button class="absolute left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/70 rounded-full text-gray-800 hover:bg-white carousel-prev">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-arrow-left-s-line"></i>
+                            </div>
+                        </button>
+                        <button class="absolute right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/70 rounded-full text-gray-800 hover:bg-white carousel-next">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-arrow-right-s-line"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="w-full md:w-1/4 flex flex-col gap-4">
+                    <div class="h-[195px] bg-cover bg-center rounded" style="background-image: url('https://readdy.ai/api/search-image?query=home%20appliances%20promotional%20banner%20with%20kitchen%20appliances%20and%20home%20electronics%20on%20clean%20white%20background%20with%20discount%20text%2C%20professional%20product%20photography&width=400&height=195&seq=jumia4&orientation=landscape')"></div>
+                    <div class="h-[195px] bg-cover bg-center rounded" style="background-image: url('https://readdy.ai/api/search-image?query=beauty%20products%20promotional%20banner%20showing%20skincare%20and%20makeup%20items%20arranged%20attractively%20with%20discount%20text%2C%20clean%20modern%20design%2C%20professional%20product%20photography%20on%20light%20background&width=400&height=195&seq=jumia5&orientation=landscape')"></div>
+                </div>
+            </div>
+        </section>
 
-      <!-- Share Screen -->
-      <button class="flex flex-col items-center text-yellow-400 hover:text-yellow-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-        <span class="text-xs">Share</span>
-      </button>
+        <!-- Quick Access Categories -->
+        <section class="container mx-auto px-4 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Popular Categories</h2>
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+                <a href="#" class="category-card flex flex-col items-center p-3 bg-white rounded shadow-sm hover:shadow">
+                    <div class="w-16 h-16 flex items-center justify-center mb-2 bg-gray-100 rounded-full">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-t-shirt-line text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                    <span class="text-sm text-center">Fashion</span>
+                </a>
+                <a href="#" class="category-card flex flex-col items-center p-3 bg-white rounded shadow-sm hover:shadow">
+                    <div class="w-16 h-16 flex items-center justify-center mb-2 bg-gray-100 rounded-full">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-smartphone-line text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                    <span class="text-sm text-center">Phones</span>
+                </a>
+                <a href="#" class="category-card flex flex-col items-center p-3 bg-white rounded shadow-sm hover:shadow">
+                    <div class="w-16 h-16 flex items-center justify-center mb-2 bg-gray-100 rounded-full">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-computer-line text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                    <span class="text-sm text-center">Computing</span>
+                </a>
+                <a href="#" class="category-card flex flex-col items-center p-3 bg-white rounded shadow-sm hover:shadow">
+                    <div class="w-16 h-16 flex items-center justify-center mb-2 bg-gray-100 rounded-full">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-tv-line text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                    <span class="text-sm text-center">Electronics</span>
+                </a>
+                <a href="#" class="category-card flex flex-col items-center p-3 bg-white rounded shadow-sm hover:shadow">
+                    <div class="w-16 h-16 flex items-center justify-center mb-2 bg-gray-100 rounded-full">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-home-line text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                    <span class="text-sm text-center">Home & Office</span>
+                </a>
+                <a href="#" class="category-card flex flex-col items-center p-3 bg-white rounded shadow-sm hover:shadow">
+                    <div class="w-16 h-16 flex items-center justify-center mb-2 bg-gray-100 rounded-full">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-shopping-basket-line text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                    <span class="text-sm text-center">Supermarket</span>
+                </a>
+                <a href="#" class="category-card flex flex-col items-center p-3 bg-white rounded shadow-sm hover:shadow">
+                    <div class="w-16 h-16 flex items-center justify-center mb-2 bg-gray-100 rounded-full">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-heart-pulse-line text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                    <span class="text-sm text-center">Health & Beauty</span>
+                </a>
+                <a href="#" class="category-card flex flex-col items-center p-3 bg-white rounded shadow-sm hover:shadow">
+                    <div class="w-16 h-16 flex items-center justify-center mb-2 bg-gray-100 rounded-full">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-gamepad-line text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                    <span class="text-sm text-center">Gaming</span>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Flash Sales Section -->
+        <section class="container mx-auto px-4 mb-8">
+            <div class="bg-white rounded shadow p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <h2 class="text-xl font-semibold mr-4">Flash Sales</h2>
+                        <div class="flash-sale-timer rounded px-3 py-1 text-white flex items-center">
+                            <div class="w-5 h-5 flex items-center justify-center mr-1">
+                                <i class="ri-time-line"></i>
+                            </div>
+                            <span id="flash-sale-timer" class="text-sm font-medium">23:45:12</span>
+                        </div>
+                    </div>
+                    <a href="#" class="text-primary text-sm hover:underline">SEE ALL</a>
+                </div>
+                
+                <div class="scroll-container -mx-2">
+                    <div class="flex space-x-4 px-2 pb-2">
+                        <!-- Flash Sale Product 1 -->
+                        <div class="product-card min-w-[180px] max-w-[180px] bg-white border border-gray-200 rounded overflow-hidden">
+                            <div class="relative">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20modern%20smartphone%20with%20clean%20white%20background%2C%20showing%20the%20device%20from%20front%20view%20with%20screen%20on%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=180&height=180&seq=jumia6&orientation=squarish" alt="Smartphone" class="w-full h-[180px] object-cover object-top">
+                                <div class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">-25%</div>
+                            </div>
+                            <div class="p-3">
+                                <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Samsung Galaxy A54 - 6.4" 8GB RAM 128GB ROM</h3>
+                                <div class="mt-1">
+                                    <span class="text-lg font-semibold">$299.99</span>
+                                    <span class="text-sm text-gray-500 line-through ml-1">$399.99</span>
+                                </div>
+                                <div class="mt-2">
+                                    <div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-red-500 rounded-full" style="width: 75%"></div>
+                                    </div>
+                                    <div class="text-xs text-gray-500 mt-1">75% Sold</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Flash Sale Product 2 -->
+                        <div class="product-card min-w-[180px] max-w-[180px] bg-white border border-gray-200 rounded overflow-hidden">
+                            <div class="relative">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20wireless%20headphones%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=180&height=180&seq=jumia7&orientation=squarish" alt="Headphones" class="w-full h-[180px] object-cover object-top">
+                                <div class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">-40%</div>
+                            </div>
+                            <div class="p-3">
+                                <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Sony WH-1000XM4 Wireless Noise Cancelling Headphones</h3>
+                                <div class="mt-1">
+                                    <span class="text-lg font-semibold">$179.99</span>
+                                    <span class="text-sm text-gray-500 line-through ml-1">$299.99</span>
+                                </div>
+                                <div class="mt-2">
+                                    <div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-red-500 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                    <div class="text-xs text-gray-500 mt-1">85% Sold</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Flash Sale Product 3 -->
+                        <div class="product-card min-w-[180px] max-w-[180px] bg-white border border-gray-200 rounded overflow-hidden">
+                            <div class="relative">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20smartwatch%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%20with%20screen%20on%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=180&height=180&seq=jumia8&orientation=squarish" alt="Smartwatch" class="w-full h-[180px] object-cover object-top">
+                                <div class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">-30%</div>
+                            </div>
+                            <div class="p-3">
+                                <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Apple Watch Series 7 GPS 41mm Aluminum Case</h3>
+                                <div class="mt-1">
+                                    <span class="text-lg font-semibold">$279.99</span>
+                                    <span class="text-sm text-gray-500 line-through ml-1">$399.99</span>
+                                </div>
+                                <div class="mt-2">
+                                    <div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-red-500 rounded-full" style="width: 60%"></div>
+                                    </div>
+                                    <div class="text-xs text-gray-500 mt-1">60% Sold</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Flash Sale Product 4 -->
+                        <div class="product-card min-w-[180px] max-w-[180px] bg-white border border-gray-200 rounded overflow-hidden">
+                            <div class="relative">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20laptop%20computer%20on%20clean%20white%20background%2C%20showing%20the%20device%20from%20front%20view%20with%20screen%20on%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=180&height=180&seq=jumia9&orientation=squarish" alt="Laptop" class="w-full h-[180px] object-cover object-top">
+                                <div class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">-20%</div>
+                            </div>
+                            <div class="p-3">
+                                <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Dell XPS 13 - Intel Core i7, 16GB RAM, 512GB SSD</h3>
+                                <div class="mt-1">
+                                    <span class="text-lg font-semibold">$999.99</span>
+                                    <span class="text-sm text-gray-500 line-through ml-1">$1,249.99</span>
+                                </div>
+                                <div class="mt-2">
+                                    <div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-red-500 rounded-full" style="width: 45%"></div>
+                                    </div>
+                                    <div class="text-xs text-gray-500 mt-1">45% Sold</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Flash Sale Product 5 -->
+                        <div class="product-card min-w-[180px] max-w-[180px] bg-white border border-gray-200 rounded overflow-hidden">
+                            <div class="relative">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20bluetooth%20speaker%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=180&height=180&seq=jumia10&orientation=squarish" alt="Bluetooth Speaker" class="w-full h-[180px] object-cover object-top">
+                                <div class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">-35%</div>
+                            </div>
+                            <div class="p-3">
+                                <h3 class="text-sm text-gray-800 line-clamp-2 h-10">JBL Charge 5 Portable Waterproof Bluetooth Speaker</h3>
+                                <div class="mt-1">
+                                    <span class="text-lg font-semibold">$129.99</span>
+                                    <span class="text-sm text-gray-500 line-through ml-1">$199.99</span>
+                                </div>
+                                <div class="mt-2">
+                                    <div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-red-500 rounded-full" style="width: 70%"></div>
+                                    </div>
+                                    <div class="text-xs text-gray-500 mt-1">70% Sold</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Flash Sale Product 6 -->
+                        <div class="product-card min-w-[180px] max-w-[180px] bg-white border border-gray-200 rounded overflow-hidden">
+                            <div class="relative">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20digital%20camera%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=180&height=180&seq=jumia11&orientation=squarish" alt="Digital Camera" class="w-full h-[180px] object-cover object-top">
+                                <div class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">-25%</div>
+                            </div>
+                            <div class="p-3">
+                                <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Canon EOS M50 Mark II Mirrorless Camera with 15-45mm Lens</h3>
+                                <div class="mt-1">
+                                    <span class="text-lg font-semibold">$599.99</span>
+                                    <span class="text-sm text-gray-500 line-through ml-1">$799.99</span>
+                                </div>
+                                <div class="mt-2">
+                                    <div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-red-500 rounded-full" style="width: 55%"></div>
+                                    </div>
+                                    <div class="text-xs text-gray-500 mt-1">55% Sold</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Top Deals Section -->
+        <section class="container mx-auto px-4 mb-8">
+            <div class="bg-white rounded shadow p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold">Top Deals</h2>
+                    <a href="#" class="text-primary text-sm hover:underline">SEE ALL</a>
+                </div>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                    <!-- Product 1 -->
+                    <div class="product-card bg-white border border-gray-200 rounded overflow-hidden">
+                        <div class="relative">
+                            <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%204K%20smart%20TV%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%20with%20screen%20on%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=200&height=200&seq=jumia12&orientation=squarish" alt="Smart TV" class="w-full h-[200px] object-cover object-top">
+                            <div class="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">-15%</div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Samsung 55" Crystal UHD 4K Smart TV</h3>
+                            <div class="mt-1">
+                                <span class="text-lg font-semibold">$499.99</span>
+                                <span class="text-sm text-gray-500 line-through ml-1">$589.99</span>
+                            </div>
+                            <div class="flex items-center mt-1">
+                                <div class="flex text-yellow-400">
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-half-line"></i>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-1">(124)</span>
+                            </div>
+                            <div class="mt-2 flex items-center text-xs text-green-600">
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-truck-line"></i>
+                                </div>
+                                <span class="ml-1">Free Shipping</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 2 -->
+                    <div class="product-card bg-white border border-gray-200 rounded overflow-hidden">
+                        <div class="relative">
+                            <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20coffee%20maker%20machine%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=200&height=200&seq=jumia13&orientation=squarish" alt="Coffee Maker" class="w-full h-[200px] object-cover object-top">
+                            <div class="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">-20%</div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Nespresso Vertuo Next Coffee Machine</h3>
+                            <div class="mt-1">
+                                <span class="text-lg font-semibold">$149.99</span>
+                                <span class="text-sm text-gray-500 line-through ml-1">$189.99</span>
+                            </div>
+                            <div class="flex items-center mt-1">
+                                <div class="flex text-yellow-400">
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-line"></i>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-1">(89)</span>
+                            </div>
+                            <div class="mt-2 flex items-center text-xs text-green-600">
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-truck-line"></i>
+                                </div>
+                                <span class="ml-1">Free Shipping</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 3 -->
+                    <div class="product-card bg-white border border-gray-200 rounded overflow-hidden">
+                        <div class="relative">
+                            <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20vacuum%20cleaner%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20side%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=200&height=200&seq=jumia14&orientation=squarish" alt="Vacuum Cleaner" class="w-full h-[200px] object-cover object-top">
+                            <div class="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">-25%</div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Dyson V11 Absolute Cordless Vacuum Cleaner</h3>
+                            <div class="mt-1">
+                                <span class="text-lg font-semibold">$499.99</span>
+                                <span class="text-sm text-gray-500 line-through ml-1">$669.99</span>
+                            </div>
+                            <div class="flex items-center mt-1">
+                                <div class="flex text-yellow-400">
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-1">(156)</span>
+                            </div>
+                            <div class="mt-2 flex items-center text-xs text-green-600">
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-truck-line"></i>
+                                </div>
+                                <span class="ml-1">Free Shipping</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 4 -->
+                    <div class="product-card bg-white border border-gray-200 rounded overflow-hidden">
+                        <div class="relative">
+                            <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20blender%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=200&height=200&seq=jumia15&orientation=squarish" alt="Blender" class="w-full h-[200px] object-cover object-top">
+                            <div class="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">-30%</div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Ninja Professional Countertop Blender</h3>
+                            <div class="mt-1">
+                                <span class="text-lg font-semibold">$89.99</span>
+                                <span class="text-sm text-gray-500 line-through ml-1">$129.99</span>
+                            </div>
+                            <div class="flex items-center mt-1">
+                                <div class="flex text-yellow-400">
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-half-line"></i>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-1">(78)</span>
+                            </div>
+                            <div class="mt-2 flex items-center text-xs text-green-600">
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-truck-line"></i>
+                                </div>
+                                <span class="ml-1">Free Shipping</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 5 -->
+                    <div class="product-card bg-white border border-gray-200 rounded overflow-hidden">
+                        <div class="relative">
+                            <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20microwave%20oven%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=200&height=200&seq=jumia16&orientation=squarish" alt="Microwave" class="w-full h-[200px] object-cover object-top">
+                            <div class="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">-18%</div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Samsung 1.1 cu. ft. Countertop Microwave</h3>
+                            <div class="mt-1">
+                                <span class="text-lg font-semibold">$129.99</span>
+                                <span class="text-sm text-gray-500 line-through ml-1">$159.99</span>
+                            </div>
+                            <div class="flex items-center mt-1">
+                                <div class="flex text-yellow-400">
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-half-line"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-line"></i>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-1">(62)</span>
+                            </div>
+                            <div class="mt-2 flex items-center text-xs text-green-600">
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-truck-line"></i>
+                                </div>
+                                <span class="ml-1">Free Shipping</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 6 -->
+                    <div class="product-card bg-white border border-gray-200 rounded overflow-hidden">
+                        <div class="relative">
+                            <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20an%20air%20fryer%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=200&height=200&seq=jumia17&orientation=squarish" alt="Air Fryer" class="w-full h-[200px] object-cover object-top">
+                            <div class="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">-22%</div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Philips Premium Digital Air Fryer XXL</h3>
+                            <div class="mt-1">
+                                <span class="text-lg font-semibold">$179.99</span>
+                                <span class="text-sm text-gray-500 line-through ml-1">$229.99</span>
+                            </div>
+                            <div class="flex items-center mt-1">
+                                <div class="flex text-yellow-400">
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-half-line"></i>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-1">(103)</span>
+                            </div>
+                            <div class="mt-2 flex items-center text-xs text-green-600">
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-truck-line"></i>
+                                </div>
+                                <span class="ml-1">Free Shipping</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Official Stores Section -->
+        <section class="container mx-auto px-4 mb-8">
+            <div class="bg-white rounded shadow p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold">Official Stores</h2>
+                    <a href="#" class="text-primary text-sm hover:underline">SEE ALL</a>
+                </div>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <a href="#" class="flex flex-col items-center p-4 border border-gray-200 rounded hover:shadow-md transition-shadow">
+                        <div class="w-16 h-16 flex items-center justify-center mb-2">
+                            <div class="w-12 h-12 flex items-center justify-center">
+                                <i class="ri-apple-fill text-4xl"></i>
+                            </div>
+                        </div>
+                        <span class="text-sm font-medium">Apple</span>
+                    </a>
+                    <a href="#" class="flex flex-col items-center p-4 border border-gray-200 rounded hover:shadow-md transition-shadow">
+                        <div class="w-16 h-16 flex items-center justify-center mb-2">
+                            <div class="w-12 h-12 flex items-center justify-center">
+                                <i class="ri-samsung-fill text-4xl"></i>
+                            </div>
+                        </div>
+                        <span class="text-sm font-medium">Samsung</span>
+                    </a>
+                    <a href="#" class="flex flex-col items-center p-4 border border-gray-200 rounded hover:shadow-md transition-shadow">
+                        <div class="w-16 h-16 flex items-center justify-center mb-2">
+                            <div class="w-12 h-12 flex items-center justify-center">
+                                <i class="ri-microsoft-fill text-4xl"></i>
+                            </div>
+                        </div>
+                        <span class="text-sm font-medium">Microsoft</span>
+                    </a>
+                    <a href="#" class="flex flex-col items-center p-4 border border-gray-200 rounded hover:shadow-md transition-shadow">
+                        <div class="w-16 h-16 flex items-center justify-center mb-2">
+                            <div class="w-12 h-12 flex items-center justify-center">
+                                <i class="ri-sony-fill text-4xl"></i>
+                            </div>
+                        </div>
+                        <span class="text-sm font-medium">Sony</span>
+                    </a>
+                    <a href="#" class="flex flex-col items-center p-4 border border-gray-200 rounded hover:shadow-md transition-shadow">
+                        <div class="w-16 h-16 flex items-center justify-center mb-2">
+                            <div class="w-12 h-12 flex items-center justify-center">
+                                <i class="ri-lg-fill text-4xl"></i>
+                            </div>
+                        </div>
+                        <span class="text-sm font-medium">LG</span>
+                    </a>
+                    <a href="#" class="flex flex-col items-center p-4 border border-gray-200 rounded hover:shadow-md transition-shadow">
+                        <div class="w-16 h-16 flex items-center justify-center mb-2">
+                            <div class="w-12 h-12 flex items-center justify-center">
+                                <i class="ri-nike-fill text-4xl"></i>
+                            </div>
+                        </div>
+                        <span class="text-sm font-medium">Nike</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Recommended For You Section -->
+        <section class="container mx-auto px-4 mb-8">
+            <div class="bg-white rounded shadow p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold">Recommended For You</h2>
+                    <a href="#" class="text-primary text-sm hover:underline">SEE ALL</a>
+                </div>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                    <!-- Recommended Product 1 -->
+                    <div class="product-card bg-white border border-gray-200 rounded overflow-hidden">
+                        <div class="relative">
+                            <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20pair%20of%20athletic%20shoes%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20side%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=200&height=200&seq=jumia18&orientation=squarish" alt="Athletic Shoes" class="w-full h-[200px] object-cover object-top">
+                            <div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-heart-line text-gray-400 hover:text-red-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Nike Air Zoom Pegasus 38 Running Shoes</h3>
+                            <div class="mt-1">
+                                <span class="text-lg font-semibold">$119.99</span>
+                            </div>
+                            <div class="flex items-center mt-1">
+                                <div class="flex text-yellow-400">
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-half-line"></i>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-1">(92)</span>
+                            </div>
+                            <div class="mt-2 flex items-center text-xs text-blue-600">
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-store-2-line"></i>
+                                </div>
+                                <span class="ml-1">Official Store</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recommended Product 2 -->
+                    <div class="product-card bg-white border border-gray-200 rounded overflow-hidden">
+                        <div class="relative">
+                            <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20mens%20dress%20shirt%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=200&height=200&seq=jumia19&orientation=squarish" alt="Dress Shirt" class="w-full h-[200px] object-cover object-top">
+                            <div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-heart-line text-gray-400 hover:text-red-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Calvin Klein Men's Slim Fit Non-Iron Dress Shirt</h3>
+                            <div class="mt-1">
+                                <span class="text-lg font-semibold">$49.99</span>
+                            </div>
+                            <div class="flex items-center mt-1">
+                                <div class="flex text-yellow-400">
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-line"></i>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-1">(67)</span>
+                            </div>
+                            <div class="mt-2 flex items-center text-xs text-green-600">
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-truck-line"></i>
+                                </div>
+                                <span class="ml-1">Free Shipping</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recommended Product 3 -->
+                    <div class="product-card bg-white border border-gray-200 rounded overflow-hidden">
+                        <div class="relative">
+                            <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20womens%20handbag%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=200&height=200&seq=jumia20&orientation=squarish" alt="Handbag" class="w-full h-[200px] object-cover object-top">
+                            <div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-heart-line text-gray-400 hover:text-red-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Michael Kors Jet Set Travel Tote Bag</h3>
+                            <div class="mt-1">
+                                <span class="text-lg font-semibold">$159.99</span>
+                            </div>
+                            <div class="flex items-center mt-1">
+                                <div class="flex text-yellow-400">
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-half-line"></i>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-1">(114)</span>
+                            </div>
+                            <div class="mt-2 flex items-center text-xs text-blue-600">
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-store-2-line"></i>
+                                </div>
+                                <span class="ml-1">Official Store</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recommended Product 4 -->
+                    <div class="product-card bg-white border border-gray-200 rounded overflow-hidden">
+                        <div class="relative">
+                            <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20mens%20watch%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=200&height=200&seq=jumia21&orientation=squarish" alt="Watch" class="w-full h-[200px] object-cover object-top">
+                            <div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-heart-line text-gray-400 hover:text-red-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Fossil Men's Grant Chronograph Stainless Steel Watch</h3>
+                            <div class="mt-1">
+                                <span class="text-lg font-semibold">$129.99</span>
+                            </div>
+                            <div class="flex items-center mt-1">
+                                <div class="flex text-yellow-400">
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-line"></i>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-1">(83)</span>
+                            </div>
+                            <div class="mt-2 flex items-center text-xs text-green-600">
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-truck-line"></i>
+                                </div>
+                                <span class="ml-1">Free Shipping</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recommended Product 5 -->
+                    <div class="product-card bg-white border border-gray-200 rounded overflow-hidden">
+                        <div class="relative">
+                            <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20perfume%20bottle%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=200&height=200&seq=jumia22&orientation=squarish" alt="Perfume" class="w-full h-[200px] object-cover object-top">
+                            <div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-heart-line text-gray-400 hover:text-red-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Chanel Coco Mademoiselle Eau de Parfum 100ml</h3>
+                            <div class="mt-1">
+                                <span class="text-lg font-semibold">$135.99</span>
+                            </div>
+                            <div class="flex items-center mt-1">
+                                <div class="flex text-yellow-400">
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-half-line"></i>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-1">(129)</span>
+                            </div>
+                            <div class="mt-2 flex items-center text-xs text-blue-600">
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-store-2-line"></i>
+                                </div>
+                                <span class="ml-1">Official Store</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recommended Product 6 -->
+                    <div class="product-card bg-white border border-gray-200 rounded overflow-hidden">
+                        <div class="relative">
+                            <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20gaming%20controller%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=200&height=200&seq=jumia23&orientation=squarish" alt="Gaming Controller" class="w-full h-[200px] object-cover object-top">
+                            <div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-heart-line text-gray-400 hover:text-red-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Sony PlayStation 5 DualSense Wireless Controller</h3>
+                            <div class="mt-1">
+                                <span class="text-lg font-semibold">$69.99</span>
+                            </div>
+                            <div class="flex items-center mt-1">
+                                <div class="flex text-yellow-400">
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="w-4 h-4 flex items-center justify-center">
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-1">(207)</span>
+                            </div>
+                            <div class="mt-2 flex items-center text-xs text-green-600">
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-truck-line"></i>
+                                </div>
+                                <span class="ml-1">Free Shipping</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Recently Viewed Section -->
+        <section class="container mx-auto px-4 mb-8">
+            <div class="bg-white rounded shadow p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold">Recently Viewed</h2>
+                    <a href="#" class="text-primary text-sm hover:underline">SEE ALL</a>
+                </div>
+                
+                <div class="scroll-container -mx-2">
+                    <div class="flex space-x-4 px-2 pb-2">
+                        <!-- Recently Viewed Product 1 -->
+                        <div class="product-card min-w-[180px] max-w-[180px] bg-white border border-gray-200 rounded overflow-hidden">
+                            <div class="relative">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20tablet%20device%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%20with%20screen%20on%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=180&height=180&seq=jumia24&orientation=squarish" alt="Tablet" class="w-full h-[180px] object-cover object-top">
+                            </div>
+                            <div class="p-3">
+                                <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Apple iPad Air (5th Generation) 10.9-inch</h3>
+                                <div class="mt-1">
+                                    <span class="text-lg font-semibold">$599.99</span>
+                                </div>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex text-yellow-400">
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-half-line"></i>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-gray-500 ml-1">(143)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recently Viewed Product 2 -->
+                        <div class="product-card min-w-[180px] max-w-[180px] bg-white border border-gray-200 rounded overflow-hidden">
+                            <div class="relative">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20kitchen%20mixer%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20side%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=180&height=180&seq=jumia25&orientation=squarish" alt="Kitchen Mixer" class="w-full h-[180px] object-cover object-top">
+                            </div>
+                            <div class="p-3">
+                                <h3 class="text-sm text-gray-800 line-clamp-2 h-10">KitchenAid Artisan Series 5-Quart Tilt-Head Stand Mixer</h3>
+                                <div class="mt-1">
+                                    <span class="text-lg font-semibold">$379.99</span>
+                                </div>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex text-yellow-400">
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-gray-500 ml-1">(98)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recently Viewed Product 3 -->
+                        <div class="product-card min-w-[180px] max-w-[180px] bg-white border border-gray-200 rounded overflow-hidden">
+                            <div class="relative">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20bluetooth%20speaker%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=180&height=180&seq=jumia26&orientation=squarish" alt="Bluetooth Speaker" class="w-full h-[180px] object-cover object-top">
+                            </div>
+                            <div class="p-3">
+                                <h3 class="text-sm text-gray-800 line-clamp-2 h-10">JBL Charge 5 Portable Waterproof Bluetooth Speaker</h3>
+                                <div class="mt-1">
+                                    <span class="text-lg font-semibold">$129.99</span>
+                                </div>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex text-yellow-400">
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-half-line"></i>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-gray-500 ml-1">(112)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recently Viewed Product 4 -->
+                        <div class="product-card min-w-[180px] max-w-[180px] bg-white border border-gray-200 rounded overflow-hidden">
+                            <div class="relative">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20coffee%20maker%20machine%20on%20clean%20white%20background%2C%20showing%20the%20full%20product%20from%20front%20view%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=180&height=180&seq=jumia27&orientation=squarish" alt="Coffee Maker" class="w-full h-[180px] object-cover object-top">
+                            </div>
+                            <div class="p-3">
+                                <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Nespresso Vertuo Next Coffee Machine</h3>
+                                <div class="mt-1">
+                                    <span class="text-lg font-semibold">$149.99</span>
+                                </div>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex text-yellow-400">
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-line"></i>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-gray-500 ml-1">(89)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recently Viewed Product 5 -->
+                        <div class="product-card min-w-[180px] max-w-[180px] bg-white border border-gray-200 rounded overflow-hidden">
+                            <div class="relative">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20smartphone%20on%20clean%20white%20background%2C%20showing%20the%20device%20from%20front%20view%20with%20screen%20on%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=180&height=180&seq=jumia28&orientation=squarish" alt="Smartphone" class="w-full h-[180px] object-cover object-top">
+                            </div>
+                            <div class="p-3">
+                                <h3 class="text-sm text-gray-800 line-clamp-2 h-10">Samsung Galaxy A54 - 6.4" 8GB RAM 128GB ROM</h3>
+                                <div class="mt-1">
+                                    <span class="text-lg font-semibold">$299.99</span>
+                                </div>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex text-yellow-400">
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-fill"></i>
+                                        </div>
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-star-line"></i>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-gray-500 ml-1">(76)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <!-- Newsletter Subscription -->
+            <div class="bg-gray-700 rounded-lg p-6 mb-8">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-xl font-semibold mb-2">STAY CONNECTED</h3>
+                        <p class="text-gray-300">Subscribe to our newsletter for the latest deals and promotions</p>
+                    </div>
+                    <div class="w-full md:w-auto">
+                        <form class="flex">
+                            <input type="email" placeholder="Your email address" class="w-full md:w-64 px-4 py-3 text-gray-800 rounded-l-button border-none focus:outline-none">
+                            <button type="submit" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-r-button whitespace-nowrap">SUBSCRIBE</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer Links -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-8">
+                <!-- Customer Service -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Customer Service</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">How to Shop</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Shipping & Delivery</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Return Policy</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Dispute Resolution</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- About Jumia -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">About Jumia</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Jumia Careers</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Jumia Express</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Terms and Conditions</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Jumia Blog</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Make Money with Us -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Make Money with Us</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white">Sell on Jumia</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Vendor Hub</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Become a Sales Consultant</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Become a Logistics Service Partner</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Jumia Affiliate Program</a></li>
+                    </ul>
+                </div>
+                
+                <!-- International Sites & Payment Methods -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">International Sites</h4>
+                    <ul class="space-y-2 mb-6">
+                        <li><a href="#" class="text-gray-300 hover:text-white">Algeria</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Egypt</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Ghana</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Ivory Coast</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Kenya</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Morocco</a></li>
+                    </ul>
+                    
+                    <h4 class="text-lg font-semibold mb-4">Payment Methods</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <div class="w-10 h-10 flex items-center justify-center bg-white rounded">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-visa-fill text-blue-800"></i>
+                            </div>
+                        </div>
+                        <div class="w-10 h-10 flex items-center justify-center bg-white rounded">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-mastercard-fill text-red-500"></i>
+                            </div>
+                        </div>
+                        <div class="w-10 h-10 flex items-center justify-center bg-white rounded">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-paypal-fill text-blue-600"></i>
+                            </div>
+                        </div>
+                        <div class="w-10 h-10 flex items-center justify-center bg-white rounded">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-bank-card-fill text-gray-700"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Social Media & App Download -->
+            <div class="flex flex-col md:flex-row justify-between items-center border-t border-gray-700 pt-8">
+                <div class="mb-4 md:mb-0">
+                    <h4 class="text-lg font-semibold mb-3">JOIN US ON</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center">
+                                <i class="ri-facebook-fill"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center">
+                                <i class="ri-twitter-x-fill"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center">
+                                <i class="ri-instagram-fill"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center">
+                                <i class="ri-youtube-fill"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-3">DOWNLOAD JUMIA FREE APP</h4>
+                    <div class="flex space-x-3">
+                        <a href="#" class="flex items-center bg-black text-white px-4 py-2 rounded">
+                            <div class="w-6 h-6 flex items-center justify-center mr-2">
+                                <i class="ri-apple-fill text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs">Download on the</div>
+                                <div class="text-sm font-semibold">App Store</div>
+                            </div>
+                        </a>
+                        <a href="#" class="flex items-center bg-black text-white px-4 py-2 rounded">
+                            <div class="w-6 h-6 flex items-center justify-center mr-2">
+                                <i class="ri-google-play-fill text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs">GET IT ON</div>
+                                <div class="text-sm font-semibold">Google Play</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="text-center text-gray-400 text-sm mt-8">
+                <p>&copy; 2025 Jumia. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-      <!-- Add User -->
-      <button class="flex flex-col items-center text-indigo-400 hover:text-indigo-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-        <span class="text-xs">Add</span>
-      </button>
+    <!-- Back to Top Button -->
+    <button class="back-to-top w-12 h-12 flex items-center justify-center bg-primary text-white rounded-full shadow-lg">
+        <div class="w-6 h-6 flex items-center justify-center">
+            <i class="ri-arrow-up-line"></i>
+        </div>
+    </button>
 
-      <!-- End Call -->
-      <button class="flex flex-col items-center text-red-500 hover:text-red-700">
-        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
-          viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M6 18L18 6M6 6l12 12" />
-        </svg>
-        <span class="text-xs">End</span>
-      </button>
+    <!-- Quick View Modal -->
+    <div id="quick-view-modal" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center p-4 border-b border-gray-200">
+                <h3 class="text-lg font-semibold">Quick View</h3>
+                <button id="close-modal" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                    <div class="w-6 h-6 flex items-center justify-center">
+                        <i class="ri-close-line"></i>
+                    </div>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="w-full md:w-1/2">
+                        <img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20smartphone%20on%20clean%20white%20background%2C%20showing%20the%20device%20from%20multiple%20angles%2C%20high%20resolution%20detailed%20image%20perfect%20for%20e-commerce&width=400&height=400&seq=jumia29&orientation=squarish" alt="Product" class="w-full h-auto object-cover rounded">
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-xl font-semibold mb-2">Samsung Galaxy A54 - 6.4" 8GB RAM 128GB ROM</h2>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-star-fill"></i>
+                                </div>
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-star-fill"></i>
+                                </div>
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-star-fill"></i>
+                                </div>
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-star-fill"></i>
+                                </div>
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-star-line"></i>
+                                </div>
+                            </div>
+                            <span class="text-sm text-gray-500 ml-1">(76 Reviews)</span>
+                        </div>
+                        <div class="mb-4">
+                            <span class="text-2xl font-bold text-primary">$299.99</span>
+                            <span class="text-lg text-gray-500 line-through ml-2">$399.99</span>
+                            <span class="text-sm bg-red-100 text-red-600 px-2 py-1 rounded ml-2">-25%</span>
+                        </div>
+                        <div class="mb-4">
+                            <h4 class="font-medium mb-2">Color</h4>
+                            <div class="flex space-x-2">
+                                <button class="w-8 h-8 rounded-full bg-black border-2 border-gray-300"></button>
+                                <button class="w-8 h-8 rounded-full bg-blue-500 border-2 border-gray-300"></button>
+                                <button class="w-8 h-8 rounded-full bg-green-500 border-2 border-gray-300"></button>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="font-medium mb-2">Quantity</h4>
+                            <div class="flex items-center">
+                                <button class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-l">
+                                    <div class="w-5 h-5 flex items-center justify-center">
+                                        <i class="ri-subtract-line"></i>
+                                    </div>
+                                </button>
+                                <input type="number" value="1" min="1" class="w-16 h-10 border-t border-b border-gray-300 text-center">
+                                <button class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-r">
+                                    <div class="w-5 h-5 flex items-center justify-center">
+                                        <i class="ri-add-line"></i>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4">
+                            <button class="flex-1 bg-primary hover:bg-primary/90 text-white py-3 rounded-button whitespace-nowrap">ADD TO CART</button>
+                            <button class="flex-1 border border-primary text-primary hover:bg-primary/5 py-3 rounded-button whitespace-nowrap">BUY NOW</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
+    <!-- Promotion Popup -->
+    <div id="promo-popup" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg w-full max-w-md p-6 relative">
+            <button id="close-popup" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <i class="ri-close-line"></i>
+                </div>
+            </button>
+            <div class="text-center">
+                <h3 class="text-xl font-bold mb-2">Special Offer!</h3>
+                <p class="mb-4">Get 15% off your first order when you sign up for our newsletter.</p>
+                <div class="mb-4">
+                    <input type="email" placeholder="Your email address" class="w-full px-4 py-2 border border-gray-300 rounded mb-2">
+                    <button class="w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-button whitespace-nowrap">SIGN UP & SAVE</button>
+                </div>
+                <div class="text-sm text-gray-500">
+                    By signing up, you agree to our <a href="#" class="text-primary hover:underline">Terms</a> and <a href="#" class="text-primary hover:underline">Privacy Policy</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script id="carousel-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carousel functionality
+            const carousel = document.querySelector('.carousel');
+            const carouselInner = carousel.querySelector('.carousel-inner');
+            const carouselItems = carousel.querySelectorAll('.carousel-item');
+            const indicators = carousel.querySelectorAll('.carousel-indicator');
+            const prevBtn = carousel.querySelector('.carousel-prev');
+            const nextBtn = carousel.querySelector('.carousel-next');
+            
+            let currentIndex = 0;
+            const itemCount = carouselItems.length;
+            
+            function updateCarousel() {
+                carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // Update indicators
+                indicators.forEach((indicator, index) => {
+                    if (index === currentIndex) {
+                        indicator.classList.add('opacity-100');
+                        indicator.classList.remove('opacity-50');
+                    } else {
+                        indicator.classList.add('opacity-50');
+                        indicator.classList.remove('opacity-100');
+                    }
+                });
+            }
+            
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % itemCount;
+                updateCarousel();
+            }
+            
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + itemCount) % itemCount;
+                updateCarousel();
+            }
+            
+            // Set up event listeners
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+            
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel();
+                });
+            });
+            
+            // Auto rotate carousel
+            let carouselInterval = setInterval(nextSlide, 5000);
+            
+            carousel.addEventListener('mouseenter', () => {
+                clearInterval(carouselInterval);
+            });
+            
+            carousel.addEventListener('mouseleave', () => {
+                carouselInterval = setInterval(nextSlide, 5000);
+            });
+            
+            // Initialize carousel
+            updateCarousel();
+        });
+    </script>
+
+    <script id="flash-sale-timer-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            // Flash sale countdown timer
+            const timerElement = document.getElementById('flash-sale-timer');
+            
+            // Set the end time to 24 hours from now
+            const endTime = new Date();
+            endTime.setHours(endTime.getHours() + 23);
+            endTime.setMinutes(endTime.getMinutes() + 45);
+            endTime.setSeconds(endTime.getSeconds() + 12);
+            
+            function updateTimer() {
+                const now = new Date();
+                const diff = endTime - now;
+                
+                if (diff <= 0) {
+                    timerElement.textContent = "00:00:00";
+                    return;
+                }
+                
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            
+            // Update timer immediately and then every second
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        });
+    </script>
+
+    <script id="ui-interactions-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            // Category dropdown toggle
+            const categoryDropdownBtn = document.getElementById('category-dropdown-btn');
+            const categoryDropdown = document.getElementById('category-dropdown');
+            
+            categoryDropdownBtn.addEventListener('click', function() {
+                categoryDropdown.classList.toggle('hidden');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!categoryDropdownBtn.contains(event.target) && !categoryDropdown.contains(event.target)) {
+                    categoryDropdown.classList.add('hidden');
+                }
+            });
+            
+            // Back to top button
+            const backToTopBtn = document.querySelector('.back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Quick view modal
+            const quickViewModal = document.getElementById('quick-view-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            
+            // Open modal when clicking on a product (for demo purposes, just use the first product)
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    quickViewModal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Close modal
+            closeModalBtn.addEventListener('click', function() {
+                quickViewModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+            
+            // Close modal when clicking outside
+            quickViewModal.addEventListener('click', function(event) {
+                if (event.target === quickViewModal) {
+                    quickViewModal.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Promotion popup (show after 5 seconds)
+            const promoPopup = document.getElementById('promo-popup');
+            const closePopupBtn = document.getElementById('close-popup');
+            
+            setTimeout(function() {
+                promoPopup.classList.remove('hidden');
+            }, 5000);
+            
+            closePopupBtn.addEventListener('click', function() {
+                promoPopup.classList.add('hidden');
+            });
+            
+            // Cookie banner
+            const cookieBanner = document.getElementById('cookie-banner');
+            const acceptCookiesBtn = document.getElementById('accept-cookies');
+            
+            acceptCookiesBtn.addEventListener('click', function() {
+                cookieBanner.style.display = 'none';
+                // In a real implementation, you would set a cookie here
+            });
+        });
+    </script>
 </body>
 </html>
