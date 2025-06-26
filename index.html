@@ -3,108 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zoom Call Interface</title>
+  <title>Zoom Call UI</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
 
-  <!-- Participants Grid -->
-  <div class="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+  <!-- Main Container -->
+  <div class="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 
-    <!-- Participant 1 (Host) -->
-    <div class="bg-gray-800 rounded-xl p-3 flex flex-col items-center shadow">
-      <img src="p1.jpg" alt="Martin" class="w-24 h-24 rounded-full mb-3 border-4 border-blue-500 object-cover">
-      <h2 class="text-lg font-bold text-blue-400">Martin Champ <span class="text-xs bg-blue-600 text-white px-2 py-1 rounded ml-2">Host</span></h2>
+    <!-- Participant Cards -->
+    <div class="bg-gray-800 p-3 flex flex-col items-center">
+      <img src="p1.jpg" class="w-24 h-24 rounded-full mb-2 object-cover border-4 border-blue-500" />
+      <h2 class="text-lg font-bold text-blue-400">Martin Champ <span class="text-xs bg-blue-600 text-white px-2 py-1 rounded ml-1">Host</span></h2>
       <p class="text-sm text-gray-300 mt-1">+254 700 000000</p>
     </div>
-
-    <!-- Participant 2 -->
-    <div class="bg-gray-800 rounded-xl p-3 flex flex-col items-center shadow">
-      <img src="p2.jpg" alt="Simon" class="w-24 h-24 rounded-full mb-3 object-cover">
+    <div class="bg-gray-800 p-3 flex flex-col items-center">
+      <img src="p2.jpg" class="w-24 h-24 rounded-full mb-2 object-cover" />
       <h2 class="text-lg font-bold">Simon Team Martin</h2>
       <p class="text-sm text-gray-300 mt-1">+254 711 223344</p>
     </div>
-
-    <!-- Participant 3 -->
-    <div class="bg-gray-800 rounded-xl p-3 flex flex-col items-center shadow">
-      <img src="p3.jpg" alt="Rose" class="w-24 h-24 rounded-full mb-3 object-cover">
+    <div class="bg-gray-800 p-3 flex flex-col items-center">
+      <img src="p3.jpg" class="w-24 h-24 rounded-full mb-2 object-cover" />
       <h2 class="text-lg font-bold">Rose M.</h2>
       <p class="text-sm text-gray-300 mt-1">+254 722 556677</p>
     </div>
-
-    <!-- Participant 4 -->
-    <div class="bg-gray-800 rounded-xl p-3 flex flex-col items-center shadow">
-      <img src="p4.jpg" alt="Kelvin" class="w-24 h-24 rounded-full mb-3 object-cover">
+    <div class="bg-gray-800 p-3 flex flex-col items-center">
+      <img src="p4.jpg" class="w-24 h-24 rounded-full mb-2 object-cover" />
       <h2 class="text-lg font-bold">Kelvin T.</h2>
       <p class="text-sm text-gray-300 mt-1">+254 733 889900</p>
     </div>
-
-    <!-- Participant 5 -->
-    <div class="bg-gray-800 rounded-xl p-3 flex flex-col items-center shadow">
-      <img src="p5.jpg" alt="Zainab" class="w-24 h-24 rounded-full mb-3 object-cover">
+    <div class="bg-gray-800 p-3 flex flex-col items-center">
+      <img src="p5.jpg" class="w-24 h-24 rounded-full mb-2 object-cover" />
       <h2 class="text-lg font-bold">Zainab Ali</h2>
       <p class="text-sm text-gray-300 mt-1">+254 744 112233</p>
     </div>
-
-    <!-- Participant 6 -->
-    <div class="bg-gray-800 rounded-xl p-3 flex flex-col items-center shadow">
-      <img src="p6.jpg" alt="Brian" class="w-24 h-24 rounded-full mb-3 object-cover">
+    <div class="bg-gray-800 p-3 flex flex-col items-center">
+      <img src="p6.jpg" class="w-24 h-24 rounded-full mb-2 object-cover" />
       <h2 class="text-lg font-bold">Brian Odhiambo</h2>
       <p class="text-sm text-gray-300 mt-1">+254 755 445566</p>
     </div>
-  </div>
 
-  <!-- Control Bar -->
-  <div class="w-full max-w-4xl mx-auto bg-gray-800/70 backdrop-blur-md rounded-full px-6 py-3 flex justify-center gap-6 items-center shadow-xl border border-gray-700">
-    
-    <!-- Mute -->
-    <button class="flex flex-col items-center text-white hover:text-blue-400">
-      <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
-        viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5v14l11-7L9 5z" />
-      </svg>
-      <span class="text-xs">Mute</span>
-    </button>
+    <!-- Controls Bar (full width) -->
+    <div class="col-span-1 sm:col-span-2 md:col-span-3 bg-gray-800 px-6 py-4 flex justify-around items-center rounded-none border-t border-gray-700">
+      
+      <!-- Mute -->
+      <button class="flex flex-col items-center text-white hover:text-blue-400">
+        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5v14l11-7L9 5z" />
+        </svg>
+        <span class="text-xs">Mute</span>
+      </button>
 
-    <!-- Video -->
-    <button class="flex flex-col items-center text-white hover:text-green-400">
-      <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
-        viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14v2a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h8a2 2 0 012 2v2z" />
-      </svg>
-      <span class="text-xs">Video</span>
-    </button>
+      <!-- Video -->
+      <button class="flex flex-col items-center text-white hover:text-green-400">
+        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14v2a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h8a2 2 0 012 2v2z" />
+        </svg>
+        <span class="text-xs">Video</span>
+      </button>
 
-    <!-- Share Screen -->
-    <button class="flex flex-col items-center text-white hover:text-yellow-400">
-      <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
-        viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M4 4h16v12H4zM8 20h8" />
-      </svg>
-      <span class="text-xs">Share</span>
-    </button>
+      <!-- Share Screen -->
+      <button class="flex flex-col items-center text-white hover:text-yellow-400">
+        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M4 4h16v12H4zM8 20h8" />
+        </svg>
+        <span class="text-xs">Share</span>
+      </button>
 
-    <!-- Add User -->
-    <button class="flex flex-col items-center text-white hover:text-indigo-400">
-      <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
-        viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M18 9v6m3-3h-6m-4 6a4 4 0 10-8 0 4 4 0 008 0zm0 0v-1a4 4 0 018 0v1" />
-      </svg>
-      <span class="text-xs">Add</span>
-    </button>
+      <!-- Add User -->
+      <button class="flex flex-col items-center text-white hover:text-indigo-400">
+        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M18 9v6m3-3h-6m-4 6a4 4 0 10-8 0 4 4 0 008 0zm0 0v-1a4 4 0 018 0v1" />
+        </svg>
+        <span class="text-xs">Add</span>
+      </button>
 
-    <!-- End Call -->
-    <button class="flex flex-col items-center text-red-500 hover:text-red-700">
-      <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
-        viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M6 18L18 6M6 6l12 12" />
-      </svg>
-      <span class="text-xs">End</span>
-    </button>
+      <!-- End Call -->
+      <button class="flex flex-col items-center text-red-500 hover:text-red-700">
+        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12" />
+        </svg>
+        <span class="text-xs">End</span>
+      </button>
+    </div>
   </div>
 
 </body>
